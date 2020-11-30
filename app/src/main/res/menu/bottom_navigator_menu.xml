@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sale"
+
+        android:enabled="true"
+        android:icon="@drawable/sale"
+        android:title="매매"/>
+
+    <item
+        android:id="@+id/current"
+
+        android:enabled="true"
+        android:icon="@drawable/current"
+        android:title="현황"/>
+
+    <item
+        android:id="@+id/chat"
+
+        android:enabled="true"
+        android:icon="@drawable/chat"
+        android:title="채팅"/>
+
+    <item
+        android:id="@+id/board"
+
+        android:enabled="true"
+        android:icon="@drawable/board"
+        android:title="친목"/>
+
+    <item
+        android:id="@+id/MY"
+
+        android:enabled="true"
+        android:icon="@drawable/my"
+        android:title="MY"/>
+
+
+
+
+</menu>
