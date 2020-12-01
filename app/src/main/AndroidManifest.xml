@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wims.whereismystore">
+    package="com.example.Final_Project">
 
     <application
         android:allowBackup="true"
@@ -10,11 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.wims.whereismystore.LoginActivity"
-            tools:ignore="MissingClass"/>
-
-        <activity android:name="com.wims.whereismystore.SplashActivity">
+        <activity android:name="com.wims.whereismystore.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,31 +20,31 @@
         </activity>
 
         <activity android:name="com.wims.whereismystore.JoinActivity"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.SaleActivity"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.Fragment1"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.Fragment2"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.Fragment3"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.Fragment4"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
         <activity android:name="com.wims.whereismystore.Fragment5"
-            tools:ignore="Instantiatable,MissingClass">
+            tools:ignore="Instantiatable">
         </activity>
 
 
