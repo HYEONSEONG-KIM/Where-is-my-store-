@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.wims.whereismystore.LoginActivity">
+        <activity android:name="com.wims.whereismystore.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,31 +19,31 @@
 
         </activity>
 
-        <activity android:name="com.wims.whereismystore.JoinActivity"
+        <activity android:name="com.wims.whereismystore.activity.JoinActivity"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.SaleActivity"
+        <activity android:name="com.wims.whereismystore.activity.SaleActivity"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.Fragment1"
+        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment1"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.Fragment2"
+        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment2"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.Fragment3"
+        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment3"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.Fragment4"
+        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment4"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.Fragment5"
+        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment5"
             tools:ignore="Instantiatable">
         </activity>
 

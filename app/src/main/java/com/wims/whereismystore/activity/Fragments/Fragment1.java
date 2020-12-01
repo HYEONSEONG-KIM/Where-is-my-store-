@@ -1,4 +1,5 @@
-package com.wims.whereismystore;
+package com.wims.whereismystore.activity.Fragments;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.Final_Project.R;
 
-public class Fragment4 extends Fragment {
-    //게시판기능 class
+public class Fragment1 extends Fragment {
+    //매매기능 class
     private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment4, container, false);
+        view = inflater.inflate(R.layout.fragment1, container, false);
 
 
 
