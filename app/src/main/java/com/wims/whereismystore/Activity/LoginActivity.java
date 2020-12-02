@@ -1,4 +1,4 @@
-package com.wims.whereismystore.activity;
+package com.wims.whereismystore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, com.wims.whereismystore.activity.JoinActivity.class);
+                Intent intent = new Intent(LoginActivity.this, com.wims.whereismystore.Activity.JoinActivity.class);
                 startActivity(intent);
             }
         });

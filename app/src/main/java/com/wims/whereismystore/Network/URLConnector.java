@@ -1,4 +1,4 @@
-package com.wims.whereismystore.connect;
+package com.wims.whereismystore.Network;
 
 import android.util.Log;
 

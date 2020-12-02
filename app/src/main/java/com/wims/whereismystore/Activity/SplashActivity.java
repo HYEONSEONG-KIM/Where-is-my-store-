@@ -1,4 +1,4 @@
-package com.wims.whereismystore.activity;
+package com.wims.whereismystore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ public class SplashActivity  extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), com.wims.whereismystore.activity.LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), com.wims.whereismystore.Activity.LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

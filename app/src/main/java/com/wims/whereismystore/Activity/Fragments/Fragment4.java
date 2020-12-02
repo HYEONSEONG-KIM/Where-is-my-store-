@@ -1,4 +1,4 @@
-package com.wims.whereismystore.activity.Fragments;
+package com.wims.whereismystore.Activity.Fragments;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
