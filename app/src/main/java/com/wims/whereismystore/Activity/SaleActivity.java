@@ -1,4 +1,4 @@
-package com.wims.whereismystore.activity;
+package com.wims.whereismystore.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,11 +10,6 @@ import android.view.MenuItem;
 
 import com.example.Final_Project.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.wims.whereismystore.activity.Fragments.Fragment1;
-import com.wims.whereismystore.activity.Fragments.Fragment2;
-import com.wims.whereismystore.activity.Fragments.Fragment3;
-import com.wims.whereismystore.activity.Fragments.Fragment4;
-import com.wims.whereismystore.activity.Fragments.Fragment5;
 
 public class SaleActivity extends AppCompatActivity {
 
