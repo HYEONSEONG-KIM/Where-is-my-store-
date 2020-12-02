@@ -1,4 +1,4 @@
-package com.wims.whereismystore.activity;
+package com.wims.whereismystore;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
