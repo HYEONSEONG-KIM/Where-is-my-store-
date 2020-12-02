@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100"
+    tools:ignore="MissingPrefix">
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="20"
+        />
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:text="MY"/>
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+
+
+
+
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     개인정보 변경"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_weight="6"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/my_change"
+        android:gravity="fill"
+        />
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/mysale"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     나의 매매"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_weight="6"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/my_sale"
+        android:gravity="fill"
+        />
+
+
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/myboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     나의 친목"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_weight="6"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/my_board"
+        android:gravity="fill"
+        />
+
+
+
+
+
+
+
 
 </LinearLayout>
