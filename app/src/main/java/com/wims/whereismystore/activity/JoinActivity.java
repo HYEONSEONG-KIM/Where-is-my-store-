@@ -59,7 +59,7 @@ public class JoinActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(JoinActivity.this, com.wims.whereismystore.Activity.LoginActivity.class);
+                Intent intent = new Intent(JoinActivity.this, com.wims.whereismystore.activity.LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
