@@ -8,9 +8,9 @@ import android.widget.Button; // 버튺 뷰 사용
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 
-import static com.example.Final_Project.R.id.login_button;
+import static com.wims.whereismystore.R.id.login_button;
 
 public class LoginActivity extends AppCompatActivity {
 

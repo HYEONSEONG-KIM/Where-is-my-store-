@@ -6,7 +6,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 
 public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {

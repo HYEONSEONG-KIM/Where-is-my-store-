@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 
 public class Fragment4 extends Fragment {
     //게시판기능 class

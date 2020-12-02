@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 
 public class Fragment2 extends Fragment {
     //현황기능 class
