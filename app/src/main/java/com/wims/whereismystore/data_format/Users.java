@@ -1,4 +1,4 @@
-package com.wims.whereismystore.Class;
+package com.wims.whereismystore.data_format;
 
 public class Users {
 

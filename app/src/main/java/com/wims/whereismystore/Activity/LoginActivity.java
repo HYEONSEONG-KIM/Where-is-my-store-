@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.wims.whereismystore.R;
+import com.wims.whereismystore.activity.SaleActivity;
 
 import static com.wims.whereismystore.R.id.login_button;
 
@@ -26,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
+                Intent intent = new Intent(LoginActivity.this, com.wims.whereismystore.Activity.JoinActivity.class);
                 startActivity(intent);
             }
         });

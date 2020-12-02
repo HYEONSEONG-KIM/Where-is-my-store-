@@ -1,6 +1,5 @@
-package com.wims.whereismystore.Network;
+package com.wims.whereismystore.connect;
 
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 
 import java.io.BufferedReader;
