@@ -1,4 +1,4 @@
-package com.wims.whereismystore;
+package com.wims.whereismystore.activity;
 
 import android.content.Intent; // 인텐트 활용
 
