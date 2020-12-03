@@ -10,40 +10,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.wims.whereismystore.activity.LoginActivity">
+        <activity android:name="com.wims.whereismystore.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.JoinActivity"
+        <activity android:name="com.wims.whereismystore.Activity.JoinActivity">
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.SaleActivity"
+        <activity android:name="com.wims.whereismystore.Activity.SaleActivity"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment1"
+        <activity android:name="com.wims.whereismystore.Activity.Fragment1"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment2"
+        <activity android:name="com.wims.whereismystore.Activity.Fragment2"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment3"
+        <activity android:name="com.wims.whereismystore.Activity.Fragment3"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment4"
+        <activity android:name="com.wims.whereismystore.Activity.Fragment4"
             tools:ignore="Instantiatable">
         </activity>
 
-        <activity android:name="com.wims.whereismystore.activity.Fragments.Fragment5"
+        <activity android:name="com.wims.whereismystore.Activity.Fragment5"
             tools:ignore="Instantiatable">
         </activity>
 

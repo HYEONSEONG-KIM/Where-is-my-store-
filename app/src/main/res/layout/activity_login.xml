@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wims.whereismystore.activity.LoginActivity">
+    tools:context="com.wims.whereismystore.Activity.LoginActivity">
 
     <Button
         android:id="@+id/login_button"
@@ -22,7 +22,6 @@
         android:layout_marginBottom="41dp"
         android:ems="10"
         android:hint="이메일"
-        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/login_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
