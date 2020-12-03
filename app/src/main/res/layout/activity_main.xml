@@ -6,14 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.wims.whereismystore.Activity.SaleActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="659dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/sale_spinner"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:background="#00ff0000"
+                android:spinnerMode="dropdown"
+                tools:ignore="MissingConstraints" />
+            <Button
+                android:id="@+id/saleUpload_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="글쓰기"
+                android:background="#00ff0000"/>
+            <Button
+                android:id="@+id/saleFind_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="찾기"
+                android:background="#00ff0000"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/salelist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavi"
