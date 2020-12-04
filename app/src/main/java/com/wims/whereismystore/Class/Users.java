@@ -1,21 +1,26 @@
 package com.wims.whereismystore.Class;
 
-public class Users {
+import com.google.firebase.database.PropertyName;
 
-    private String pin;
+import java.io.Serializable;
+
+public class Users implements Serializable {
+
+    @PropertyName("email")
     private String email;
-    private String phone;
+    @PropertyName("name")
     private String name;
+    @PropertyName("password")
     private String password;
-    private String created_at;
-    private String lastacess_at;
-    private int state;
 
-    public Users(String email, String password,  String name){
+    public Users() {}
+
+    public Users(String email,String name,String password){
         this.email = email;
-        this.password = password;
         this.name = name;
+        this.password = password;
     }
+
 
     public String getName() {
         return name;
@@ -39,15 +44,6 @@ public class Users {
 
     public String getPassword(){
         return password;
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password +'\''+
-                '}';
     }
 
 }
