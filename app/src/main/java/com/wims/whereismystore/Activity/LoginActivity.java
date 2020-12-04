@@ -34,6 +34,7 @@ import javax.security.auth.callback.Callback;
 
 import io.perfmark.Link;
 
+import static com.example.Final_Project.R.id.join_button;
 import static com.example.Final_Project.R.id.login_button;
 import static com.example.Final_Project.R.id.login_email;
 import static com.example.Final_Project.R.id.login_password;
@@ -64,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         email = (EditText)findViewById(login_email);
         password = (EditText)findViewById(login_password);
         login = (Button)findViewById(login_button);
+        account = (Button)findViewById(join_button);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,33 +77,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 Login_Sys();
             }
+        });
 
-                    /*
-                    usersRef.orderByKey().equalTo("bung010@naver213+com").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                            Users log = ds.getValue(Users.class);
-                            String emailString = ds.child("email").getValue(String.class);
-                            String LinkString = ds.child("name").getValue(String.class);
-                            String TitleString = ds.child("password").getValue(String.class);
-
-                            emailS = emailString;
-                            nameS = LinkString;
-                            passwordS = TitleString;
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {}
-                });
-
-                users = new Users(emailS,nameS,passwordS);
-                Toast.makeText(LoginActivity.this, users.getName(), Toast.LENGTH_SHORT).show();
-
-                     */
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,JoinActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
@@ -140,7 +123,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
                                     intent.putExtra("User",user);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
 
                                 }

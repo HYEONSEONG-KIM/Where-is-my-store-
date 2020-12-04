@@ -107,7 +107,6 @@ public class JoinActivity extends AppCompatActivity {
                 String getUserName = name.getText().toString();
                 String getUserEmail = email.getText().toString();
                 String getUserPassword = password.getText().toString();
-                Toast.makeText(JoinActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
                 //hashmap 만들기
                 Map<String, Users> users = new HashMap<>();
                 writeNewUser(getUserEmail, getUserName, getUserPassword);
@@ -126,6 +125,9 @@ public class JoinActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         // Write was successful!
                         Toast.makeText(JoinActivity.this, "가입을 완료했습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
