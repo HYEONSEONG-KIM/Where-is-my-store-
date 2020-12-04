@@ -36,6 +36,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.0-alpha01'
     implementation "androidx.navigation:navigation-ui:2.3.0-alpha01"
 
+    //ted permission --권한 허용 받아오기
+    implementation "gun0912.ted:tedpermission:2.2.3"
+    //이미지
+    implementation 'com.squareup.picasso:picasso:2.71828'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     //firebase 연동
