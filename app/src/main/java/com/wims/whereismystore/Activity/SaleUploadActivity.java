@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -46,7 +47,7 @@ public class SaleUploadActivity extends AppCompatActivity {
     private static final int SEARCH_ADDRESS_ACTIVITY = 10000;
     private String strIndustry=null;
     private ArrayList<Uri> imageList;
-    private ArrayList<Uri> currentIamgeList=new ArrayList();
+    private ArrayList<Uri> currentImageList=new ArrayList();
     private int currentImageIndex=0;
     private Button addressButton;
     private ImageButton select_images_btn;
@@ -55,8 +56,10 @@ public class SaleUploadActivity extends AppCompatActivity {
 
     private ArrayAdapter<CharSequence> industryGroupSpin;
     private EditText address_editText;
-    private EditText Bnumber;
-
+    private String BNumTotal;
+    private EditText price;
+    private EditText title;
+    private EditText contents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +71,20 @@ public class SaleUploadActivity extends AppCompatActivity {
         image[6]=findViewById(R.id.upload_image7);image[7]=findViewById(R.id.upload_image8);
         image[8]=findViewById(R.id.upload_image9);image[9]=findViewById(R.id.upload_image10);
 
+        price=findViewById(R.id.upload_price_editText);
+        title=findViewById(R.id.upload_title_editText);
+        contents=findViewById(R.id.upload_contents_editText);
+
         address_editText=findViewById(R.id.upload_address_EditText);
+        //취소 버튼 클릭 시 업로드 취소
+        Button cancel_btn=findViewById(R.id.upload_cancle_button);
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //스피너 업종별 선택
         indSpin=findViewById(R.id.industryName);
 
@@ -96,26 +112,15 @@ public class SaleUploadActivity extends AppCompatActivity {
                 startActivityForResult(i,SEARCH_ADDRESS_ACTIVITY);
             }
         });
-        //사업자 번호 자동 하이픈 생성
-        Bnumber=findViewById(R.id.upload_BNumber_editText);
-        Bnumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //사업자 번호 합치기
+        EditText BNum1=findViewById(R.id.upload_BNum_first_editText);
+        EditText BNum2=findViewById(R.id.upload_BNum_middle_editText);
+        EditText BNum3=findViewById(R.id.upload_BNum_last_editText);
 
-            }
+        BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        //이미지 선택
+        //업로드 할 이미지 선택
         select_images_btn=findViewById(R.id.upload_images_button);
         select_images_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +142,105 @@ public class SaleUploadActivity extends AppCompatActivity {
                 }
             }
         });
+        //완료 버튼 클릭 시 업로드
+        Button complete_btn=findViewById(R.id.upload_complete_button);
+        complete_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(BNumTotal.length()!=10||currentImageIndex==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
+                    AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
+                    builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
+                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog=builder.create();
+                    alertDialog.show();
+                }else{
+
+                }
+            }
+        });
+        //이미지 선택 시 이미지 삭제(1~10)
+        image[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(0);
+            }
+        });
+        image[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(1);
+            }
+        });
+        image[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(2);
+            }
+        });
+        image[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(3);
+            }
+        });
+        image[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(4);
+            }
+        });
+        image[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(5);
+            }
+        });
+        image[6].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(6);
+            }
+        });
+        image[7].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(7);
+            }
+        });
+        image[8].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(8);
+            }
+        });
+        image[9].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteImageViewResource(9);
+            }
+        });
+
+    }
+    //이미지뷰 클릭 시 삭제
+    private void deleteImageViewResource(int index){
+        Log.d("index",""+currentImageIndex);
+        if(currentImageIndex==0){
+            currentImageList.clear();
+            image[currentImageIndex].setImageResource(0);
+            currentImageIndex=0;
+        }else {
+            currentImageList.remove(index);
+            image[currentImageIndex].setImageResource(0);
+            currentImageIndex--;
+            for (int i = index; i <= currentImageIndex; i++) {
+                setImage(i);
+            }
+        }
     }
     //사진 버튼 클릭 시 앨범 선택 다이어로그
     private void selectPhotoDialog(){
@@ -175,42 +279,55 @@ public class SaleUploadActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==FROM_ALBUM){
             if(resultCode== Activity.RESULT_OK){
-                imageList=new ArrayList();
-                int imageListIndex=currentImageIndex;
+                if(currentImageIndex<10) {
+                    imageList = new ArrayList();
+                    int imageListIndex = currentImageIndex;
 
-                // 멀티 선택을 지원하지 않는 기기에서는 getClipdata()가 없음 => getData()로 접근해야 함
-                if(data.getClipData()==null){
-                    Log.i("upload", "1. single choice"+String.valueOf(data.getData()));
-                    imageList.add(data.getData());
-                    imageListIndex++;
-                }else{
-                    ClipData clipData=data.getClipData();
-                    Log.i("upload","clipdata "+String.valueOf(clipData.getItemCount()));
-                    if (clipData.getItemCount() > 10){
-                        Toast.makeText(SaleUploadActivity.this, "사진은 10개까지 선택가능 합니다.\n다시 선택해 주세요", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    //멀티 선택에서 하나만 선택했을 경우
-                    else if(clipData.getItemCount()==1){
-                        Uri dataStr = clipData.getItemAt(0).getUri();
-                        Log.i("upload","2. clipdata choice "+String.valueOf(clipData.getItemAt(0).getUri()));
-                        Log.i("upload","2. single choice "+clipData.getItemAt(0).getUri().getPath());
-                        imageList.add(dataStr);
+                    // 멀티 선택을 지원하지 않는 기기에서는 getClipdata()가 없음 => getData()로 접근해야 함
+                    if (data.getClipData() == null) {
+                        Log.i("upload", "1. single choice" + String.valueOf(data.getData()));
+                        imageList.add(data.getData());
                         imageListIndex++;
-                    } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 10) {
-                        for (int i = 0; i < clipData.getItemCount(); i++) {
-                            if(imageListIndex==10){
-                                Toast.makeText(SaleUploadActivity.this, "사진은 10개까지 선택가능 합니다.\n다시 선택해 주세요", Toast.LENGTH_LONG).show();
-                                return;
-                            }else {
-                                Log.i("upload", "3. single choice " + String.valueOf(clipData.getItemAt(i).getUri()));
-                                imageList.add(clipData.getItemAt(i).getUri());
-                                imageListIndex++;
+                    } else {
+                        ClipData clipData = data.getClipData();
+                        Log.i("upload", "clipdata " + String.valueOf(clipData.getItemCount()));
+                        if (clipData.getItemCount() > 10) {
+                            Toast.makeText(SaleUploadActivity.this, "사진은 10개까지 선택가능 합니다.\n다시 선택해 주세요", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        //멀티 선택에서 하나만 선택했을 경우
+                        else if (clipData.getItemCount() == 1) {
+                            Uri dataStr = clipData.getItemAt(0).getUri();
+                            Log.i("upload", "2. clipdata choice " + String.valueOf(clipData.getItemAt(0).getUri()));
+                            Log.i("upload", "2. single choice " + clipData.getItemAt(0).getUri().getPath());
+                            imageList.add(dataStr);
+                            imageListIndex++;
+                        } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 10) {
+                            for (int i = 0; i < clipData.getItemCount(); i++) {
+                                if (imageListIndex == 10) {
+                                    Toast.makeText(SaleUploadActivity.this, "사진은 10개까지 선택가능 합니다.\n다시 선택해 주세요", Toast.LENGTH_LONG).show();
+                                    return;
+                                } else {
+                                    Log.i("upload", "3. single choice " + String.valueOf(clipData.getItemAt(i).getUri()));
+                                    imageList.add(clipData.getItemAt(i).getUri());
+                                    imageListIndex++;
+                                }
                             }
                         }
                     }
+                    showSelectedImage(imageList);
+                }else {
+                    AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
+                    builder.setTitle("알림").setMessage("사진을 10개까지만 선택이 가능합니다.ㅜㅜ");
+                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertDialog=builder.create();
+                    alertDialog.show();
                 }
-                showSelectedImage(imageList);
             }else{
                 Toast.makeText(SaleUploadActivity.this, "사진 선택을 취소하였습니다", Toast.LENGTH_SHORT).show();
             }
@@ -224,15 +341,15 @@ public class SaleUploadActivity extends AppCompatActivity {
         }
     }
     private void showSelectedImage(ArrayList<Uri> imageList){
+        currentImageIndex=imageList.size()-1;
         for(int i=0; i<imageList.size();i++){
-            currentIamgeList.add(imageList.get(i));
+            currentImageList.add(imageList.get(i));
             setImage(i);
-            currentImageIndex++;
         }
     }
     private void setImage(int index){
         Picasso.get()
-                .load((Uri)currentIamgeList.get(index))
+                .load((Uri)currentImageList.get(index))
                 .into(image[index]);
     }
 
@@ -258,6 +375,8 @@ public class SaleUploadActivity extends AppCompatActivity {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE})
                 .check();
     }
-
+    private void writePost(){
+        
+    }
 
 }
