@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
@@ -55,11 +57,15 @@ public class SaleUploadActivity extends AppCompatActivity {
     private Spinner indSpin;
 
     private ArrayAdapter<CharSequence> industryGroupSpin;
+    private ArrayAdapter<CharSequence> loadspin, diadspin;
     private EditText address_editText;
     private String BNumTotal;
     private EditText price;
     private EditText title;
     private EditText contents;
+    private Spinner localspin, districtspin;
+
+    private StorageReference mStorageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +106,76 @@ public class SaleUploadActivity extends AppCompatActivity {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        //스피너 시군구 선택
+        localspin=findViewById(R.id.upload_local);
+        districtspin=findViewById(R.id.upload_district);
+
+        loadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.local,R.layout.support_simple_spinner_dropdown_item);
+        loadspin.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
+        localspin.setAdapter(loadspin);
+        localspin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(loadspin.getItem(position).equals("서울특별시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.서울특별시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("부산광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.부산광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("대구광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.대구광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("인천광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.인천광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("광주광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.광주광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("대전광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.대전광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("울산광역시")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.울산광역시, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("경기도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.경기도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("강원도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.강원도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("충청북도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.충청북도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("충청남도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.충청남도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("전라북도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.전라북도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("전라남도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.전라남도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("경상북도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.경상북도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("경상남도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.경상남도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else if(loadspin.getItem(position).equals("제주특별자치도")){
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.제주특별자치도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }else{
+                    diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, R.array.세종특별자치도, R.layout.support_simple_spinner_dropdown_item);
+                    districtspin.setAdapter(diadspin);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -376,7 +452,7 @@ public class SaleUploadActivity extends AppCompatActivity {
                 .check();
     }
     private void writePost(){
-
+        mStorageRef = FirebaseStorage.getInstance().getReference();
     }
 
 }
