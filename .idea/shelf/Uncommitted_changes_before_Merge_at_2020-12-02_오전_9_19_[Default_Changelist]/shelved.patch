@@ -1,0 +1,415 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    package=\"com.example.Final_Project\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\"com.wims.whereismystore.LoginActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.JoinActivity\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.SaleActivity\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.Fragment1\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.Fragment2\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.Fragment3\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.Fragment4\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n        <activity android:name=\"com.wims.whereismystore.Fragment5\"\r\n            tools:ignore=\"Instantiatable\">\r\n        </activity>\r\n\r\n\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/AndroidManifest.xml	(date 1606868126469)
+@@ -10,7 +10,7 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-        <activity android:name="com.wims.whereismystore.LoginActivity">
++        <activity android:name="com.wims.whereismystore.Activity.LoginActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+@@ -19,35 +19,35 @@
+ 
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.JoinActivity"
++        <activity android:name="com.wims.whereismystore.Activity.JoinActivity"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.SaleActivity"
++        <activity android:name="com.wims.whereismystore.Activity.SaleActivity"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.Fragment1"
++        <activity android:name="com.wims.whereismystore.Activity.Fragment1"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.Fragment2"
++        <activity android:name="com.wims.whereismystore.Activity.Fragment2"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.Fragment3"
++        <activity android:name="com.wims.whereismystore.Activity.Fragment3"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.Fragment4"
++        <activity android:name="com.wims.whereismystore.Activity.Fragment4"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+-        <activity android:name="com.wims.whereismystore.Fragment5"
++        <activity android:name="com.wims.whereismystore.Activity.Fragment5"
+             tools:ignore="Instantiatable">
+         </activity>
+ 
+ 
+     </application>
+-
++    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/com/wims/whereismystore/SaleActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.fragment.app.FragmentManager;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\n\r\nimport com.example.Final_Project.R;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\npublic class SaleActivity extends AppCompatActivity {\r\n\r\n    private BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰\r\n    private FragmentManager manager;\r\n    private FragmentTransaction transaction;\r\n    private Fragment1 fragment1;\r\n    private Fragment2 fragment2;\r\n    private Fragment3 fragment3;\r\n    private Fragment4 fragment4;\r\n    private Fragment5 fragment5;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavi);\r\n        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {\r\n            @Override\r\n            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {\r\n                switch (menuItem.getItemId()){\r\n\r\n                    case R.id.sale:\r\n                        setFrag(0);\r\n                        break;\r\n                    case R.id.current:\r\n                        setFrag(1);\r\n                        break;\r\n                    case R.id.chat:\r\n                        setFrag(2);\r\n                        break;\r\n                    case R.id.board:\r\n                        setFrag(3);\r\n                        break;\r\n                    case R.id.MY:\r\n                        setFrag(4);\r\n                        break;\r\n                }\r\n                return true;\r\n            }\r\n        });\r\n\r\n        fragment1 = new Fragment1();\r\n        fragment2 = new Fragment2();\r\n        fragment3 = new Fragment3();\r\n        fragment4 = new Fragment4();\r\n        fragment5 = new Fragment5();\r\n\r\n        setFrag(0); // 첫화면 설정\r\n    }\r\n\r\n    // 프래그먼트 교체가 일어나는 메서드\r\n    private void setFrag(int n){\r\n\r\n        manager = getSupportFragmentManager();\r\n        transaction = manager.beginTransaction();\r\n\r\n        switch (n){\r\n            case 0:\r\n                transaction.replace(R.id.main_frame, fragment1);\r\n                transaction.commit();\r\n                break;\r\n            case 1:\r\n                transaction.replace(R.id.main_frame, fragment2);\r\n                transaction.commit();\r\n                break;\r\n            case 2:\r\n                transaction.replace(R.id.main_frame, fragment3);\r\n                transaction.commit();\r\n                break;\r\n            case 3:\r\n                transaction.replace(R.id.main_frame, fragment4);\r\n                transaction.commit();\r\n                break;\r\n            case 4:\r\n                transaction.replace(R.id.main_frame, fragment5);\r\n                transaction.commit();\r\n                break;\r\n        }\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/SaleActivity.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/SaleActivity.java	(date 1606868009125)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.appcompat.app.AppCompatActivity;
+Index: app/src/main/java/com/wims/whereismystore/LoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\n\r\nimport android.content.Intent; // 인텐트 활용\r\n\r\nimport android.os.Bundle; // 액티비티 생성 번들\r\nimport android.view.View; // 뷰계열 최상위 클래스\r\nimport android.widget.Button; // 버튺 뷰 사용\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\nimport static com.example.Final_Project.R.id.login_button;\r\n\r\npublic class LoginActivity extends AppCompatActivity {\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_login);\r\n\r\n\r\n        Button button1 = (Button)findViewById(R.id.join_button);\r\n\r\n        button1.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(LoginActivity.this, JoinActivity.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n\r\n        Button button2 = (Button)findViewById(login_button);\r\n\r\n        button2.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(LoginActivity.this, SaleActivity.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/LoginActivity.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/LoginActivity.java	(date 1606868009134)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ 
+ import android.content.Intent; // 인텐트 활용
+ 
+Index: app/src/main/java/com/wims/whereismystore/Fragment4.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\npublic class Fragment4 extends Fragment {\r\n    //게시판기능 class\r\n    private View view;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment4, container, false);\r\n\r\n\r\n\r\n        return view;\r\n    }\r\n}\r\n
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Fragment4.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/Fragment4.java	(date 1606868009152)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+ import android.view.View;
+Index: app/src/main/java/com/wims/whereismystore/Fragment5.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\npublic class Fragment5 extends Fragment {\r\n    //마이페이지기능 class\r\n    private View view;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment5, container, false);\r\n\r\n\r\n\r\n        return view;\r\n    }\r\n}\r\n
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Fragment5.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/Fragment5.java	(date 1606868009146)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ 
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\"com.wims.whereismystore.LoginActivity\">\r\n\r\n    <Button\r\n        android:id=\"@+id/login_button\"\r\n        style=\"@style/defaultButton\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"로그인\"\r\n        app:layout_constraintBaseline_toBaselineOf=\"@+id/join_button\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/login_password\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/login_email\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"41dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"이메일\"\r\n        android:inputType=\"textEmailAddress\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/login_password\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/login_password\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"41dp\"\r\n        android:ems=\"10\"\r\n        android:hint=\"비밀번호\"\r\n        android:inputType=\"textPassword\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/login_button\"\r\n        app:layout_constraintStart_toStartOf=\"@+id/login_email\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/imageView3\"\r\n        android:layout_width=\"55dp\"\r\n        android:layout_height=\"55dp\"\r\n        android:layout_marginBottom=\"41dp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/login_email\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:tint=\"@color/colorAccent\" />\r\n\r\n\r\n    <Button\r\n        android:id=\"@+id/join_button\"\r\n        style=\"@style/defaultButton\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginBottom=\"190dp\"\r\n        android:text=\"가입\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"@+id/login_password\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_login.xml	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/res/layout/activity_login.xml	(date 1606868126419)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context="com.wims.whereismystore.LoginActivity">
++    tools:context="com.wims.whereismystore.Activity.LoginActivity">
+ 
+     <Button
+         android:id="@+id/login_button"
+Index: app/src/main/java/com/wims/whereismystore/Fragment3.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\npublic class Fragment3 extends Fragment {\r\n    //채팅기능 class\r\n    private View view;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment3, container, false);\r\n\r\n\r\n\r\n        return view;\r\n    }\r\n}\r\n
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Fragment3.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/Fragment3.java	(date 1606868009158)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+ import android.view.View;
+Index: app/src/main/java/com/wims/whereismystore/JoinActivity.java
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/JoinActivity.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/JoinActivity.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
+@@ -1,27 +0,0 @@
+-package com.wims.whereismystore;
+-import android.content.Intent;
+-import android.os.Bundle;
+-import android.view.View;
+-import android.widget.Button;
+-
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import com.example.Final_Project.R;
+-
+-public class JoinActivity extends AppCompatActivity {
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_join);
+-        Button button = (Button)findViewById(R.id.delete);
+-
+-
+-        button.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View v) {
+-                Intent intent = new Intent(JoinActivity.this,LoginActivity.class);
+-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+-                startActivity(intent);
+-            }
+-        });
+-    }
+-}
+\ No newline at end of file
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Mon Nov 30 15:03:00 KST 2020\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-6.1.1-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>x-windows-949
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1606804122558)
+@@ -1,6 +1,6 @@
+-#Mon Nov 30 15:03:00 KST 2020
++#Tue Dec 01 15:28:42 KST 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-6.1.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
+Index: app/src/main/java/com/wims/whereismystore/Activity/JoinActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Activity/JoinActivity.java	(date 1606868126496)
++++ app/src/main/java/com/wims/whereismystore/Activity/JoinActivity.java	(date 1606868126496)
+@@ -0,0 +1,130 @@
++package com.wims.whereismystore.Activity;
++import android.content.Intent;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.View;
++import android.widget.Button;
++import android.widget.EditText;
++import android.widget.Toast;
++
++import androidx.annotation.NonNull;
++import androidx.appcompat.app.AppCompatActivity;
++
++import com.example.Final_Project.R;
++import com.google.android.gms.tasks.OnFailureListener;
++import com.google.android.gms.tasks.OnSuccessListener;
++import com.google.firebase.database.DataSnapshot;
++import com.google.firebase.database.DatabaseError;
++import com.google.firebase.database.DatabaseReference;
++import com.google.firebase.database.FirebaseDatabase;
++import com.google.firebase.database.ValueEventListener;
++import com.wims.whereismystore.Class.Users;
++
++import java.util.HashMap;
++
++public class JoinActivity extends AppCompatActivity {
++
++    EditText email;
++    EditText password;
++    EditText name;
++    EditText password_confirm;
++    private DatabaseReference mDatabase;
++    private boolean Email_check = false;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_join);
++
++        Button button = (Button) findViewById(R.id.delete);
++        Button join = (Button) findViewById(R.id.join_button);
++        Button check = (Button)findViewById(R.id.check_button);
++
++        mDatabase = FirebaseDatabase.getInstance().getReference();
++
++        email = (EditText) findViewById(R.id.join_email);
++        password = (EditText) findViewById(R.id.join_password);
++        name = (EditText) findViewById(R.id.join_name);
++        password_confirm = (EditText) findViewById(R.id.join_pwck);
++
++        check.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                String getUserEmail = email.getText().toString();
++                checkEmail(getUserEmail);
++            }
++        });
++
++        button.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
++                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
++                startActivity(intent);
++            }
++        });
++
++        join.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                String getUserName = name.getText().toString();
++                String getUserEmail = email.getText().toString();
++                String getUserPassword = password.getText().toString();
++                Toast.makeText(JoinActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
++                //hashmap 만들기
++                HashMap result = new HashMap<>();
++                result.put("email", getUserEmail);
++                result.put("password", getUserPassword);
++                result.put("name", getUserName);
++                writeNewUser(getUserEmail, getUserName, getUserPassword);
++            }
++        });
++
++    }
++
++    // 데이터베이스에 저장하기
++    private void writeNewUser(String email, String name, String password) {
++        Users user = new Users(email, name, password);
++        mDatabase.child("users").child(email).setValue(user)
++                .addOnSuccessListener(new OnSuccessListener<Void>() {
++                    @Override
++                    public void onSuccess(Void aVoid) {
++                        // Write was successful!
++                        Toast.makeText(JoinActivity.this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show();
++                    }
++                })
++                .addOnFailureListener(new OnFailureListener() {
++                    @Override
++                    public void onFailure(@NonNull Exception e) {
++                        // Write failed
++                        Toast.makeText(JoinActivity.this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show();
++                    }
++                });
++    }
++
++    // 이메일 중복 확인 :D
++    public void checkEmail(String email) {  
++        mDatabase.child("users").child(email).addValueEventListener(new ValueEventListener() {
++            @Override
++            public void onDataChange(DataSnapshot dataSnapshot) {
++             if(dataSnapshot.getValue() == null){
++                 Toast.makeText(JoinActivity.this, "존재 실패.", Toast.LENGTH_SHORT).show();
++             }
++
++             else{
++                 Toast.makeText(JoinActivity.this, "이 메일 존재.", Toast.LENGTH_SHORT).show();
++             }
++            }
++
++            @Override
++            public void onCancelled(@NonNull DatabaseError databaseError) {
++                // Getting Post failed, log a message
++                Log.w("FireBaseData", "loadPost:onCancelled", databaseError.toException());
++            }
++        });
++    }
++}
++
++
++
++
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\"com.wims.whereismystore.SaleActivity\">\r\n\r\n    <FrameLayout\r\n        android:id=\"@+id/main_frame\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"659dp\"\r\n        app:layout_constraintBottom_toTopOf=\"@+id/bottomNavi\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"/>\r\n\r\n    <com.google.android.material.bottomnavigation.BottomNavigationView\r\n        android:id=\"@+id/bottomNavi\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:background=\"?android:attr/windowBackground\"\r\n        app:itemIconTint=\"@color/colorGray\"\r\n        app:itemTextColor=\"@color/colorGray\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:menu=\"@menu/bottom_navigator_menu\"\r\n        tools:layout_editor_absoluteX=\"8dp\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_main.xml	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/res/layout/activity_main.xml	(date 1606868126488)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context="com.wims.whereismystore.SaleActivity">
++    tools:context="com.wims.whereismystore.Activity.SaleActivity">
+ 
+     <FrameLayout
+         android:id="@+id/main_frame"
+Index: app/src/main/java/com/wims/whereismystore/Fragment2.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\npublic class Fragment2 extends Fragment {\r\n    //현황기능 class\r\n    private View view;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment2, container, false);\r\n\r\n\r\n\r\n        return view;\r\n    }\r\n}\r\n
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Fragment2.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/Fragment2.java	(date 1606868009164)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ 
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath \"com.android.tools.build:gradle:4.0.1\"\r\n        classpath 'com.google.gms:google-services:4.3.4'\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ build.gradle	(date 1606804122554)
+@@ -5,7 +5,7 @@
+         jcenter()
+     }
+     dependencies {
+-        classpath "com.android.tools.build:gradle:4.0.1"
++        classpath 'com.android.tools.build:gradle:4.1.1'
+         classpath 'com.google.gms:google-services:4.3.4'
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+Index: app/src/main/java/com/wims/whereismystore/Fragment1.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wims.whereismystore;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport com.example.Final_Project.R;\r\n\r\npublic class Fragment1 extends Fragment {\r\n    //매매기능 class\r\n    private View view;\r\n\r\n    @Nullable\r\n    @Override\r\n    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {\r\n        view = inflater.inflate(R.layout.fragment1, container, false);\r\n\r\n\r\n\r\n        return view;\r\n    }\r\n}
+===================================================================
+--- app/src/main/java/com/wims/whereismystore/Fragment1.java	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/src/main/java/com/wims/whereismystore/Activity/Fragment1.java	(date 1606868009171)
+@@ -1,4 +1,4 @@
+-package com.wims.whereismystore;
++package com.wims.whereismystore.Activity;
+ 
+ import android.os.Bundle;
+ import android.view.LayoutInflater;
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\napply plugin: 'com.google.gms.google-services' //fire base 연동\r\n\r\nandroid {\r\n    compileSdkVersion 30\r\n    buildToolsVersion \"30.0.2\"\r\n\r\n    defaultConfig {\r\n        applicationId \"com.wims.whereismystore\"\r\n        minSdkVersion 21\r\n        targetSdkVersion 30\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'\r\n    implementation 'com.google.android.material:material:1.2.1'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\r\n    implementation 'androidx.navigation:navigation-fragment:2.3.0-alpha01'\r\n    implementation \"androidx.navigation:navigation-ui:2.3.0-alpha01\"\r\n\r\n    //firebase 연동\r\n    implementation platform('com.google.firebase:firebase-bom:26.1.0')\r\n    implementation 'com.google.firebase:firebase-analytics'\r\n    //noinspection GradleCompatible\r\n    implementation 'com.android.support:design:27.1.1'\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 45ad32fe43b06320246391c442a04950919a92ee)
++++ app/build.gradle	(date 1606804105981)
+@@ -28,6 +28,8 @@
+     implementation 'androidx.appcompat:appcompat:1.2.0'
+     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+     implementation 'com.google.android.material:material:1.2.1'
++    implementation 'com.google.firebase:firebase-auth:20.0.1'
++    implementation 'com.google.firebase:firebase-database:19.5.1'
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

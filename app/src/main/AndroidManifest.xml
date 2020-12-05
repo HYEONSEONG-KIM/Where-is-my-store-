@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wims.whereismystore">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
+    package="com.example.Final_Project">
 
     <application
         android:allowBackup="true"
@@ -18,39 +9,45 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.WebViewActivity"></activity>
-        <activity android:name=".Activity.SaleUploadActivity" />
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name="com.wims.whereismystore.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".Activity.LoginActivity" />
-        <activity
-            android:name=".Activity.JoinActivity"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.SaleActivity"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment1"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment2"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment3"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment4"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment5"
-            tools:ignore="Instantiatable" />
-    </application>
 
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.JoinActivity"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.SaleActivity"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.Fragments.Fragment1"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.Fragments.Fragment2"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.Fragments.Fragment3"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.Fragments.Fragment4"
+            tools:ignore="Instantiatable">
+        </activity>
+
+        <activity android:name="com.wims.whereismystore.Activity.Fragments.Fragment5"
+            tools:ignore="Instantiatable">
+        </activity>
+
+
+    </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

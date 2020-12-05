@@ -376,7 +376,7 @@ public class SaleUploadActivity extends AppCompatActivity {
                 .check();
     }
     private void writePost(){
-        
+
     }
 
 }
