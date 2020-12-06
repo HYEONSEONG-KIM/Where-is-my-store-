@@ -1,6 +1,8 @@
 package com.wims.whereismystore.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -10,7 +12,9 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -29,11 +33,16 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
+import com.wims.whereismystore.Class.Post;
 import com.wims.whereismystore.R;
 
 import org.w3c.dom.Text;
@@ -42,6 +51,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SaleUploadActivity extends AppCompatActivity {
@@ -59,13 +69,16 @@ public class SaleUploadActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> industryGroupSpin;
     private ArrayAdapter<CharSequence> loadspin, diadspin;
     private EditText address_editText;
+    private EditText address_remain_editText;
     private String BNumTotal;
     private EditText price;
     private EditText title;
     private EditText contents;
     private Spinner localspin, districtspin;
+    private String totalAddress;
 
     private StorageReference mStorageRef;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +95,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         contents=findViewById(R.id.upload_contents_editText);
 
         address_editText=findViewById(R.id.upload_address_EditText);
+        address_remain_editText=findViewById(R.id.upload_remainAddress_EditText);
         //취소 버튼 클릭 시 업로드 취소
         Button cancel_btn=findViewById(R.id.upload_cancle_button);
         cancel_btn.setOnClickListener(new View.OnClickListener() {
@@ -189,11 +203,9 @@ public class SaleUploadActivity extends AppCompatActivity {
             }
         });
         //사업자 번호 합치기
-        EditText BNum1=findViewById(R.id.upload_BNum_first_editText);
-        EditText BNum2=findViewById(R.id.upload_BNum_middle_editText);
-        EditText BNum3=findViewById(R.id.upload_BNum_last_editText);
-
-        BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
+        final EditText BNum1=findViewById(R.id.upload_BNum_first_editText);
+        final EditText BNum2=findViewById(R.id.upload_BNum_middle_editText);
+        final EditText BNum3=findViewById(R.id.upload_BNum_last_editText);
 
 
         //업로드 할 이미지 선택
@@ -221,8 +233,11 @@ public class SaleUploadActivity extends AppCompatActivity {
         //완료 버튼 클릭 시 업로드
         Button complete_btn=findViewById(R.id.upload_complete_button);
         complete_btn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
+                BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
+                Log.d("test",BNumTotal.length()+"");
                 if(BNumTotal.length()!=10||currentImageIndex==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
                     AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
                     builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
@@ -235,7 +250,7 @@ public class SaleUploadActivity extends AppCompatActivity {
                     AlertDialog alertDialog=builder.create();
                     alertDialog.show();
                 }else{
-
+                    writePost();
                 }
             }
         });
@@ -451,8 +466,58 @@ public class SaleUploadActivity extends AppCompatActivity {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE})
                 .check();
     }
+    //id랑 회원 이름 추가해야함
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void writePost(){
+        //이미지 저장하기 위한 storage 연결
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        //게시글 저장하기 위한 firebase 연결
+        mDatabase= FirebaseDatabase.getInstance().getReference();
+
+        Post post=new Post();
+        //주소지 저장
+        totalAddress=address_editText.getText().toString()+address_remain_editText.getText().toString();
+        post.setAddress(totalAddress);
+        //글 제목 저장
+        post.setTitle(title.getText().toString());
+        //글 내용 저장
+        post.setContents(contents.getText().toString());
+        //작성자 이름 저장
+        //작성자 아이디 저장
+        //사업자 번호 저장
+        post.setBLNumber(BNumTotal);
+        //시도명 이름 저장
+        post.setLocalName(localspin.getSelectedItem().toString());
+        //시군구 이름 저장
+        post.setDistrictName(districtspin.getSelectedItem().toString());
+        //글 상태 저장(업로드 시 기본 정상 : 1)
+        post.setState("1");
+        //글 신고 상태 저장(업로드 시 기본 정상 : 1)
+        post.setReport("1");
+        //글 작성 시간 저장
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+        String date=simpleDateFormat.format(new Date(System.currentTimeMillis()));
+        post.setCreateDate(date);
+        //글 수정 시간 저장(업로드 시 기본값으로 "" 입력)
+        post.setModifyDate("");
+        //가격 저장
+        post.setPrice(price.getText().toString());
+
+        mDatabase.child("post").push().setValue(post)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent=new Intent(SaleUploadActivity.this, SaleActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 }

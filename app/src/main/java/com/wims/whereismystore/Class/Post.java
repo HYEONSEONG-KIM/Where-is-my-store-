@@ -7,16 +7,60 @@ package com.wims.whereismystore.Class;
  */
 
 public class Post {
-    private String pin;//작성글 고유 번호
-    private String title;//작성글 제목
-    private String postText;//작성글 내용
+    private String pin;//글 고유 번호
+    private String title;//글 제목
+    private String contents;//글 내용
     private String createDate;//작성 시간
+    private String modifyDate;//수정 시간
     private String address;//작성자 입력 주소
-    private String district_code; //시군구 구분 코드
-    private String local_code;//지역 구분 코드
+    private String districtName; //시군구 구분
+    private String localName;//지역 구분
     private String writerPin;//작성자 핀
+    private String name;//작성자 이름
     private String BLNumber;// 사업자 번호
+    private String state;//글의 상태(1. 정상, 2. 예약중, 3. 거래 완료)
+    private String report;//신고 (1. 정상, 2. 신고 중, 3. 거래 중지)
+    private String price;//가격
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getPin() {
         return pin;
     }
@@ -31,14 +75,6 @@ public class Post {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPostText() {
-        return postText;
-    }
-
-    public void setPostText(String postText) {
-        this.postText = postText;
     }
 
     public String getCreateDate() {
@@ -57,14 +93,6 @@ public class Post {
         this.address = address;
     }
 
-    public String getLocal_code() {
-        return local_code;
-    }
-
-    public void setLocal_code(String local_code) {
-        this.local_code = local_code;
-    }
-
     public String getWriterPin() {
         return writerPin;
     }
@@ -81,12 +109,28 @@ public class Post {
         this.BLNumber = BLNumber;
     }
 
-    public String getDistrict_code() {
-        return district_code;
+    public String getDistrictName() {
+        return districtName;
     }
 
-    public void setDistrict_code(String district_code) {
-        this.district_code = district_code;
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getLocalName() {
+        return localName;
+    }
+
+    public void setLocalName(String localName) {
+        this.localName = localName;
+    }
+
+    public String getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(String modifyDate) {
+        this.modifyDate = modifyDate;
     }
 
 }

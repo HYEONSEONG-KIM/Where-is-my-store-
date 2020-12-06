@@ -16,8 +16,8 @@
         android:textColor="@android:color/holo_orange_dark"
         android:layout_alignTop="@+id/sale_imageView"/>
     <TextView
-        android:id="@+id/saleLocal_textView"
-        android:layout_width="fill_parent"
+        android:id="@+id/saleDistrict_textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/saleTitle_textView"
         android:layout_marginTop="1dp"
@@ -26,15 +26,15 @@
         android:textSize="15dp"/>
     <TextView
         android:id="@+id/saleprice_textView"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/saleLocal_textView"
+        android:layout_below="@id/saleDistrict_textView"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@id/sale_imageView"
         android:textColor="@android:color/background_dark"
         android:textSize="13dp"/>
     <TextView
-        android:id="@+id/saleTime_textView"
+        android:id="@+id/saleState_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -1,5 +1,6 @@
 package com.wims.whereismystore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -14,6 +15,7 @@ import com.wims.whereismystore.Activity.Fragments.Fragment2;
 import com.wims.whereismystore.Activity.Fragments.Fragment3;
 import com.wims.whereismystore.Activity.Fragments.Fragment4;
 import com.wims.whereismystore.Activity.Fragments.Fragment5;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 public class SaleActivity extends AppCompatActivity {
@@ -31,6 +33,7 @@ public class SaleActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
