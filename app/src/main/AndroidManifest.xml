@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.Final_Project">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,6 +49,9 @@
             tools:ignore="Instantiatable">
         </activity>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBWJUujGMWooaqCsOhvCZZccw_hw5B-U1k" />
 
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

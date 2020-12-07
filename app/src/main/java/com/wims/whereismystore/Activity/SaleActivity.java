@@ -24,6 +24,7 @@ public class SaleActivity extends AppCompatActivity {
     private Fragment3 fragment3 = new Fragment3();
     private Fragment4 fragment4 = new Fragment4();
     private Fragment5 fragment5 = new Fragment5();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
