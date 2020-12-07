@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,6 +48,7 @@ import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
+import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.Post;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
@@ -485,6 +487,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         mDatabase= FirebaseDatabase.getInstance().getReference();
 
         Post post=new Post();
+        Photos photo=new Photos();
         //주소지 저장
         totalAddress=address_editText.getText().toString()+address_remain_editText.getText().toString();
         post.setAddress(totalAddress);
@@ -520,8 +523,6 @@ public class SaleUploadActivity extends AppCompatActivity {
         //가격 저장
         post.setPrice(price.getText().toString());
         //이미지
-        post.setPhotos(currentImageList);
-
         mDatabase.child("post").push().setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -544,26 +545,30 @@ public class SaleUploadActivity extends AppCompatActivity {
     }
     //스토리지에 이미지 업로드
     private void uploadImage(Uri uploadImage, int index){
-        //이미지 저장하기 위한 storage 연결
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        Uri file=Uri.fromFile(new File(String.valueOf(uploadImage)));
-        Log.d("upload",file.toString());
+        mStorageRef=FirebaseStorage.getInstance().getReference();
+        StorageReference photoRef=mStorageRef.child("images").child(postKey+"_"+index);
 
-        StorageReference uploadImageRef=mStorageRef.child("images").child(postKey+"_"+index);
-        UploadTask uploadTask=uploadImageRef.putFile(uploadImage);
-        Log.d("upload","uploadTask : "+uploadTask);
+        photoRef.putFile(uploadImage)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Task<Uri> downloadUri=taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                        downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String imageUrl=uri.toString();
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SaleUploadActivity.this, "게시글 사진 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(SaleUploadActivity.this, "게시글 사진 업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    }
+                });
+
     }
+
 
 }
