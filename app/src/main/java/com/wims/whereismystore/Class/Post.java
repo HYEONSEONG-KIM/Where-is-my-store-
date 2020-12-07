@@ -25,14 +25,14 @@ public class Post {
     private String state;//글의 상태(1. 정상, 2. 예약중, 3. 거래 완료)
     private String report;//신고 (1. 정상, 2. 신고 중, 3. 거래 중지)
     private String price;//가격
-    private ArrayList<Uri> photos;//사진
+    private String photo;//사진
 
-    public ArrayList<Uri> getPhotos() {
-        return photos;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotos(ArrayList<Uri> photos) {
-        this.photos = photos;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
 

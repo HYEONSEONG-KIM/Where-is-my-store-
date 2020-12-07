@@ -87,7 +87,7 @@ public class SaleUploadActivity extends AppCompatActivity {
     private String totalAddress;
     private String postKey;
 
-
+    private Photos photo;
     private String userID;
     private String userName;
 
@@ -487,7 +487,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         mDatabase= FirebaseDatabase.getInstance().getReference();
 
         Post post=new Post();
-        Photos photo=new Photos();
+        photo=new Photos();
         //주소지 저장
         totalAddress=address_editText.getText().toString()+address_remain_editText.getText().toString();
         post.setAddress(totalAddress);
@@ -523,10 +523,21 @@ public class SaleUploadActivity extends AppCompatActivity {
         //가격 저장
         post.setPrice(price.getText().toString());
         //이미지
-        mDatabase.child("post").push().setValue(post)
+        post.setPhoto("");
+        postKey=mDatabase.child("post").push().getKey();
+
+        for(int i=0; i<=currentImageIndex;i++){
+            String imageUrl=uploadImage(currentImageList.get(i),i);
+            photo.setPhotos(imageUrl,i);
+        }
+
+
+        mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        mDatabase.child("post").child(postKey).child("photo").setValue(photo);
+                        Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(SaleUploadActivity.this, SaleActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -538,15 +549,16 @@ public class SaleUploadActivity extends AppCompatActivity {
                         Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
-        postKey=mDatabase.getKey();
-        for(int i=0; i<=currentImageIndex;i++){
-            uploadImage(currentImageList.get(i),i);
-        }
+
+
+        Log.d("upload",postKey);
+
     }
     //스토리지에 이미지 업로드
-    private void uploadImage(Uri uploadImage, int index){
+    private String uploadImage(final Uri uploadImage, int index){
         mStorageRef=FirebaseStorage.getInstance().getReference();
-        StorageReference photoRef=mStorageRef.child("images").child(postKey+"_"+index);
+        String fileName=postKey+"_"+index;
+        StorageReference photoRef=mStorageRef.child("images").child(fileName);
 
         photoRef.putFile(uploadImage)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -556,7 +568,6 @@ public class SaleUploadActivity extends AppCompatActivity {
                         downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                String imageUrl=uri.toString();
                             }
                         });
                     }
@@ -567,7 +578,7 @@ public class SaleUploadActivity extends AppCompatActivity {
 
                     }
                 });
-
+        return fileName;
     }
 
 
