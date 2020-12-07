@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.Final_Project">
+    package="com.wims.whereismystore">
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name = "com.wims.whereismystore.Class.Users"
+        android:usesCleartextTraffic="true"
         >
         <activity android:name="com.wims.whereismystore.Activity.LoginActivity"
             tools:ignore="Instantiatable">

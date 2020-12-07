@@ -1,4 +1,4 @@
-package com.wims.whereismystore.Activity;
+package com.wims.whereismystore.Activity.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 
 public class Fragment5 extends Fragment {
     //마이페이지기능 class

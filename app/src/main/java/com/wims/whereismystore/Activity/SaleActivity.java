@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.Final_Project.R;
+import com.wims.whereismystore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Activity.Fragments.Fragment2;

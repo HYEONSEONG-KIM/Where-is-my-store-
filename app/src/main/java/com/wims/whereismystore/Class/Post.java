@@ -6,6 +6,10 @@ package com.wims.whereismystore.Class;
  * 게시글 클래스
  */
 
+import android.net.Uri;
+
+import java.util.ArrayList;
+
 public class Post {
     private String pin;//글 고유 번호
     private String title;//글 제목
@@ -21,6 +25,16 @@ public class Post {
     private String state;//글의 상태(1. 정상, 2. 예약중, 3. 거래 완료)
     private String report;//신고 (1. 정상, 2. 신고 중, 3. 거래 중지)
     private String price;//가격
+    private ArrayList<Uri> photos;//사진
+
+    public ArrayList<Uri> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<Uri> photos) {
+        this.photos = photos;
+    }
+
 
     public String getPrice() {
         return price;

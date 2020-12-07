@@ -9,6 +9,7 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,14 +36,19 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
 import com.wims.whereismystore.Class.Post;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 import org.w3c.dom.Text;
@@ -52,6 +58,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
 
 public class SaleUploadActivity extends AppCompatActivity {
@@ -76,6 +83,11 @@ public class SaleUploadActivity extends AppCompatActivity {
     private EditText contents;
     private Spinner localspin, districtspin;
     private String totalAddress;
+    private String postKey;
+
+
+    private String userID;
+    private String userName;
 
     private StorageReference mStorageRef;
     private DatabaseReference mDatabase;
@@ -469,8 +481,6 @@ public class SaleUploadActivity extends AppCompatActivity {
     //id랑 회원 이름 추가해야함
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void writePost(){
-        //이미지 저장하기 위한 storage 연결
-        mStorageRef = FirebaseStorage.getInstance().getReference();
         //게시글 저장하기 위한 firebase 연결
         mDatabase= FirebaseDatabase.getInstance().getReference();
 
@@ -484,6 +494,13 @@ public class SaleUploadActivity extends AppCompatActivity {
         post.setContents(contents.getText().toString());
         //작성자 이름 저장
         //작성자 아이디 저장
+        Application app=getApplication();
+        Users user=(Users)app;
+
+        userID=user.getEmail();
+        userName=user.getName();
+        post.setWriterPin(userID);
+        post.setName(userName);
         //사업자 번호 저장
         post.setBLNumber(BNumTotal);
         //시도명 이름 저장
@@ -502,6 +519,8 @@ public class SaleUploadActivity extends AppCompatActivity {
         post.setModifyDate("");
         //가격 저장
         post.setPrice(price.getText().toString());
+        //이미지
+        post.setPhotos(currentImageList);
 
         mDatabase.child("post").push().setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -518,6 +537,33 @@ public class SaleUploadActivity extends AppCompatActivity {
                         Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
+        postKey=mDatabase.getKey();
+        for(int i=0; i<=currentImageIndex;i++){
+            uploadImage(currentImageList.get(i),i);
+        }
+    }
+    //스토리지에 이미지 업로드
+    private void uploadImage(Uri uploadImage, int index){
+        //이미지 저장하기 위한 storage 연결
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        Uri file=Uri.fromFile(new File(String.valueOf(uploadImage)));
+        Log.d("upload",file.toString());
+
+        StorageReference uploadImageRef=mStorageRef.child("images").child(postKey+"_"+index);
+        UploadTask uploadTask=uploadImageRef.putFile(uploadImage);
+        Log.d("upload","uploadTask : "+uploadTask);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SaleUploadActivity.this, "게시글 사진 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(SaleUploadActivity.this, "게시글 사진 업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
