@@ -1,5 +1,6 @@
 package com.wims.whereismystore.Activity;
 
+import android.app.Application;
 import android.content.Intent; // 인텐트 활용
 
 import android.os.Bundle; // 액티비티 생성 번들
@@ -30,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button login;
     private Button account;
-
+    private Users user;
     String emailS;
     String nameS;
     String passwordS;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean login_state =false;
 
-    static Users user = new Users();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,19 +98,16 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                                    Users log = ds.getValue(Users.class);
                                     emailS= ds.child("email").getValue(String.class);
                                     nameS = ds.child("name").getValue(String.class);
                                     passwordS = ds.child("password").getValue(String.class);
 
+                                    user = (Users)getApplicationContext();
                                     user.setEmail(emailS);
                                     user.setName(nameS);
                                     user.setPassword(passwordS);
 
                                     Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
-                                    intent.putExtra("User",user);
-
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
