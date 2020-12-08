@@ -53,7 +53,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         pager=findViewById(R.id.SaleItemViewPager);
         //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
-        pager.setAdapter(adapter);
+        //pager.setAdapter(adapter);
 
         Intent intent=getIntent();
         postID=intent.getStringExtra("postID");
