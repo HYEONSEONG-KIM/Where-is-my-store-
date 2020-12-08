@@ -1,5 +1,6 @@
 package com.wims.whereismystore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.wims.whereismystore.Class.ChatMessage;
+import com.wims.whereismystore.Class.ChatModel;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
@@ -35,7 +37,6 @@ public class ChattingActivity extends AppCompatActivity {
 
 
     public static final String CHAT = "chat";
-    public static final String MESSAGE = "message";
     private FirebaseRecyclerAdapter<ChatMessage,MessageViewHolder>mFirebaseAdapter;
 
     private DatabaseReference mFirebaseDatabaseReference;
@@ -45,8 +46,12 @@ public class ChattingActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
-    private  String mUsername;
-    private  String mPhotoUrl;
+    private String mUsername;
+    private String mPhotoUrl;
+    private String mEmail;
+
+    private String UID;
+    private String UNAME;
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder{
         TextView nameTextView;
@@ -73,7 +78,15 @@ public class ChattingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
+        Intent intent=getIntent();
+        UID=intent.getExtras().getString("UID");
+        UNAME=intent.getExtras().getString("NAME");
+
+
+
         mUsername=((Users)getApplication()).getName();
+        mEmail=((Users)getApplication()).getEmail();
+
 
         mFirebaseDatabaseReference= FirebaseDatabase.getInstance().getReference();
         mMessageEditText=findViewById(R.id.message_edit);
@@ -85,14 +98,17 @@ public class ChattingActivity extends AppCompatActivity {
         send_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChatMessage chatMessage=new ChatMessage(mMessageEditText.getText().toString(),
-                        mUsername,mPhotoUrl,null);
-                mFirebaseDatabaseReference.child(CHAT).child(MESSAGE).push().setValue(chatMessage);
-                mMessageEditText.setText("");
+                ChatModel chatModel=new ChatModel();
+                chatModel.My_id=mUsername;
+                chatModel.UID=UID;
+
+                FirebaseDatabase.getInstance().getReference().child(CHAT).push().setValue(chatModel);
 
             }
         });
-        Query query=mFirebaseDatabaseReference.child(CHAT).child(MESSAGE);
+
+
+        Query query=mFirebaseDatabaseReference.child(CHAT);
         FirebaseRecyclerOptions<ChatMessage>options=new FirebaseRecyclerOptions.Builder<ChatMessage>()
                 .setQuery(query,ChatMessage.class).build();
         mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {

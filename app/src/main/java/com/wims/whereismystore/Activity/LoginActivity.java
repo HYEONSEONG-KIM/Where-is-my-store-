@@ -1,35 +1,21 @@
 package com.wims.whereismystore.Activity;
 
-import android.app.Application;
-import android.content.Intent; // 인텐트 활용
-
-import android.os.Bundle; // 액티비티 생성 번들
-import android.view.View; // 뷰계열 최상위 클래스
-import android.widget.Button; // 버튺 뷰 사용
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
->>>>>>>>> Temporary merge branch 2
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-<<<<<<<<< Temporary merge branch 1
-import com.wims.whereismystore.R;
-
-import static com.wims.whereismystore.R.id.login_button;
-=========
-import com.example.Final_Project.R;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.annotations.NotNull;
-import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.auth.User;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
@@ -76,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 Login_Sys();
             }
+        });
 
         account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +96,11 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                                    Users log = ds.getValue(Users.class);
                                     emailS= ds.child("email").getValue(String.class);
                                     nameS = ds.child("name").getValue(String.class);
                                     passwordS = ds.child("password").getValue(String.class);
 
+                                    user = (Users)getApplicationContext();
                                     user.setEmail(emailS);
                                     user.setName(nameS);
                                     user.setPassword(passwordS);

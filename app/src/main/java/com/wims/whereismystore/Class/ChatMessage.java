@@ -6,13 +6,18 @@ public class ChatMessage {
     private String name;
     private String photoUrl;
     private String imageUrl;
+    private String email;
 
     public ChatMessage(){
 
     }
-    public ChatMessage(String text,String name,String photoUrl,String imageUrl){
+
+
+
+    public ChatMessage(String text, String name, String email, String photoUrl, String imageUrl){
         this.text=text;
         this.name=name;
+        this.email=email;
         this.photoUrl=photoUrl;
         this.imageUrl=imageUrl;
     }
@@ -55,5 +60,13 @@ public class ChatMessage {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

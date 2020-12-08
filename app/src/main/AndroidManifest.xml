@@ -18,11 +18,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activity.ChattingActivity"></activity>
-        <activity android:name=".Activity.PasswordCheckActivity" />
-        <activity android:name=".Activity.ChangePassInfo" />
-        <activity android:name=".Activity.PerInfoActivity" />
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activity.SaleItemViewActivity"></activity>
@@ -30,9 +25,6 @@
             android:name=".Activity.LoginActivity"
             tools:ignore="Instantiatable"></activity>
         <activity android:name=".Activity.SplashActivity">
-=========
-        <activity android:name="com.wims.whereismystore.Activity.LoginActivity">
->>>>>>>>> Temporary merge branch 2
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,28 +58,6 @@
         <activity
             android:name=".Activity.Fragments.Fragment5"
             tools:ignore="Instantiatable"></activity>
-        <activity android:name=".Activity.LoginActivity" />
-        <activity
-            android:name=".Activity.JoinActivity"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.SaleActivity"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment1"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment2"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment3"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment4"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Activity.Fragments.Fragment5"
-            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.ChangePassInfo"
             tools:ignore="DuplicateActivity,Instantiatable" />
@@ -97,6 +67,8 @@
         <activity
             android:name=".Activity.PerInfoActivity"
             tools:ignore="DuplicateActivity,Instantiatable" />
+
+        <activity android:name=".Activity.ChattingActivity" />
 
         <service android:name=".Class.MyFcmService">
             <intent-filter>
@@ -114,5 +86,5 @@
             android:name="com.google.firebase.messaging.default_notification_channel_color"
             android:resource="@color/colorAccent"/>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
 </manifest>
