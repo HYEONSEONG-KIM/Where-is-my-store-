@@ -2,6 +2,7 @@ package com.wims.whereismystore.Activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.wims.whereismystore.Activity.Fragments.Fragment2;
 import com.wims.whereismystore.Activity.Fragments.Fragment3;
 import com.wims.whereismystore.Activity.Fragments.Fragment4;
 import com.wims.whereismystore.Activity.Fragments.Fragment5;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 public class SaleActivity extends AppCompatActivity {
@@ -21,16 +23,20 @@ public class SaleActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    private Fragment1 fragment1;
-    private Fragment2 fragment2;
-    private Fragment3 fragment3;
-    private Fragment4 fragment4;
-    private Fragment5 fragment5;
+    private Fragment1 fragment1 = new Fragment1();
+    private Fragment2 fragment2 = new Fragment2();
+    private Fragment3 fragment3 = new Fragment3();
+    private Fragment4 fragment4 = new Fragment4();
+    private Fragment5 fragment5 = new Fragment5();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String id = ((Users)getApplication()).getEmail();
+
+        Toast.makeText(SaleActivity.this,id,  Toast.LENGTH_SHORT).show();
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavi);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -57,13 +63,6 @@ public class SaleActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        fragment1 = new Fragment1();
-        fragment2 = new Fragment2();
-        fragment3 = new Fragment3();
-        fragment4 = new Fragment4();
-        fragment5 = new Fragment5();
-
         setFrag(0); // 첫화면 설정
     }
 

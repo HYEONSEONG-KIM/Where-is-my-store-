@@ -6,13 +6,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Class.Users"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.PerInfoActivity"></activity>
+        <activity android:name=".Activity.ChattingActivity"></activity>
+        <activity android:name=".Activity.PasswordCheckActivity" />
+        <activity android:name=".Activity.ChangePassInfo" />
+        <activity android:name=".Activity.PerInfoActivity" />
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,28 +24,53 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity"></activity>
+        <activity android:name=".Activity.LoginActivity" />
         <activity
             android:name=".Activity.JoinActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.SaleActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment1"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment2"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment3"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment4"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment5"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".Activity.ChangePassInfo"
+            tools:ignore="DuplicateActivity,Instantiatable" />
+        <activity
+            android:name=".Activity.PasswordCheckActivity"
+            tools:ignore="DuplicateActivity" />
+        <activity
+            android:name=".Activity.PerInfoActivity"
+            tools:ignore="DuplicateActivity,Instantiatable" />
+
+        <service android:name=".Class.MyFcmService">
+            <intent-filter>
+                <action android:name=".MyFcmService"></action>
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel_id"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_icon"
+            android:resource="@mipmap/ic_launcher"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_color"
+            android:resource="@color/colorAccent"/>
     </application>
 
 </manifest>
