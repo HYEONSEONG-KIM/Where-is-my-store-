@@ -51,7 +51,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         time=findViewById(R.id.saleView_time);
         contents=findViewById(R.id.saleView_contents);
         pager=findViewById(R.id.SaleItemViewPager);
-        SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
+        //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
         pager.setAdapter(adapter);
 
