@@ -1,6 +1,8 @@
 package com.wims.whereismystore.Class;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 import com.wims.whereismystore.R;
 
 import java.util.ArrayList;
@@ -19,7 +26,6 @@ import java.util.ArrayList;
 public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleListViewHolder>{
     private ArrayList<SaleListItem> listItems;
     private Context context;
-
     public SaleListAdapter(ArrayList<SaleListItem> arrayList, Context context){
         this.listItems=arrayList;
         this.context=context;
@@ -35,9 +41,14 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
 
     @Override
     public void onBindViewHolder(@NonNull SaleListAdapter.SaleListViewHolder holder, int position) {
+        StorageReference storage =FirebaseStorage.getInstance().getReference();
+        StorageReference iamgeRef=storage.child(listItems.get(position).getImage());
+
         Glide.with(holder.itemView)
-                .load(listItems.get(position).getImage())
+                .load(iamgeRef)
                 .into(holder.image);
+
+        Log.d("fragment1","adapter : "+listItems.get(position).getImage());
         holder.title.setText(listItems.get(position).getTitle());
         holder.state.setText(listItems.get(position).getState());
         holder.price.setText(listItems.get(position).getPrice());
@@ -65,4 +76,5 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
             this.state=itemView.findViewById(R.id.saleState_textView);
         }
     }
+
 }

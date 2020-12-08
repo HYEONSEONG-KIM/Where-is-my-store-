@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.wims.whereismystore.Activity.SaleUploadActivity;
+import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.SaleListAdapter;
 import com.wims.whereismystore.Class.SaleListItem;
 import com.wims.whereismystore.R;
@@ -38,6 +40,7 @@ public class Fragment1 extends Fragment {
     private DatabaseReference databaseReference;
     private DatabaseError databaseError;
 
+    Photos photo;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,7 +70,11 @@ public class Fragment1 extends Fragment {
                 arrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     SaleListItem saleListItem=dataSnapshot.getValue(SaleListItem.class);
-                    arrayList.add(saleListItem);
+                    saleListItem.setPostID(dataSnapshot.getKey());
+                    photo=dataSnapshot.child("photo").getValue(Photos.class);
+                    saleListItem.setImage(photo.getPhoto_1());
+                    Log.d("fragment1",saleListItem.getPostID()+", "+photo.getPhoto_1());
+                    arrayList.add(0,saleListItem);
                 }
                 adapter.notifyDataSetChanged();
             }

@@ -8,7 +8,7 @@ public class SaleListItem {
     private String price;
     private String state;
     private String postID;
-    private Uri image;
+    private String image;
 
     public String getDistrictName() {
         return districtName;
@@ -18,12 +18,11 @@ public class SaleListItem {
         this.districtName = districtName;
     }
 
-
-    public Uri getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         this.image = image;
     }
     public String getTitle() {
