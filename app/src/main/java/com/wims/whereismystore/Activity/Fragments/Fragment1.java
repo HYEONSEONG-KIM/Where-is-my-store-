@@ -73,7 +73,6 @@ public class Fragment1 extends Fragment {
                     saleListItem.setPostID(dataSnapshot.getKey());
                     photo=dataSnapshot.child("photo").getValue(Photos.class);
                     saleListItem.setImage(photo.getPhoto_1());
-                    Log.d("fragment1",saleListItem.getPostID()+", "+photo.getPhoto_1());
                     arrayList.add(0,saleListItem);
                 }
                 adapter.notifyDataSetChanged();

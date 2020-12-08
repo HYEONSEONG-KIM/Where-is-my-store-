@@ -1,6 +1,7 @@
 package com.wims.whereismystore.Class;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.wims.whereismystore.Activity.SaleItemViewActivity;
 import com.wims.whereismystore.R;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleListViewHolder>{
     private ArrayList<SaleListItem> listItems;
     private Context context;
+    private Intent intent;
+
     public SaleListAdapter(ArrayList<SaleListItem> arrayList, Context context){
         this.listItems=arrayList;
         this.context=context;
@@ -40,7 +44,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SaleListAdapter.SaleListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SaleListAdapter.SaleListViewHolder holder, final int position) {
         StorageReference storage =FirebaseStorage.getInstance().getReference();
         StorageReference iamgeRef=storage.child(listItems.get(position).getImage());
 
@@ -48,11 +52,21 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
                 .load(iamgeRef)
                 .into(holder.image);
 
-        Log.d("fragment1","adapter : "+listItems.get(position).getImage());
         holder.title.setText(listItems.get(position).getTitle());
         holder.state.setText(listItems.get(position).getState());
         holder.price.setText(listItems.get(position).getPrice());
         holder.district.setText(listItems.get(position).getDistrictName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(v.getContext(), SaleItemViewActivity.class);
+                String postID=listItems.get(position).getPostID();
+                intent.putExtra("postID",postID);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
