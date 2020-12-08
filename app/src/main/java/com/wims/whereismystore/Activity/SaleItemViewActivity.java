@@ -3,6 +3,7 @@ package com.wims.whereismystore.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private TextView title;
     private TextView time;
     private TextView contents;
-    private ViewPager pager;
+    private ViewPager2 pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
