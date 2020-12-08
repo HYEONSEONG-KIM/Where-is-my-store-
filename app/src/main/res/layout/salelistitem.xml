@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/sale_imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+    <TextView
+        android:id="@+id/saleTitle_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/sale_imageView"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_alignTop="@+id/sale_imageView"/>
+    <TextView
+        android:id="@+id/saleDistrict_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/saleTitle_textView"
+        android:layout_marginTop="1dp"
+        android:layout_toRightOf="@id/sale_imageView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="15dp"/>
+    <TextView
+        android:id="@+id/saleprice_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saleDistrict_textView"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/sale_imageView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="13dp"/>
+    <TextView
+        android:id="@+id/saleState_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/background_dark"
+        android:textSize="12dp"/>
+
+</RelativeLayout>

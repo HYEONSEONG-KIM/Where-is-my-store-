@@ -1,14 +1,16 @@
 package com.wims.whereismystore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
+import com.wims.whereismystore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Activity.Fragments.Fragment2;
@@ -16,7 +18,6 @@ import com.wims.whereismystore.Activity.Fragments.Fragment3;
 import com.wims.whereismystore.Activity.Fragments.Fragment4;
 import com.wims.whereismystore.Activity.Fragments.Fragment5;
 import com.wims.whereismystore.Class.Users;
-import com.wims.whereismystore.R;
 
 public class SaleActivity extends AppCompatActivity {
 
@@ -63,6 +64,13 @@ public class SaleActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        fragment1 = new Fragment1();
+        fragment2 = new Fragment2();
+        fragment3 = new Fragment3();
+        fragment4 = new Fragment4();
+        fragment5 = new Fragment5();
+
         setFrag(0); // 첫화면 설정
     }
 

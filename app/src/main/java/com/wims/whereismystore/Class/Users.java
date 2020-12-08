@@ -1,17 +1,20 @@
 package com.wims.whereismystore.Class;
 
 import android.app.Application;
+import android.content.res.Configuration;
 
 import com.google.firebase.database.PropertyName;
+
+import java.io.Serializable;
 
 public class Users extends Application {
 
     @PropertyName("email")
-    private  String email;
+    private String email;
     @PropertyName("name")
-    private  String name;
+    private String name;
     @PropertyName("password")
-    private  String password;
+    private String password;
 
     public Users() {}
 
