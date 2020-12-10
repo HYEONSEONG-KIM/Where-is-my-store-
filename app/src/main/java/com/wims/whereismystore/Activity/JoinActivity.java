@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wims.whereismystore.Class.Users;
+import com.wims.whereismystore.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -163,7 +164,3 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
-

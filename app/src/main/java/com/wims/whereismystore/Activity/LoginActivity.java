@@ -1,11 +1,9 @@
 package com.wims.whereismystore.Activity;
 
-import android.app.Application;
-import android.content.Intent; // 인텐트 활용
-
-import android.os.Bundle; // 액티비티 생성 번들
-import android.view.View; // 뷰계열 최상위 클래스
-import android.widget.Button; // 버튺 뷰 사용
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
