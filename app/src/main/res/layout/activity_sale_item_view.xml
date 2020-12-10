@@ -17,10 +17,18 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@android:color/holo_orange_light"/>
-        <androidx.viewpager2.widget.ViewPager2
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/SaleItemViewPager"
             android:layout_width="match_parent"
             android:layout_height="340dp" />
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/saleView_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:ci_drawable="@drawable/indicator"
+            app:ci_height="7dp"
+            app:ci_width="7dp"
+            app:ci_margin="4dp"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

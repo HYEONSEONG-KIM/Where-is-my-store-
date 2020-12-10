@@ -3,6 +3,7 @@ package com.wims.whereismystore.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -20,9 +21,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Class.Photos;
+import com.wims.whereismystore.Class.SaleViewpagerAdapter;
 import com.wims.whereismystore.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import me.relex.circleindicator.CircleIndicator;
 
 
 public class SaleItemViewActivity extends AppCompatActivity {
@@ -30,7 +35,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private Photos photo;
+    private HashMap<String, Object> photo;
     private HashMap<String,Object> post;
 
     private TextView name;
@@ -38,10 +43,14 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private TextView title;
     private TextView time;
     private TextView contents;
-    private ViewPager2 pager;
+    private ViewPager pager;
     private LinearLayout layout;
     private Toolbar toolbar;
     private TextView report;
+
+    private SaleViewpagerAdapter adapter;
+    CircleIndicator indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +68,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         contents=findViewById(R.id.saleView_contents);
         pager=findViewById(R.id.SaleItemViewPager);
         layout=findViewById(R.id.saleView_layout);
+        indicator=findViewById(R.id.saleView_indicator);
         //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
         //pager.setAdapter(adapter);
@@ -74,7 +84,6 @@ public class SaleItemViewActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 final String key=snapshot.getKey();
                 post=(HashMap<String, Object>) snapshot.getValue();
-                Log.d("post",post.toString());
                 name.setText(post.get("name").toString());
                 address.setText(post.get("localName").toString()+" "+post.get("districtName").toString());
                 title.setText(post.get("title").toString());
@@ -84,6 +93,16 @@ public class SaleItemViewActivity extends AppCompatActivity {
                     time.setText(post.get("modifyDate").toString());
                 }
                 contents.setText(post.get("contents").toString());
+                photo= (HashMap<String, Object>) snapshot.child("photo").getValue();
+
+                ArrayList<String> data=new ArrayList<>();
+                for(int i=0; i<Integer.parseInt(photo.get("count").toString());i++){
+                    String photoIndex="photo_"+(i+1);
+                    data.add(photo.get(photoIndex).toString());
+                }
+                adapter=new SaleViewpagerAdapter(getApplicationContext(),data);
+                pager.setAdapter(adapter);
+                indicator.setViewPager(pager);
 
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
