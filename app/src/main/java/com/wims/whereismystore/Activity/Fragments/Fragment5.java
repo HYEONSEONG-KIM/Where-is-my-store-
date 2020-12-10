@@ -17,15 +17,13 @@ import com.wims.whereismystore.Activity.PerInfoActivity;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
-
-
 public class Fragment5 extends Fragment {
     //마이페이지기능 class
 
     private View view;
 
 
-     Users user = new Users();
+    Users user = new Users();
 
     @Nullable
     @Override
@@ -39,9 +37,6 @@ public class Fragment5 extends Fragment {
         textView.setText(email);
 
         final String pass=user.getPassword();
-
-
-
 
 
         textView.setOnClickListener(new View.OnClickListener() {
@@ -66,5 +61,6 @@ public class Fragment5 extends Fragment {
 
 
     }
+
 
 }

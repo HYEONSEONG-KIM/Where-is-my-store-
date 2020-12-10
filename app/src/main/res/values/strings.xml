@@ -323,4 +323,6 @@
     <string-array name="세종특별자치도">
         <item></item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -20,7 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.UserUploadPostActivity"></activity>
+        <activity android:name=".Activity.ReportPostActivity"></activity>
+        <activity android:name=".Activity.ReportUserActivity" />
+        <activity android:name=".Activity.SaleFindActivity" />
+        <activity android:name=".Activity.UserUploadPostActivity" />
+        <activity android:name=".Activity.ChangePassInfo" />
+        <activity android:name=".Activity.PasswordCheckActivity" />
+        <activity android:name=".Activity.PerInfoActivity" />
+        <activity android:name=".Activity.WriterUserInfoActivity" />
         <activity android:name=".Activity.SaleItemViewActivity" />
         <activity
             android:name=".Activity.LoginActivity"

@@ -12,7 +12,11 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/saleItemView_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/holo_orange_light"/>
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/SaleItemViewPager"
             android:layout_width="match_parent"
@@ -50,7 +54,6 @@
                     android:layout_height="wrap_content">
                     <Button
                         android:id="@+id/saleView_chat"
-                        android:enabled="true"
                         android:background="@android:color/holo_orange_light"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -66,9 +69,14 @@
                         android:layout_height="wrap_content"
                         android:text="상권보기" />
                 </LinearLayout>
-
-
             </LinearLayout>
+
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_centerInParent="true"
+                android:background="#EFEFEE"/>
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -91,7 +99,31 @@
                     android:textColor="@android:color/black"
                     android:id="@+id/saleView_contents"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:background="#EFEFEE"/>
+                <TextView
+                    android:textSize="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/reportPost_Report"
+                    android:text="이 게시글 신고하기"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_centerInParent="true"
+                    android:background="#EFEFEE"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

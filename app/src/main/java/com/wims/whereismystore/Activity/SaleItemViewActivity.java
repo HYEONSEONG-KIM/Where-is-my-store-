@@ -2,16 +2,16 @@ package com.wims.whereismystore.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Class.Photos;
-import com.wims.whereismystore.Class.Post;
-import com.wims.whereismystore.Class.SaleViewpagerAdapter;
 import com.wims.whereismystore.R;
 
 import java.util.HashMap;
@@ -42,10 +40,17 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private TextView contents;
     private ViewPager2 pager;
     private LinearLayout layout;
+    private Toolbar toolbar;
+    private TextView report;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_item_view);
+
+        toolbar=findViewById(R.id.saleItemView_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("상품 보기");
 
         name=findViewById(R.id.saleView_name);
         address=findViewById(R.id.saleView_address);
@@ -58,7 +63,8 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
         //pager.setAdapter(adapter);
 
-        Intent intent=getIntent();
+
+        final Intent intent=getIntent();
         postID=intent.getStringExtra("postID");
 
         database=FirebaseDatabase.getInstance();
@@ -66,6 +72,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final String key=snapshot.getKey();
                 post=(HashMap<String, Object>) snapshot.getValue();
                 Log.d("post",post.toString());
                 name.setText(post.get("name").toString());
@@ -81,9 +88,23 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(SaleItemViewActivity.this,UserUploadPostActivity.class);
-                        intent.putExtra("uploadUserID",post.get("writerPin").toString());
+                        Intent intent=new Intent(SaleItemViewActivity.this, WriterUserInfoActivity.class);
+                        intent.putExtra("userID",post.get("writerPin").toString());
+                        intent.putExtra("userName",post.get("name").toString());
                         startActivity(intent);
+                    }
+                });
+
+                report=findViewById(R.id.reportPost_Report);
+                report.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent1=new Intent(SaleItemViewActivity.this,ReportPostActivity.class);
+                        intent1.putExtra("userID",post.get("writerPin").toString());
+                        intent1.putExtra("userName",post.get("name").toString());
+                        intent1.putExtra("postID",key);
+                        intent1.putExtra("title",post.get("title").toString());
+                        startActivity(intent1);
                     }
                 });
             }
@@ -92,7 +113,15 @@ public class SaleItemViewActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

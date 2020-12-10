@@ -1,14 +1,18 @@
 package com.wims.whereismystore.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.wims.whereismystore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Activity.Fragments.Fragment2;
@@ -23,19 +27,16 @@ public class SaleActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView; // 바텀네비게이션 뷰
     private FragmentManager manager;
     private FragmentTransaction transaction;
-    private Fragment1 fragment1 = new Fragment1();
-    private Fragment2 fragment2 = new Fragment2();
-    private Fragment3 fragment3 = new Fragment3();
-    private Fragment4 fragment4 = new Fragment4();
-    private Fragment5 fragment5 = new Fragment5();
+    private Fragment1 fragment1;
+    private Fragment2 fragment2;
+    private Fragment3 fragment3;
+    private Fragment4 fragment4;
+    private Fragment5 fragment5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String id = ((Users)getApplication()).getEmail();
-
-        Toast.makeText(SaleActivity.this,id,Toast.LENGTH_SHORT).show();
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavi);

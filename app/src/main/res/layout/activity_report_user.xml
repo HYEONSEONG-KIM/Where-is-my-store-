@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.ReportUserActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/reportUser_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/holo_orange_light"/>
+    <TextView
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/reportUser_ID"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/reportUser_nonManners"
+        android:text="비매너 사용자예요"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="욕설을 해요"
+        android:layout_marginTop="10dp"
+        android:id="@+id/reportUser_abuse"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="성희롱을 해요"
+        android:id="@+id/reportUser_SexualHarassment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="거래 / 환불 분쟁 신고"
+        android:id="@+id/reportUser_dispute"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:text="사기 신고"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/reportUser_scam"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+
+    <TextView
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:text="다른 문제가 있어요"
+        android:id="@+id/reportUser_otherProblem"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="40dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_centerInParent="true"
+        android:background="#EFEFEE"/>
+</LinearLayout>
