@@ -8,6 +8,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private TextView time;
     private TextView contents;
     private ViewPager2 pager;
-
+    private LinearLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         time=findViewById(R.id.saleView_time);
         contents=findViewById(R.id.saleView_contents);
         pager=findViewById(R.id.SaleItemViewPager);
+        layout=findViewById(R.id.saleView_layout);
         //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
         //pager.setAdapter(adapter);
@@ -74,12 +77,20 @@ public class SaleItemViewActivity extends AppCompatActivity {
                     time.setText(post.get("modifyDate").toString());
                 }
                 contents.setText(post.get("contents").toString());
+
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(SaleItemViewActivity.this,UserUploadPostActivity.class);
+                        intent.putExtra("uploadUserID",post.get("writerPin").toString());
+                        startActivity(intent);
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
 
 
 
