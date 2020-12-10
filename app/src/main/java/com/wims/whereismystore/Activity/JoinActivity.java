@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wims.whereismystore.Class.Users;
-import com.wims.whereismystore.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +41,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         button = (Button) findViewById(R.id.delete);
-        join = (Button) findViewById(R.id.join_button);
+        join = (Button) findViewById(R.id.change_delete);
         check = (Button)findViewById(R.id.check_button);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();

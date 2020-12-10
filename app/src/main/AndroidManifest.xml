@@ -20,10 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SaleItemViewActivity"></activity>
+        <activity android:name=".Activity.TestActivity"></activity>
+        <activity android:name=".Activity.SaleItemViewActivity" />
         <activity
             android:name=".Activity.LoginActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,30 +37,30 @@
         </activity>
         <activity
             android:name=".Activity.SaleActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.SaleUploadActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.WebViewActivity"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment1"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment2"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment3"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment4"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Activity.Fragments.Fragment5"
-            tools:ignore="Instantiatable"></activity>
+            tools:ignore="Instantiatable" />
         <activity
-            android:name=".Activity.ChangePassInfo"
+            android:name=".Activity.ChangePasswordActivity"
             tools:ignore="DuplicateActivity,Instantiatable" />
         <activity
             android:name=".Activity.PasswordCheckActivity"
@@ -67,24 +68,23 @@
         <activity
             android:name=".Activity.PerInfoActivity"
             tools:ignore="DuplicateActivity,Instantiatable" />
-
         <activity android:name=".Activity.ChattingActivity" />
 
         <service android:name=".Class.MyFcmService">
             <intent-filter>
-                <action android:name=".MyFcmService"></action>
+                <action android:name=".MyFcmService" />
             </intent-filter>
         </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="default_channel_id"/>
+            android:value="default_channel_id" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_icon"
-            android:resource="@mipmap/ic_launcher"/>
+            android:resource="@mipmap/ic_launcher" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_color"
-            android:resource="@color/colorAccent"/>
+            android:resource="@color/colorAccent" />
     </application>
 
 </manifest>

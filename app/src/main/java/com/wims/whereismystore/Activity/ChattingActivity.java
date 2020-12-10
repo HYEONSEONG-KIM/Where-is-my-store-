@@ -2,33 +2,37 @@ package com.wims.whereismystore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.wims.whereismystore.Class.ChatMessage;
 import com.wims.whereismystore.Class.ChatModel;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,8 +40,8 @@ public class ChattingActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
 
-    public static final String CHAT = "chat";
-    private FirebaseRecyclerAdapter<ChatMessage,MessageViewHolder>mFirebaseAdapter;
+
+    private FirebaseRecyclerAdapter<ChatModel,MessageViewHolder>mFirebaseAdapter;
 
     private DatabaseReference mFirebaseDatabaseReference;
     private EditText mMessageEditText;
@@ -52,6 +56,22 @@ public class ChattingActivity extends AppCompatActivity {
 
     private String UID;
     private String UNAME;
+    private String chatRoomUid;
+
+    private String Opponent; //아이디와 이름 합쳐서
+    private String My;
+
+    private String my; //.을+로 바꾸어 저장
+    private String op;
+
+    private String Email;
+
+
+
+
+
+
+    private RecyclerView mMessageRecyclerView;
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder{
         TextView nameTextView;
@@ -63,112 +83,285 @@ public class ChattingActivity extends AppCompatActivity {
         public MessageViewHolder(View itemView) {
             super(itemView);
 
-            nameTextView=itemView.findViewById(R.id.nameTextView);
+            nameTextView=itemView.findViewById(R.id.messageItem_textview_name);
             messageImageView=itemView.findViewById(R.id.messageImageview);
             messageTextView=itemView.findViewById(R.id.messageTextview);
-            photoImageView=itemView.findViewById(R.id.photoImageview);
+            photoImageView=itemView.findViewById(R.id.messageItem_imageview_profile);
         }
 
 
     }
 
-    private RecyclerView mMessageRecyclerView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
-        Intent intent=getIntent();
-        UID=intent.getExtras().getString("UID");
-        UNAME=intent.getExtras().getString("NAME");
+
+
+        Intent intent = getIntent();
+        UID = intent.getExtras().getString("UID");  //상대방의 아이디
+        UNAME = intent.getExtras().getString("NAME"); //상대방의 이름
+
+        Email=UID.replace(".","+");
+
+        Opponent=UNAME+"("+UID+")"; //상대방 이름(이메일)
+        op=Opponent.replace(".","+");
+
+        mUsername = ((Users) getApplication()).getName(); //내 이름
+        mEmail = ((Users) getApplication()).getEmail(); //내 아이디
+
+
+        My=mUsername+"("+mEmail+")"; //나의 이름(이메일)
+        my=My.replace(".","+");
 
 
 
-        mUsername=((Users)getApplication()).getName();
-        mEmail=((Users)getApplication()).getEmail();
-
-
-        mFirebaseDatabaseReference= FirebaseDatabase.getInstance().getReference();
-        mMessageEditText=findViewById(R.id.message_edit);
-        mMessageRecyclerView=findViewById(R.id.message_recycler_view);
 
 
 
-        send_bnt=findViewById((R.id.send_button));
+        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mMessageEditText = findViewById(R.id.message_edit);
+        mMessageRecyclerView = findViewById(R.id.message_recycler_view);
+
+
+        send_bnt = findViewById((R.id.send_button));
         send_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChatModel chatModel=new ChatModel();
-                chatModel.My_id=mUsername;
-                chatModel.UID=UID;
+                ChatModel chatModel = new ChatModel();
+               chatModel.users.put(my ,true);
+               chatModel.users.put(op,true);
 
-                FirebaseDatabase.getInstance().getReference().child(CHAT).push().setValue(chatModel);
+                if(chatRoomUid==null) {
+                    FirebaseDatabase.getInstance().getReference().child("chatroom")
+                            .push().setValue(chatModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            checkChatRoom();
+                        }
+                    });
+                    mMessageEditText.setText("");
 
-            }
-        });
-
-
-        Query query=mFirebaseDatabaseReference.child(CHAT);
-        FirebaseRecyclerOptions<ChatMessage>options=new FirebaseRecyclerOptions.Builder<ChatMessage>()
-                .setQuery(query,ChatMessage.class).build();
-        mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatMessage model) {
-                holder.messageTextView.setText(model.getText());
-                holder.nameTextView.setText(model.getName());
-                if(model.getPhotoUrl()==null){
-                    holder.photoImageView.setImageDrawable(ContextCompat.getDrawable(ChattingActivity.this,R.drawable.ic_baseline_account_circle_24));
                 }
                 else{
-                    Glide.with(ChattingActivity.this).load(model.getPhotoUrl()).into(holder.photoImageView);
-                }
-            }
-
-            @NonNull
-            @Override
-            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
-                return new MessageViewHolder(view);
-            }
-        };
-        mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                LinearLayoutManager layoutManager = (LinearLayoutManager) mMessageRecyclerView.getLayoutManager();
-                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
-
-                if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    mMessageRecyclerView.scrollToPosition(positionStart);
+                 ChatModel.Comment comment=new ChatModel.Comment();
+                 comment.uid=my;
+                 comment.message=mMessageEditText.getText().toString();
+                 FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
+                         .child("comments").push().setValue(comment);
+                    mMessageEditText.setText("");
                 }
             }
         });
 
-        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
-        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (bottom < oldBottom) {
-                    v.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
-                        }
-                    }, 100);
-                }
-            }
-        });
+        checkChatRoom();
+
+//        Query query=mFirebaseDatabaseReference.child("chatroom");
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
+//                    dataSnapshot.child()
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        FirebaseRecyclerOptions<ChatModel> options=new FirebaseRecyclerOptions.Builder<ChatModel>()
+//                .setQuery(query,ChatModel.class).build();
+//     mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatModel, MessageViewHolder>(options) {
+//         @Override
+//         protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatModel model) {
+//                holder.messageTextView.setText(model.get);
+//         }
+//
+//         @NonNull
+//         @Override
+//         public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
+//             return new MessageViewHolder(view);
+//         }
+//     };
+
+//
+//       //하단글추가되면 아래로
+//        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+//            @Override
+//            public void onItemRangeInserted(int positionStart, int itemCount) {
+//                super.onItemRangeInserted(positionStart, itemCount);
+//                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+//                LinearLayoutManager layoutManager = (LinearLayoutManager) mMessageRecyclerView.getLayoutManager();
+//                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
+//
+//                if (lastVisiblePosition == -1 ||
+//                        (positionStart >= (friendlyMessageCount - 1) &&
+//                                lastVisiblePosition == (positionStart - 1))) {
+//                    mMessageRecyclerView.scrollToPosition(positionStart);
+//                }
+//            }
+//        });
+//
+//        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
+//        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                if (bottom < oldBottom) {
+//                    v.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
+//                        }
+//                    }, 100);
+//                }
+//            }
+//        });
+
 
 
 
 
     }
+
+    void checkChatRoom(){
+
+        FirebaseDatabase.getInstance().getReference().child("chatroom").orderByChild("users/"+my).equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot item:snapshot.getChildren()){
+                            ChatModel chatModel=item.getValue(ChatModel.class);
+                            if(chatModel.users.containsKey(op)){
+                                chatRoomUid=item.getKey(); //방 아이디
+                                mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
+                                mMessageRecyclerView.setAdapter(new RecyclerViewAdapter());
+
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+
+
+
+
+
+    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+        List<ChatModel.Comment> comments;
+
+
+        public RecyclerViewAdapter(){
+            comments=new ArrayList<>();
+            FirebaseDatabase.getInstance().getReference().child("users").child(Email).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    getMessageList();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+        }
+        void getMessageList(){
+            FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
+                    .child("comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    comments.clear();
+
+                    for(DataSnapshot item:snapshot.getChildren()){
+                        comments.add(item.getValue(ChatModel.Comment.class));
+                        Log.d("test1",comments.get(1).getMessage());
+                    }
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+
+
+        @NonNull
+
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
+
+            return new MessageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
+
+            if(comments.get(position).uid.equals(my)) {
+                messageViewHolder.textView_message.setText(comments.get(position).getMessage());
+                messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+            }
+            else{
+               //messageViewHolder.textView_name.setText(userModel.getName());
+               messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+               messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+               messageViewHolder.textView_message.setText(comments.get(position).getMessage());
+               messageViewHolder.textView_message.setTextSize(25);
+            }
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return comments.size();
+        }
+
+        private class MessageViewHolder extends RecyclerView.ViewHolder{
+            public TextView textView_message;
+            public TextView textView_name;
+            public LinearLayout linearLayout_destination;
+
+            public MessageViewHolder(@NonNull View itemView) {
+
+                super(itemView);
+                textView_message= itemView.findViewById(R.id.messageTextview);
+                textView_name=itemView.findViewById(R.id.messageItem_textview_name);
+                linearLayout_destination=itemView.findViewById(R.id.messageItem_lineralayout_destination);
+
+
+            }
+        }
+
+    }
+
+
+
+
+
 
     @Override
     protected void onStart() {

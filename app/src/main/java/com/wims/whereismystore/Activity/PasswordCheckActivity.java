@@ -15,7 +15,10 @@ import com.wims.whereismystore.R;
 
 public class PasswordCheckActivity extends AppCompatActivity  {
 
+
+
     EditText pass;
+    String password;
 
 
     @Override
@@ -23,7 +26,7 @@ public class PasswordCheckActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_check);
 
-        final String password=((Users)getApplication()).getPassword();
+        password=((Users)getApplication()).getPassword();
 
 
         pass= (EditText) findViewById(R.id.password_check);
@@ -39,7 +42,7 @@ public class PasswordCheckActivity extends AppCompatActivity  {
             public void onClick(View view) {
                 String Pass_check=pass.getText().toString();
                if(Pass_check.equals(password)){
-            Intent intent=new Intent(PasswordCheckActivity.this, ChangePassInfo.class);
+            Intent intent=new Intent(PasswordCheckActivity.this, ChangePasswordActivity.class);
             startActivity(intent);
                    Toast.makeText(PasswordCheckActivity.this,"성공", Toast.LENGTH_SHORT).show();
                }

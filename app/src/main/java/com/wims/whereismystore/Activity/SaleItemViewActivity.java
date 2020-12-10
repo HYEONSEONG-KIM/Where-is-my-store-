@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Class.Photos;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 import java.util.HashMap;
@@ -43,6 +44,8 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private String UNAME;
     private Button chatbnt;
 
+    private String My_Email;
+
 //    @IgnoreExtraProperties
 //    public class User{
 //        public User(){
@@ -55,12 +58,16 @@ public class SaleItemViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_item_view);
 
+        My_Email=((Users)getApplication()).getEmail();
+
         name=findViewById(R.id.saleView_name);
         address=findViewById(R.id.saleView_address);
         title=findViewById(R.id.saleView_title);
         time=findViewById(R.id.saleView_time);
         contents=findViewById(R.id.saleView_contents);
         pager=findViewById(R.id.SaleItemViewPager);
+
+        chatbnt=findViewById(R.id.saleView_chat);
         //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
         //pager.setAdapter(adapter);
@@ -85,6 +92,13 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 }
                 contents.setText(post.get("contents").toString());
 
+                UID=post.get("writerPin").toString();
+
+                if(UID.equals(My_Email))
+                    chatbnt.setText("수정");
+                else
+                    chatbnt.setText("채팅");
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -98,7 +112,8 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
 
 
-        chatbnt=findViewById(R.id.saleView_chat);
+
+
         chatbnt.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -111,13 +126,17 @@ public class SaleItemViewActivity extends AppCompatActivity {
                        UID=post2.get("writerPin").toString();
                        UNAME=post2.get("name").toString();
 
+                       if(UID.equals(My_Email)) {
+                           Intent intent =new Intent(SaleItemViewActivity.this,TestActivity.class);
+                           startActivity(intent);
+                       }
+                       else{
+                           Intent intent = new Intent(SaleItemViewActivity.this, ChattingActivity.class);
+                           intent.putExtra("UID", UID);
+                           intent.putExtra("NAME", UNAME);
+                           startActivity(intent);
 
-
-
-                       Intent intent2=new Intent(SaleItemViewActivity.this,ChattingActivity.class);
-                       intent2.putExtra("UID",UID);
-                       intent2.putExtra("NAME",UNAME);
-                       startActivity(intent2);
+                       }
 
                        }
 
