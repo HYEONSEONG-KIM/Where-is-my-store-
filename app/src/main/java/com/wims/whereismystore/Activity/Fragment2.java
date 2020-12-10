@@ -387,15 +387,25 @@ public class Fragment2 extends Fragment  {
                         JSONObject item = jsonArray.getJSONObject(i);
                         String name =  item.getString("개방서비스명");
                         String state = item.getString("영업상태명");
-                        String address = item.getString("도로명전체주소");
-                        String latS = item.getString("좌표x");
-                        String langS = item.getString("좌표y");
-                       Toast.makeText(getActivity(), name + " | " + state + " | " + latS + " | " + langS, Toast.LENGTH_SHORT).show();
-                        double lat = Double.parseDouble(latS);
-                        double lang = Double.parseDouble(langS);
+                        String jaddress = item.getString("도로명전체주소");
+                      // Toast.makeText(getActivity(), name + " | " + state + " | " + latS + " | " + langS, Toast.LENGTH_SHORT).show();
+                      //  double lat = Double.parseDouble(latS);
+                       // double lang = Double.parseDouble(langS);
 //
-                        MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(lat,lang)).title(name).snippet(state);
-                        map.addMarker(markerOptions).showInfoWindow();
+                            Geocoder mgeocoder = new Geocoder(getActivity());
+                            try {
+                                List<Address> mResultLocation = mgeocoder.getFromLocationName(jaddress, 30);
+                                if(mResultLocation.size() != 0) {
+                                    double mLat = mResultLocation.get(0).getLatitude();
+                                    double mLng = mResultLocation.get(0).getLongitude();
+                                    Toast.makeText(getActivity(), jaddress, Toast.LENGTH_SHORT).show();
+                                    MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(mLat, mLng)).title(name).snippet(state);
+                                    map.addMarker(markerOptions).showInfoWindow();
+                                }
+                            } catch (IOException m) {
+                                m.printStackTrace();
+                                Toast.makeText(getActivity(), "안됨", Toast.LENGTH_SHORT).show();
+                            }
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
