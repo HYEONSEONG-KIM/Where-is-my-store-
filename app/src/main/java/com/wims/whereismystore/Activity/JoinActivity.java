@@ -36,16 +36,17 @@ public class JoinActivity extends AppCompatActivity {
     Button check, join, button;
     private DatabaseReference mDatabase;
     private String emailString;
-
+    private String status = "1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         button = (Button) findViewById(R.id.delete);
         join = (Button) findViewById(R.id.join_button);
         check = (Button)findViewById(R.id.check_button);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         email = (EditText) findViewById(R.id.join_email);
         password = (EditText) findViewById(R.id.join_password);
@@ -103,13 +104,19 @@ public class JoinActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userPin = email.getText().toString().replace('.','+');
                 String getUserName = name.getText().toString();
                 String getUserEmail = email.getText().toString();
                 String getUserPassword = password.getText().toString();
-                //hashmap 만들기
-                Map<String, Users> users = new HashMap<>();
-                writeNewUser(getUserEmail, getUserName, getUserPassword);
+                String confirm_pw = password_confirm.getText().toString();
+                if(getUserPassword.equals(confirm_pw)){
+
+                    writeNewUser(getUserEmail, getUserName, getUserPassword);
+                }
+
+                else
+                    Toast.makeText(JoinActivity.this, "비밀번호가 같지 않습니다", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -117,9 +124,14 @@ public class JoinActivity extends AppCompatActivity {
 
     // 데이터베이스에 저장하기
     private void writeNewUser(String email, String name, String password) {
-        Users user = new Users(email, name, password);
-        email = email.replace('.','+');
-        mDatabase.child("users").child(email).setValue(user)
+        //Users user = new Users(email, name, password);
+        HashMap<Object,String> hashMap = new HashMap<>();
+        hashMap.put("email",email);
+        hashMap.put("name",name);
+        hashMap.put("password",password);
+        hashMap.put("status",status);
+        String uid = email.replace('.','+');
+        mDatabase.child("users").child(uid).setValue(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

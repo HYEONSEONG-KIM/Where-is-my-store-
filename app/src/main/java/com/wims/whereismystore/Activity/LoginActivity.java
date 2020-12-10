@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     String emailS;
     String nameS;
     String passwordS;
+    String status;
 
     String emailString;
     String passwordString;
@@ -115,12 +116,13 @@ public class LoginActivity extends AppCompatActivity {
                                     emailS= ds.child("email").getValue(String.class);
                                     nameS = ds.child("name").getValue(String.class);
                                     passwordS = ds.child("password").getValue(String.class);
+                                    status = ds.child("status").getValue(String.class);
 
                                     user = (Users)getApplicationContext();
                                     user.setEmail(emailS);
                                     user.setName(nameS);
                                     user.setPassword(passwordS);
-
+                                    user.setStatus(status);
                                     Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
