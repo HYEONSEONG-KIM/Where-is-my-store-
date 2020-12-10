@@ -1,8 +1,8 @@
 package com.wims.whereismystore.Activity;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
 
 import com.wims.whereismystore.R;
 

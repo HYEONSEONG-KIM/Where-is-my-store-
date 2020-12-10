@@ -1,6 +1,5 @@
 package com.wims.whereismystore.Class;
 
-import android.net.Uri;
 
 public class Photos {
     private String photo_1;
@@ -13,6 +12,16 @@ public class Photos {
     private String photo_8;
     private String photo_9;
     private String photo_10;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    private int count;
 
     public Photos(){
         photo_1="";photo_2="";
@@ -138,6 +147,45 @@ public class Photos {
             default:
                 break;
         }
+    }
+
+    public String getPhotos(int index){
+        String photo = null;
+        switch (index){
+            case 0:
+                photo=getPhoto_1();
+                break;
+            case 1:
+                photo=getPhoto_2();
+                break;
+            case 2:
+                photo=getPhoto_3();
+                break;
+            case 3:
+                photo=getPhoto_4();
+                break;
+            case 4:
+                photo=getPhoto_5();
+                break;
+            case 5:
+                photo=getPhoto_6();
+                break;
+            case 6:
+                photo=getPhoto_7();
+                break;
+            case 7:
+                photo=getPhoto_8();
+                break;
+            case 8:
+                photo=getPhoto_9();
+                break;
+            case 9:
+                photo=getPhoto_10();
+                break;
+            default:
+                break;
+        }
+        return photo;
     }
 
 }

@@ -27,10 +27,8 @@
         android:layout_centerInParent="true"
         android:background="#EFEFEE"/>
 
-    
 
 
 
-    </LinearLayout>
 
-
+</LinearLayout>

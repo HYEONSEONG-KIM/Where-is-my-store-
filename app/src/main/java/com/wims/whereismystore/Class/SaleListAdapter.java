@@ -44,13 +44,23 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SaleListAdapter.SaleListViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SaleListAdapter.SaleListViewHolder holder, final int position) {
         StorageReference storage =FirebaseStorage.getInstance().getReference();
-        StorageReference iamgeRef=storage.child(listItems.get(position).getImage());
+        storage.child("images/"+listItems.get(position).getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d("image",uri.toString());
+                Glide.with(holder.itemView)
+                        .load(uri)
+                        .into(holder.image);
 
-        Glide.with(holder.itemView)
-                .load(iamgeRef)
-                .into(holder.image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("image","fail");
+            }
+        });
 
         holder.title.setText(listItems.get(position).getTitle());
         holder.state.setText(listItems.get(position).getState());
@@ -63,6 +73,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
                 intent=new Intent(v.getContext(), SaleItemViewActivity.class);
                 String postID=listItems.get(position).getPostID();
                 intent.putExtra("postID",postID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

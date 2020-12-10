@@ -128,240 +128,82 @@ public class ChattingActivity extends AppCompatActivity {
         mMessageRecyclerView = findViewById(R.id.message_recycler_view);
 
 
-        send_bnt = findViewById((R.id.send_button));
+
+        send_bnt=findViewById((R.id.send_button));
         send_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChatModel chatModel = new ChatModel();
-               chatModel.users.put(my ,true);
-               chatModel.users.put(op,true);
+                ChatModel chatModel=new ChatModel();
+                chatModel.My_id=mUsername;
+                chatModel.UID=UID;
 
-                if(chatRoomUid==null) {
-                    FirebaseDatabase.getInstance().getReference().child("chatroom")
-                            .push().setValue(chatModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            checkChatRoom();
-                        }
-                    });
-                    mMessageEditText.setText("");
+                FirebaseDatabase.getInstance().getReference().child(CHAT).push().setValue(chatModel);
 
+            }
+        });
+
+
+        Query query=mFirebaseDatabaseReference.child(CHAT);
+        FirebaseRecyclerOptions<ChatMessage>options=new FirebaseRecyclerOptions.Builder<ChatMessage>()
+                .setQuery(query,ChatMessage.class).build();
+        mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatMessage model) {
+                holder.messageTextView.setText(model.getText());
+                holder.nameTextView.setText(model.getName());
+                if(model.getPhotoUrl()==null){
+                    holder.photoImageView.setImageDrawable(ContextCompat.getDrawable(ChattingActivity.this,R.drawable.ic_baseline_account_circle_24));
                 }
                 else{
-                 ChatModel.Comment comment=new ChatModel.Comment();
-                 comment.uid=my;
-                 comment.message=mMessageEditText.getText().toString();
-                 FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
-                         .child("comments").push().setValue(comment);
-                    mMessageEditText.setText("");
+                    Glide.with(ChattingActivity.this).load(model.getPhotoUrl()).into(holder.photoImageView);
+                }
+            }
+
+            @NonNull
+            @Override
+            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
+                return new MessageViewHolder(view);
+            }
+        };
+        mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
+
+        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+                LinearLayoutManager layoutManager = (LinearLayoutManager) mMessageRecyclerView.getLayoutManager();
+                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if (lastVisiblePosition == -1 ||
+                        (positionStart >= (friendlyMessageCount - 1) &&
+                                lastVisiblePosition == (positionStart - 1))) {
+                    mMessageRecyclerView.scrollToPosition(positionStart);
                 }
             }
         });
 
-        checkChatRoom();
-
-//        Query query=mFirebaseDatabaseReference.child("chatroom");
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-//                    dataSnapshot.child()
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        FirebaseRecyclerOptions<ChatModel> options=new FirebaseRecyclerOptions.Builder<ChatModel>()
-//                .setQuery(query,ChatModel.class).build();
-//     mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatModel, MessageViewHolder>(options) {
-//         @Override
-//         protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatModel model) {
-//                holder.messageTextView.setText(model.get);
-//         }
-//
-//         @NonNull
-//         @Override
-//         public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//             View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
-//             return new MessageViewHolder(view);
-//         }
-//     };
-
-//
-//       //하단글추가되면 아래로
-//        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-//            @Override
-//            public void onItemRangeInserted(int positionStart, int itemCount) {
-//                super.onItemRangeInserted(positionStart, itemCount);
-//                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-//                LinearLayoutManager layoutManager = (LinearLayoutManager) mMessageRecyclerView.getLayoutManager();
-//                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
-//
-//                if (lastVisiblePosition == -1 ||
-//                        (positionStart >= (friendlyMessageCount - 1) &&
-//                                lastVisiblePosition == (positionStart - 1))) {
-//                    mMessageRecyclerView.scrollToPosition(positionStart);
-//                }
-//            }
-//        });
-//
-//        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
-//        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                if (bottom < oldBottom) {
-//                    v.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
-//                        }
-//                    }, 100);
-//                }
-//            }
-//        });
-
-
-
-
-
-    }
-
-    void checkChatRoom(){
-
-        FirebaseDatabase.getInstance().getReference().child("chatroom").orderByChild("users/"+my).equalTo(true)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot item:snapshot.getChildren()){
-                            ChatModel chatModel=item.getValue(ChatModel.class);
-                            if(chatModel.users.containsKey(op)){
-                                chatRoomUid=item.getKey(); //방 아이디
-                                mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
-                                mMessageRecyclerView.setAdapter(new RecyclerViewAdapter());
-
-
-
-                            }
+        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
+        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
+                    v.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
                         }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-    }
-
-
-
-
-
-
-    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-
-        List<ChatModel.Comment> comments;
-
-
-        public RecyclerViewAdapter(){
-            comments=new ArrayList<>();
-            FirebaseDatabase.getInstance().getReference().child("users").child(Email).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    getMessageList();
+                    }, 100);
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-        }
-        void getMessageList(){
-            FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
-                    .child("comments").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    comments.clear();
-
-                    for(DataSnapshot item:snapshot.getChildren()){
-                        comments.add(item.getValue(ChatModel.Comment.class));
-                        Log.d("test1",comments.get(1).getMessage());
-                    }
-                    notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        }
-
-
-
-
-        @NonNull
-
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
-
-            return new MessageViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            MessageViewHolder messageViewHolder=((MessageViewHolder)holder);
-
-            if(comments.get(position).uid.equals(my)) {
-                messageViewHolder.textView_message.setText(comments.get(position).getMessage());
-                messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
-                messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
             }
-            else{
-               //messageViewHolder.textView_name.setText(userModel.getName());
-               messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
-               messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
-               messageViewHolder.textView_message.setText(comments.get(position).getMessage());
-               messageViewHolder.textView_message.setTextSize(25);
-            }
+        });
 
 
-        }
 
-        @Override
-        public int getItemCount() {
-            return comments.size();
-        }
-
-        private class MessageViewHolder extends RecyclerView.ViewHolder{
-            public TextView textView_message;
-            public TextView textView_name;
-            public LinearLayout linearLayout_destination;
-
-            public MessageViewHolder(@NonNull View itemView) {
-
-                super(itemView);
-                textView_message= itemView.findViewById(R.id.messageTextview);
-                textView_name=itemView.findViewById(R.id.messageItem_textview_name);
-                linearLayout_destination=itemView.findViewById(R.id.messageItem_lineralayout_destination);
-
-
-            }
-        }
 
     }
-
-
-
-
-
 
     @Override
     protected void onStart() {

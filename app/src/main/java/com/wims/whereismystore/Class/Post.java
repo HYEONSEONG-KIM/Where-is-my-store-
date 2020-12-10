@@ -7,10 +7,12 @@ package com.wims.whereismystore.Class;
  */
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Post {
+public class Post{
     private String pin;//글 고유 번호
     private String title;//글 제목
     private String contents;//글 내용
@@ -26,6 +28,7 @@ public class Post {
     private String report;//신고 (1. 정상, 2. 신고 중, 3. 거래 중지)
     private String price;//가격
     private String photo;//사진
+
 
     public String getPhoto() {
         return photo;

@@ -531,7 +531,7 @@ public class SaleUploadActivity extends AppCompatActivity {
             photo.setPhotos(imageUrl,i);
         }
 
-
+        photo.setCount(currentImageIndex);
         mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
