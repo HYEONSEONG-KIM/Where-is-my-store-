@@ -251,8 +251,8 @@ public class SaleUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
-                Log.d("test",BNumTotal.length()+"");
-                if(BNumTotal.length()!=10||currentImageIndex==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
+                Log.d("test",BNumTotal.length()+","+currentImageIndex+","+address_editText.getText()+","+price.getText()+","+title.getText()+","+contents.getText());
+                if(BNumTotal.length()!=10||currentImageList.size()==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
                     AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
                     builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
                     builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -489,7 +489,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         Post post=new Post();
         photo=new Photos();
         //주소지 저장
-        totalAddress=address_editText.getText().toString()+address_remain_editText.getText().toString();
+        totalAddress=address_editText.getText().toString()+" "+address_remain_editText.getText().toString();
         post.setAddress(totalAddress);
         //글 제목 저장
         post.setTitle(title.getText().toString());
@@ -531,7 +531,7 @@ public class SaleUploadActivity extends AppCompatActivity {
             photo.setPhotos(imageUrl,i);
         }
 
-        photo.setCount(currentImageIndex);
+        photo.setCount(currentImageIndex+1);
         mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
