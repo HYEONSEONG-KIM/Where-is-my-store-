@@ -407,7 +407,7 @@ public class SaleUploadActivity extends AppCompatActivity {
                             Log.i("upload", "2. single choice " + clipData.getItemAt(0).getUri().getPath());
                             imageList.add(dataStr);
                             imageListIndex++;
-                        } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 10) {
+                        } else if (clipData.getItemCount() > 1 && clipData.getItemCount() <= 10) {
                             for (int i = 0; i < clipData.getItemCount(); i++) {
                                 if (imageListIndex == 10) {
                                     Toast.makeText(SaleUploadActivity.this, "사진은 10개까지 선택가능 합니다.\n다시 선택해 주세요", Toast.LENGTH_LONG).show();
@@ -490,7 +490,10 @@ public class SaleUploadActivity extends AppCompatActivity {
         photo=new Photos();
         //주소지 저장
         totalAddress=address_editText.getText().toString()+" "+address_remain_editText.getText().toString();
-        post.setAddress(totalAddress);
+        post.setTotalAddress(totalAddress);
+        post.setAddress(address_editText.getText().toString());
+        post.setRemainAddress(address_remain_editText.getText().toString());
+
         //글 제목 저장
         post.setTitle(title.getText().toString());
         //글 내용 저장
@@ -515,7 +518,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         //글 신고 상태 저장(업로드 시 기본 정상 : 1)
         post.setReport("1");
         //글 작성 시간 저장
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM월 dd일, yyyy");
         String date=simpleDateFormat.format(new Date(System.currentTimeMillis()));
         post.setCreateDate(date);
         //글 수정 시간 저장(업로드 시 기본값으로 "" 입력)
@@ -524,6 +527,8 @@ public class SaleUploadActivity extends AppCompatActivity {
         post.setPrice(price.getText().toString());
         //이미지
         post.setPhoto("");
+        //업종별 코드
+        post.setIndustryCode(strIndustry);
         postKey=mDatabase.child("post").push().getKey();
 
         for(int i=0; i<=currentImageIndex;i++){
@@ -531,7 +536,7 @@ public class SaleUploadActivity extends AppCompatActivity {
             photo.setPhotos(imageUrl,i);
         }
 
-        photo.setCount(currentImageIndex+1);
+        photo.setCount(String.valueOf(currentImageIndex+1));
         mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

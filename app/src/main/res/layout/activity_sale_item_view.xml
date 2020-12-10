@@ -44,7 +44,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="5">
 
                     <TextView
                         android:id="@+id/saleView_name"
@@ -59,7 +60,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
                     <Button
                         android:id="@+id/saleView_chat"
                         android:background="@android:color/holo_orange_light"

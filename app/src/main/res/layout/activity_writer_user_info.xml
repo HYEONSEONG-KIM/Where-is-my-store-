@@ -13,6 +13,11 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/holo_orange_light"/>
     <TextView
+        android:textSize="30dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:gravity="center"
         android:id="@+id/userUpload_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
