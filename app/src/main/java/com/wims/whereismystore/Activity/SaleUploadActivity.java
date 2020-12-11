@@ -1,12 +1,5 @@
 package com.wims.whereismystore.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
@@ -17,31 +10,29 @@ import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -53,14 +44,8 @@ import com.wims.whereismystore.Class.Post;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
 
 public class SaleUploadActivity extends AppCompatActivity {
@@ -251,8 +236,8 @@ public class SaleUploadActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
-                Log.d("test",BNumTotal.length()+"");
-                if(BNumTotal.length()!=10||currentImageIndex==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
+                Log.d("test",BNumTotal.length()+","+currentImageIndex+","+address_editText.getText()+","+price.getText()+","+title.getText()+","+contents.getText());
+                if(BNumTotal.length()!=10||currentImageList.size()==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
                     AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
                     builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
                     builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -489,7 +474,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         Post post=new Post();
         photo=new Photos();
         //주소지 저장
-        totalAddress=address_editText.getText().toString()+address_remain_editText.getText().toString();
+        totalAddress=address_editText.getText().toString()+" "+address_remain_editText.getText().toString();
         post.setAddress(totalAddress);
         //글 제목 저장
         post.setTitle(title.getText().toString());
@@ -531,7 +516,7 @@ public class SaleUploadActivity extends AppCompatActivity {
             photo.setPhotos(imageUrl,i);
         }
 
-        photo.setCount(currentImageIndex);
+        photo.setCount(currentImageIndex+1);
         mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

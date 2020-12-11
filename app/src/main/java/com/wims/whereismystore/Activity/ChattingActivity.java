@@ -2,13 +2,11 @@ package com.wims.whereismystore.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,10 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,21 +29,16 @@ import com.wims.whereismystore.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ChattingActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
 
 
-    private FirebaseRecyclerAdapter<ChatModel,MessageViewHolder>mFirebaseAdapter;
-
     private DatabaseReference mFirebaseDatabaseReference;
     private EditText mMessageEditText;
     private Button send_bnt;
 
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseUser mFirebaseUser;
+
 
     private String mUsername;
     private String mPhotoUrl;
@@ -69,28 +59,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
 
-
-
     private RecyclerView mMessageRecyclerView;
-
-    public static class MessageViewHolder extends RecyclerView.ViewHolder{
-        TextView nameTextView;
-        TextView messageTextView;
-        CircleImageView photoImageView;
-        ImageView messageImageView;
-
-
-        public MessageViewHolder(View itemView) {
-            super(itemView);
-
-            nameTextView=itemView.findViewById(R.id.messageItem_textview_name);
-            messageImageView=itemView.findViewById(R.id.messageImageview);
-            messageTextView=itemView.findViewById(R.id.messageTextview);
-            photoImageView=itemView.findViewById(R.id.messageItem_imageview_profile);
-        }
-
-
-    }
 
 
 
@@ -101,26 +70,21 @@ public class ChattingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting);
 
 
-
         Intent intent = getIntent();
         UID = intent.getExtras().getString("UID");  //상대방의 아이디
         UNAME = intent.getExtras().getString("NAME"); //상대방의 이름
 
-        Email=UID.replace(".","+");
+        Email = UID.replace(".", "+");
 
-        Opponent=UNAME+"("+UID+")"; //상대방 이름(이메일)
-        op=Opponent.replace(".","+");
+        Opponent = UNAME + "(" + UID + ")"; //상대방 이름(이메일)
+        op = Opponent.replace(".", "+");
 
         mUsername = ((Users) getApplication()).getName(); //내 이름
         mEmail = ((Users) getApplication()).getEmail(); //내 아이디
 
 
-        My=mUsername+"("+mEmail+")"; //나의 이름(이메일)
-        my=My.replace(".","+");
-
-
-
-
+        My = mUsername + "(" + mEmail + ")"; //나의 이름(이메일)
+        my = My.replace(".", "+");
 
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -128,94 +92,147 @@ public class ChattingActivity extends AppCompatActivity {
         mMessageRecyclerView = findViewById(R.id.message_recycler_view);
 
 
-
-        send_bnt=findViewById((R.id.send_button));
+        send_bnt = findViewById((R.id.send_button));
         send_bnt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChatModel chatModel=new ChatModel();
-                chatModel.My_id=mUsername;
-                chatModel.UID=UID;
+                ChatModel chatModel = new ChatModel();
+                chatModel.users.put(my, true);
+                chatModel.users.put(op, true);
 
-                FirebaseDatabase.getInstance().getReference().child(CHAT).push().setValue(chatModel);
-
-            }
-        });
-
-
-        Query query=mFirebaseDatabaseReference.child(CHAT);
-        FirebaseRecyclerOptions<ChatMessage>options=new FirebaseRecyclerOptions.Builder<ChatMessage>()
-                .setQuery(query,ChatMessage.class).build();
-        mFirebaseAdapter=new FirebaseRecyclerAdapter<ChatMessage, MessageViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MessageViewHolder holder, int position, @NonNull ChatMessage model) {
-                holder.messageTextView.setText(model.getText());
-                holder.nameTextView.setText(model.getName());
-                if(model.getPhotoUrl()==null){
-                    holder.photoImageView.setImageDrawable(ContextCompat.getDrawable(ChattingActivity.this,R.drawable.ic_baseline_account_circle_24));
-                }
-                else{
-                    Glide.with(ChattingActivity.this).load(model.getPhotoUrl()).into(holder.photoImageView);
-                }
-            }
-
-            @NonNull
-            @Override
-            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
-                return new MessageViewHolder(view);
-            }
-        };
-        mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mMessageRecyclerView.setAdapter(mFirebaseAdapter);
-
-        mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-                LinearLayoutManager layoutManager = (LinearLayoutManager) mMessageRecyclerView.getLayoutManager();
-                int lastVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
-
-                if (lastVisiblePosition == -1 ||
-                        (positionStart >= (friendlyMessageCount - 1) &&
-                                lastVisiblePosition == (positionStart - 1))) {
-                    mMessageRecyclerView.scrollToPosition(positionStart);
-                }
-            }
-        });
-
-        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
-        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (bottom < oldBottom) {
-                    v.postDelayed(new Runnable() {
+                if (chatRoomUid == null) {
+                    FirebaseDatabase.getInstance().getReference().child("chatroom")
+                            .push().setValue(chatModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void run() {
-                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
+                        public void onSuccess(Void aVoid) {
+                            checkChatRoom();
                         }
-                    }, 100);
+                    });
+                    mMessageEditText.setText("");
+
+                } else {
+                    ChatModel.Comment comment = new ChatModel.Comment();
+                    comment.uid = my;
+                    comment.message = mMessageEditText.getText().toString();
+                    FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
+                            .child("comments").push().setValue(comment);
+                    mMessageEditText.setText("");
                 }
             }
         });
 
+        checkChatRoom();
+
+
+//        // 키보드 올라올 때 RecyclerView의 위치를 마지막 포지션으로 이동
+//        mMessageRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                if (bottom < oldBottom) {
+//                    v.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mMessageRecyclerView.smoothScrollToPosition(mFirebaseAdapter.getItemCount());
+//                        }
+//                    }, 100);
+//                }
+//            }
+//        });
+
+
+    }
+
+    void checkChatRoom() {
+
+        FirebaseDatabase.getInstance().getReference().child("chatroom").orderByChild("users/" + my).equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot item : snapshot.getChildren()) {
+                            ChatModel chatModel = item.getValue(ChatModel.class);
+                            if (chatModel.users.containsKey(op)) {
+                                chatRoomUid = item.getKey(); //방 아이디
+                                mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
+                                mMessageRecyclerView.setAdapter(new RecyclerViewAdapter());
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+        List<ChatModel.Comment> comments;
+        public RecyclerViewAdapter() {
+            comments=new ArrayList<>();
+
+            FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
+                    .child("comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    comments.clear();
+
+                    for(DataSnapshot item : snapshot.getChildren()){
+                        comments.add(item.getValue(ChatModel.Comment.class));
+                    }
+
+                    notifyDataSetChanged();
+
+                    mMessageRecyclerView.scrollToPosition(comments.size()-1);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+           View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
+
+            return new MessageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            ((MessageViewHolder)holder).textView_message.setText(comments.get(position).message);
+            ((MessageViewHolder)holder).textView_name.setText(comments.get(position).uid);
+        }
+
+        @Override
+        public int getItemCount() {
+            return comments.size();
+        }
+
+        private class MessageViewHolder extends RecyclerView.ViewHolder {
+            public TextView textView_message;
+            public  TextView textView_name;
+            public LinearLayout linearLayout_main;
+
+            public MessageViewHolder(View view) {
+                super(view);
+                textView_message=view.findViewById(R.id.messageTextview);
+                textView_name=view.findViewById(R.id.messageItem_textview_name);
+                linearLayout_main=findViewById(R.id.messageItem_lineralayout_main);
+            }
+        }
+
 
 
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mFirebaseAdapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mFirebaseAdapter.stopListening();
-    }
 
 
 }
+
+
