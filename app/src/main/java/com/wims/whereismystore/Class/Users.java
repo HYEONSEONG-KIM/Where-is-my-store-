@@ -1,11 +1,8 @@
 package com.wims.whereismystore.Class;
 
 import android.app.Application;
-import android.content.res.Configuration;
 
 import com.google.firebase.database.PropertyName;
-
-import java.io.Serializable;
 
 public class Users extends Application {
 
@@ -15,15 +12,13 @@ public class Users extends Application {
     private  String name;
     @PropertyName("password")
     private  String password;
-    @PropertyName("status")
-    private String status;
+
     public Users() {}
 
-    public Users(String email,String name,String password,String status){
+    public Users(String email,String name,String password){
         this.email = email;
         this.name = name;
         this.password = password;
-        this.status = status;
     }
 
 
@@ -51,8 +46,4 @@ public class Users extends Application {
         return password;
     }
 
-    public void setStatus(String status) { this.status = status;}
-
-    public String getStatus () { return status;}
 }
-    public void setStatus(String status) { this.status = status;}

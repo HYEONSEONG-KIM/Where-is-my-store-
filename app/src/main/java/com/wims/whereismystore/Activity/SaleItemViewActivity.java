@@ -57,6 +57,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
 
 
+
     private SaleViewpagerAdapter adapter;
     CircleIndicator indicator;
 
@@ -123,6 +124,9 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 pager.setAdapter(adapter);
                 indicator.setViewPager(pager);
 
+                if(My_Email.equals(post.get("writerPin"))){
+                    chatbnt.setVisibility(View.INVISIBLE);
+                }
                 UID = Objects.requireNonNull(post.get("writerPin")).toString();
                 UNAME = Objects.requireNonNull(post.get("name")).toString();
 
@@ -166,6 +170,9 @@ public class SaleItemViewActivity extends AppCompatActivity {
                         UID=post.get("writerPin").toString();
                         UNAME=post.get("name").toString();
 
+                        String uid=UNAME+"("+UID+")";
+                        String destinationUid=uid.replace(".","+");
+
                         if(UID.equals(My_Email)) {
                             chatbnt.setEnabled(false);
                         }
@@ -173,6 +180,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
                             Intent intent = new Intent(SaleItemViewActivity.this, ChattingActivity.class);
                             intent.putExtra("UID", UID);
                             intent.putExtra("NAME", UNAME);
+                            intent.putExtra("destinationUid",destinationUid);
                             startActivity(intent);
 
                         }

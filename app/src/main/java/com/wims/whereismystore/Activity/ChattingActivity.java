@@ -1,7 +1,9 @@
 package com.wims.whereismystore.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +56,16 @@ public class ChattingActivity extends AppCompatActivity {
     private String my; //.을+로 바꾸어 저장
     private String op;
 
-    private String Email;
+    private String destinationUid;
+
+
+    TextView chat_text;
 
 
 
 
     private RecyclerView mMessageRecyclerView;
+
 
 
 
@@ -70,26 +76,32 @@ public class ChattingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting);
 
 
+
+
         Intent intent = getIntent();
         UID = intent.getExtras().getString("UID");  //상대방의 아이디
         UNAME = intent.getExtras().getString("NAME"); //상대방의 이름
 
-        Email = UID.replace(".", "+");
 
-        Opponent = UNAME + "(" + UID + ")"; //상대방 이름(이메일)
-        op = Opponent.replace(".", "+");
 
+
+        op = intent.getExtras().getString("destinationUid");
         mUsername = ((Users) getApplication()).getName(); //내 이름
         mEmail = ((Users) getApplication()).getEmail(); //내 아이디
 
+        Log.d("test3",op);
 
         My = mUsername + "(" + mEmail + ")"; //나의 이름(이메일)
         my = My.replace(".", "+");
 
+        Opponent =op.replace("+",".");
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mMessageEditText = findViewById(R.id.message_edit);
         mMessageRecyclerView = findViewById(R.id.message_recycler_view);
+        chat_text=findViewById(R.id.chat_textview);
+
+        chat_text.setText(Opponent);
 
 
         send_bnt = findViewById((R.id.send_button));
@@ -145,7 +157,7 @@ public class ChattingActivity extends AppCompatActivity {
 
     void checkChatRoom() {
 
-        FirebaseDatabase.getInstance().getReference().child("chatroom").orderByChild("users/" + my).equalTo(true)
+        FirebaseDatabase.getInstance().getReference().child("chatroom").orderByChild("users/"+ my).equalTo(true)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -203,10 +215,21 @@ public class ChattingActivity extends AppCompatActivity {
             return new MessageViewHolder(view);
         }
 
+        @SuppressLint("ResourceAsColor")
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            ((MessageViewHolder)holder).textView_message.setText(comments.get(position).message);
-            ((MessageViewHolder)holder).textView_name.setText(comments.get(position).name);
+
+            if(comments.get(position).uid.equals(my)) {
+                ((MessageViewHolder) holder).textView_message.setText(comments.get(position).message);
+                ((MessageViewHolder) holder).textView_name.setText(comments.get(position).name);
+                ((MessageViewHolder) holder).textView_message.setTextColor(R.color.colorBlack);
+            }
+
+            else{
+                ((MessageViewHolder) holder).textView_message.setText(comments.get(position).message);
+                ((MessageViewHolder) holder).textView_name.setText(comments.get(position).name);
+
+            }
         }
 
         @Override

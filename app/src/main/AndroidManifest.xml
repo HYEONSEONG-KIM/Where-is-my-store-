@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.Final_Project">
+    package="com.wims.whereismystore">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 파일 읽기 권한 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 파일 쓰기 권한 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- 카메라 기능 사용 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Class.Users"
         android:allowBackup="true"
@@ -12,13 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name = "com.wims.whereismystore.Class.Users"
-        android:usesCleartextTraffic="true"
-
-        >
-        <activity android:name="com.wims.whereismystore.Activity.LoginActivity">
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ReportPostActivity"/>
+        <activity android:name=".Activity.ReportPostActivity"></activity>
         <activity android:name=".Activity.ReportUserActivity" />
         <activity android:name=".Activity.SaleFindActivity" />
         <activity android:name=".Activity.UserUploadPostActivity" />
@@ -75,15 +77,7 @@
             tools:ignore="DuplicateActivity,Instantiatable" />
         <activity android:name=".Activity.ChattingActivity" />
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBWJUujGMWooaqCsOhvCZZccw_hw5B-U1k" />
-        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <service android:name=".Class.MyFcmService">
-            <intent-filter>
-                <action android:name=".MyFcmService" />
-            </intent-filter>
-        </service>
+
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
@@ -96,11 +90,5 @@
             android:resource="@color/colorAccent" />
             tools:ignore="Instantiatable" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-
-
-
 
 </manifest>

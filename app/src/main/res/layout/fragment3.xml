@@ -3,11 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:text="채팅"/>
+        android:id="@+id/chatfragment_recyclerview"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

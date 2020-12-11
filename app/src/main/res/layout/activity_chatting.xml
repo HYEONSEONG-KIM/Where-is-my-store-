@@ -8,10 +8,10 @@
     tools:context=".Activity.ChattingActivity">
 
     <TextView
+        android:id="@+id/chat_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="채  팅"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_gravity="center"
         />
 

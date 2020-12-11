@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/sale_imageView"
         android:layout_width="80dp"
         android:layout_height="80dp"/>
     <TextView
         android:id="@+id/saleTitle_textView"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/sale_imageView"
@@ -19,7 +17,6 @@
         android:layout_alignTop="@+id/sale_imageView"/>
     <TextView
         android:id="@+id/saleDistrict_textView"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/saleTitle_textView"
@@ -29,7 +26,6 @@
         android:textSize="15dp"/>
     <TextView
         android:id="@+id/saleprice_textView"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/saleDistrict_textView"
@@ -39,7 +35,6 @@
         android:textSize="13dp"/>
     <TextView
         android:id="@+id/saleState_textView"
-        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

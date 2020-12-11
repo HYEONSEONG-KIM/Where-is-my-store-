@@ -479,8 +479,6 @@ public class SaleUploadActivity extends AppCompatActivity {
         post.setAddress(address_editText.getText().toString());
         post.setRemainAddress(address_remain_editText.getText().toString());
 
-        totalAddress=address_editText.getText().toString()+" "+address_remain_editText.getText().toString();
-        post.setAddress(totalAddress);
         //글 제목 저장
         post.setTitle(title.getText().toString());
         //글 내용 저장
@@ -505,7 +503,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         //글 신고 상태 저장(업로드 시 기본 정상 : 1)
         post.setReport("1");
         //글 작성 시간 저장
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM월 dd일, yyyy");
         String date=simpleDateFormat.format(new Date(System.currentTimeMillis()));
         post.setCreateDate(date);
         //글 수정 시간 저장(업로드 시 기본값으로 "" 입력)
@@ -514,6 +512,8 @@ public class SaleUploadActivity extends AppCompatActivity {
         post.setPrice(price.getText().toString());
         //이미지
         post.setPhoto("");
+        //업종별 코드
+        post.setIndustryCode(strIndustry);
         postKey=mDatabase.child("post").push().getKey();
 
         for(int i=0; i<=currentImageIndex;i++){
@@ -521,7 +521,7 @@ public class SaleUploadActivity extends AppCompatActivity {
             photo.setPhotos(imageUrl,i);
         }
 
-        photo.setCount(String.valueOf(currentImageIndex));
+        photo.setCount(String.valueOf(currentImageIndex+1));
         mDatabase.child("post").child(postKey).setValue(post)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
