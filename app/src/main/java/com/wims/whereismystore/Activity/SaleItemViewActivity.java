@@ -2,19 +2,25 @@ package com.wims.whereismystore.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +62,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private String My_Email;
     private SaleViewpagerAdapter adapter;
     CircleIndicator indicator;
+    private String writerPin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
+        writerPin=intent.getStringExtra("postUserID");
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("post").child(postID);
@@ -113,6 +121,9 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 pager.setAdapter(adapter);
                 indicator.setViewPager(pager);
 
+                if(My_Email.equals(post.get("writerPin"))){
+                    chatbnt.setVisibility(View.INVISIBLE);
+                }
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -162,7 +173,6 @@ public class SaleItemViewActivity extends AppCompatActivity {
                             intent.putExtra("UID", UID);
                             intent.putExtra("NAME", UNAME);
                             startActivity(intent);
-
                         }
 
                     }
@@ -171,25 +181,46 @@ public class SaleItemViewActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-
-
-
                 });
-
-
-
             }
         });
 
     }
 
 
+    @SuppressLint("RestrictedApi")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.toolbar_main_menu,menu);
+
+        Log.d("pintest",My_Email+","+writerPin);
+        if(menu instanceof MenuBuilder){
+            MenuBuilder menuBuilder= (MenuBuilder) menu;
+            menuBuilder.setOptionalIconsVisible(true);
+        }
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
+                return true;
+            case R.id.post_modify_item:
+                if(My_Email.equals(writerPin)) {
+                    Toast.makeText(this, "modify", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "modify2", Toast.LENGTH_LONG).show();
+                }
+                return true;
+            case R.id.post_delete_item:
+                if(My_Email.equals(writerPin)) {
+                    Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this, "delete2", Toast.LENGTH_LONG).show();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

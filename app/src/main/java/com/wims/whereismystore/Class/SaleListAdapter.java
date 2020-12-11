@@ -80,6 +80,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
                 intent=new Intent(v.getContext(), SaleItemViewActivity.class);
                 String postID=listItems.get(position).getPostID();
                 intent.putExtra("postID",postID);
+                intent.putExtra("postUserID",listItems.get(position).getWriterPin());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
