@@ -114,6 +114,7 @@ public class ChattingActivity extends AppCompatActivity {
                     ChatModel.Comment comment = new ChatModel.Comment();
                     comment.uid = my;
                     comment.message = mMessageEditText.getText().toString();
+                    comment.name=UNAME;
                     FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
                             .child("comments").push().setValue(comment);
                     mMessageEditText.setText("");
@@ -205,7 +206,7 @@ public class ChattingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ((MessageViewHolder)holder).textView_message.setText(comments.get(position).message);
-            ((MessageViewHolder)holder).textView_name.setText(comments.get(position).uid);
+            ((MessageViewHolder)holder).textView_name.setText(comments.get(position).name);
         }
 
         @Override
