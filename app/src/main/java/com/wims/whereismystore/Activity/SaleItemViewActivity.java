@@ -6,11 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.SaleViewpagerAdapter;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 import java.util.ArrayList;
@@ -48,10 +51,10 @@ public class SaleItemViewActivity extends AppCompatActivity {
     private LinearLayout layout;
     private Toolbar toolbar;
     private TextView report;
-
+    private Button chatbnt;
     private String UID;
     private String UNAME;
-
+    private String My_Email;
     private SaleViewpagerAdapter adapter;
     CircleIndicator indicator;
 
@@ -65,6 +68,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("상품 보기");
 
+
         name = findViewById(R.id.saleView_name);
         address = findViewById(R.id.saleView_address);
         title = findViewById(R.id.saleView_title);
@@ -73,10 +77,8 @@ public class SaleItemViewActivity extends AppCompatActivity {
         pager = findViewById(R.id.SaleItemViewPager);
         layout = findViewById(R.id.saleView_layout);
         indicator = findViewById(R.id.saleView_indicator);
-        //SaleViewpagerAdapter adapter=new SaleViewpagerAdapter(getLayoutInflater());
 
-        //pager.setAdapter(adapter);
-
+        chatbnt=findViewById(R.id.saleView_chat);
 
         final Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
@@ -109,9 +111,6 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 pager.setAdapter(adapter);
                 indicator.setViewPager(pager);
 
-                UID = Objects.requireNonNull(post.get("writerPin")).toString();
-                UNAME = Objects.requireNonNull(post.get("name")).toString();
-
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -134,12 +133,20 @@ public class SaleItemViewActivity extends AppCompatActivity {
                         startActivity(intent1);
                     }
                 });
+                Application app=getApplication();
+                Users user=(Users)app;
+
+                String cur_userID=user.getEmail();
+                if(cur_userID.equals(post.get("writerPin"))){
+
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
     }
 
 
