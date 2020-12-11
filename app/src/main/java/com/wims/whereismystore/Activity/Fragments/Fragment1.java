@@ -1,6 +1,8 @@
 package com.wims.whereismystore.Activity.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +12,10 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,8 +46,9 @@ public class Fragment1 extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private DatabaseError databaseError;
-
+    private FragmentTransaction transaction;
     Photos photo;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class Fragment1 extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 //super.onScrolled(recyclerView, dx, dy);
@@ -118,5 +125,11 @@ public class Fragment1 extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

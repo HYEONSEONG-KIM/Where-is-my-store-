@@ -1,10 +1,12 @@
 package com.wims.whereismystore.Activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,7 +46,6 @@ public class SaleActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
-
                     case R.id.sale:
                         setFrag(0);
                         break;
@@ -72,14 +73,17 @@ public class SaleActivity extends AppCompatActivity {
         fragment5 = new Fragment5();
 
         setFrag(0); // 첫화면 설정
+
+
     }
+
+
 
     // 프래그먼트 교체가 일어나는 메서드
     private void setFrag(int n){
 
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-
         switch (n){
             case 0:
                 transaction.replace(R.id.main_frame, fragment1);
@@ -103,4 +107,5 @@ public class SaleActivity extends AppCompatActivity {
                 break;
         }
     }
+
 }

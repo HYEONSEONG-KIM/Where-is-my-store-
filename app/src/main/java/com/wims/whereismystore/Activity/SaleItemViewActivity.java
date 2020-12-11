@@ -1,6 +1,7 @@
 package com.wims.whereismystore.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +29,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.SaleViewpagerAdapter;
 import com.wims.whereismystore.Class.Users;
@@ -127,10 +131,13 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SaleItemViewActivity.this, WriterUserInfoActivity.class);
-                        intent.putExtra("userID", post.get("writerPin").toString());
-                        intent.putExtra("userName", post.get("name").toString());
-                        startActivity(intent);
+                        if(My_Email.equals(writerPin)){}
+                        else {
+                            Intent intent = new Intent(SaleItemViewActivity.this, WriterUserInfoActivity.class);
+                            intent.putExtra("userID", post.get("writerPin").toString());
+                            intent.putExtra("userName", post.get("name").toString());
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -194,7 +201,6 @@ public class SaleItemViewActivity extends AppCompatActivity {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.toolbar_main_menu,menu);
 
-        Log.d("pintest",My_Email+","+writerPin);
         if(menu instanceof MenuBuilder){
             MenuBuilder menuBuilder= (MenuBuilder) menu;
             menuBuilder.setOptionalIconsVisible(true);
@@ -202,6 +208,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -212,14 +219,36 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 if(My_Email.equals(writerPin)) {
                     Toast.makeText(this, "modify", Toast.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(this, "modify2", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "게시글 작성자만 수정할 수 있습니다.", Toast.LENGTH_LONG).show();
                 }
                 return true;
             case R.id.post_delete_item:
                 if(My_Email.equals(writerPin)) {
-                    Toast.makeText(this, "delete", Toast.LENGTH_LONG).show();
+                    database = FirebaseDatabase.getInstance();
+                    databaseReference = database.getReference().child("post").child(postID);
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            HashMap<String, Object> photo = (HashMap<String, Object>) snapshot.child("photo").getValue();
+                            ArrayList<String> data = new ArrayList<>();
+                            for (int i = 0; i < Integer.parseInt(photo.get("count").toString()); i++) {
+                                String photoIndex = "photo_" + (i + 1);
+                                data.add(photo.get(photoIndex).toString());
+                                StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("images/"+photoIndex);
+                                storageReference.delete();
+                            }
+                            databaseReference.removeValue();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    finish();
                 }else{
-                    Toast.makeText(this, "delete2", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "게시글 작성자만 삭제할 수 있습니다.", Toast.LENGTH_LONG).show();
                 }
                 return true;
         }
