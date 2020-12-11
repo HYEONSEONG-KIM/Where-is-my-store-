@@ -63,8 +63,15 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
         });
 
         holder.title.setText(listItems.get(position).getTitle());
-        holder.state.setText(listItems.get(position).getState());
         holder.price.setText(listItems.get(position).getPrice());
+        if(listItems.get(position).getState().toString().equals("1")){ }
+        else if(listItems.get(position).getState().toString().equals("2")){
+            holder.state.setText("예약중");
+            holder.state.setBackgroundResource(R.drawable.bg_state);
+        }else{
+            holder.state.setText("거래완료");
+            holder.state.setBackgroundResource(R.drawable.bg_state);
+        }
         holder.district.setText(listItems.get(position).getDistrictName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

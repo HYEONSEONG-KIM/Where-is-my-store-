@@ -13,15 +13,15 @@ public class Photos {
     private String photo_9;
     private String photo_10;
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(String count) {
         this.count = count;
     }
 
-    private int count;
+    private String count;
 
     public Photos(){
         photo_1="";photo_2="";

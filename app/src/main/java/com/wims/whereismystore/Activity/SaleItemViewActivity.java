@@ -1,5 +1,10 @@
 package com.wims.whereismystore.Activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
+import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.SaleViewpagerAdapter;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
@@ -58,6 +64,9 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
 
 
+    private String UID;
+    private String UNAME;
+
     private SaleViewpagerAdapter adapter;
     CircleIndicator indicator;
 
@@ -74,6 +83,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
         chatbnt=findViewById(R.id.saleView_chat);
 
+        toolbar = findViewById(R.id.saleItemView_toolbar);
         toolbar = findViewById(R.id.saleItemView_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -149,7 +159,6 @@ public class SaleItemViewActivity extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -193,6 +202,8 @@ public class SaleItemViewActivity extends AppCompatActivity {
 
             }
         });
+    }
+
 
 
 

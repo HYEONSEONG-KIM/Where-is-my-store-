@@ -28,6 +28,34 @@ public class Post{
     private String report;//신고 (1. 정상, 2. 신고 중, 3. 거래 중지)
     private String price;//가격
     private String photo;//사진
+    private String industryCode;
+    private String totalAddress;
+    private String remainAddress;
+
+
+    public String getIndustryCode() {
+        return industryCode;
+    }
+
+    public void setIndustryCode(String industryCode) {
+        this.industryCode = industryCode;
+    }
+
+    public String getTotalAddress() {
+        return totalAddress;
+    }
+
+    public void setTotalAddress(String totalAddress) {
+        this.totalAddress = totalAddress;
+    }
+
+    public String getRemainAddress() {
+        return remainAddress;
+    }
+
+    public void setRemainAddress(String remainAddress) {
+        this.remainAddress = remainAddress;
+    }
 
 
     public String getPhoto() {
