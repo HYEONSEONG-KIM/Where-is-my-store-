@@ -9,11 +9,13 @@
     tools:ignore="MissingPrefix">
     <TextView
         android:id="@+id/ID"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="20"
+        android:layout_weight="30"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:background="?attr/selectableItemBackground"
         />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
@@ -26,7 +28,7 @@
         android:id="@+id/change"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="     개인정보 변경"
+        android:text="     비밀번호 변경"
         android:textStyle="bold"
         android:textSize="15sp"
         android:layout_weight="6"
@@ -64,6 +66,19 @@
         android:gravity="fill"
         />
 
+    <Button
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="     로그아웃"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_weight="6"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/logout"
+        android:gravity="fill"
+        />
 
 
 

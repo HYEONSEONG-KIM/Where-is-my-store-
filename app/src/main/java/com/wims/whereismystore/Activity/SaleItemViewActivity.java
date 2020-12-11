@@ -29,7 +29,6 @@ import com.wims.whereismystore.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -67,6 +66,9 @@ public class SaleItemViewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("상품 보기");
+
+        My_Email=((Users)getApplication()).getEmail();
+        chatbnt=findViewById(R.id.saleView_chat);
 
 
         name = findViewById(R.id.saleView_name);
@@ -133,17 +135,49 @@ public class SaleItemViewActivity extends AppCompatActivity {
                         startActivity(intent1);
                     }
                 });
-                Application app=getApplication();
-                Users user=(Users)app;
-
-                String cur_userID=user.getEmail();
-                if(cur_userID.equals(post.get("writerPin"))){
-
-                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+        chatbnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                database=FirebaseDatabase.getInstance();
+                databaseReference=database.getReference().child("post").child(postID);
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        post=(HashMap<String, Object>) snapshot.getValue();
+                        UID=post.get("writerPin").toString();
+                        UNAME=post.get("name").toString();
+
+                        if(UID.equals(My_Email)) {
+                            chatbnt.setEnabled(false);
+                        }
+                        else{
+                            Intent intent = new Intent(SaleItemViewActivity.this, ChattingActivity.class);
+                            intent.putExtra("UID", UID);
+                            intent.putExtra("NAME", UNAME);
+                            startActivity(intent);
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+
+
+                });
+
+
+
             }
         });
 

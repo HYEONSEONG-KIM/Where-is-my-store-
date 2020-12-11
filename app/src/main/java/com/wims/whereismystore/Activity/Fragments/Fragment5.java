@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.wims.whereismystore.Activity.LoginActivity;
 import com.wims.whereismystore.Activity.PasswordCheckActivity;
 import com.wims.whereismystore.Activity.PerInfoActivity;
 import com.wims.whereismystore.Class.Users;
@@ -55,6 +56,18 @@ public class Fragment5 extends Fragment {
                 startActivity(intent2);
             }
         });
+
+
+        Button logoutbny=view.findViewById(R.id.logout);
+        logoutbny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
 
 
         return view;

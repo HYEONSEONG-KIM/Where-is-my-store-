@@ -41,7 +41,7 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         button = (Button) findViewById(R.id.delete);
-        join = (Button) findViewById(R.id.join_button);
+        join = (Button) findViewById(R.id.change_delete);
         check = (Button)findViewById(R.id.check_button);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();

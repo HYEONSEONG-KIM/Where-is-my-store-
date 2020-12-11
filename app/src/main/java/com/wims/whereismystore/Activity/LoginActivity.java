@@ -21,10 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
-import static com.wims.whereismystore.R.id.join_button;
-import static com.wims.whereismystore.R.id.login_button;
+import static com.wims.whereismystore.R.id.change_delete;
+import static com.wims.whereismystore.R.id.changebnt;
 import static com.wims.whereismystore.R.id.login_email;
-import static com.wims.whereismystore.R.id.login_password;
+import static com.wims.whereismystore.R.id.change_password_pwck;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText email;
@@ -50,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         email = (EditText)findViewById(login_email);
-        password = (EditText)findViewById(login_password);
-        login = (Button)findViewById(login_button);
-        account = (Button)findViewById(join_button);
+        password = (EditText)findViewById(change_password_pwck);
+        login = (Button)findViewById(changebnt);
+        account = (Button)findViewById(change_delete);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
