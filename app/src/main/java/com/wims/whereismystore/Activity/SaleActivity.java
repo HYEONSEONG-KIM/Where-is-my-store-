@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -32,11 +33,16 @@ public class SaleActivity extends AppCompatActivity {
     private Fragment3 fragment3;
     private Fragment4 fragment4;
     private Fragment5 fragment5;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String id = ((Users)getApplication()).getEmail();
+
+        Toast.makeText(SaleActivity.this,id,  Toast.LENGTH_SHORT).show();
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavi);
