@@ -114,7 +114,7 @@ public class ChattingActivity extends AppCompatActivity {
                     ChatModel.Comment comment = new ChatModel.Comment();
                     comment.uid = my;
                     comment.message = mMessageEditText.getText().toString();
-                    comment.name=UNAME;
+                    comment.name=mUsername;
                     FirebaseDatabase.getInstance().getReference().child("chatroom").child(chatRoomUid)
                             .child("comments").push().setValue(comment);
                     mMessageEditText.setText("");
