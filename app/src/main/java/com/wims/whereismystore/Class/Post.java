@@ -10,9 +10,10 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Post{
+public class Post implements Serializable {
     private String pin;//글 고유 번호
     private String title;//글 제목
     private String contents;//글 내용

@@ -10,8 +10,10 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Class.Photos;
+import com.wims.whereismystore.Class.Post;
 import com.wims.whereismystore.Class.SaleViewpagerAdapter;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
@@ -217,7 +221,52 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 return true;
             case R.id.post_modify_item:
                 if(My_Email.equals(writerPin)) {
-                    Toast.makeText(this, "modify", Toast.LENGTH_LONG).show();
+
+                    database = FirebaseDatabase.getInstance();
+                    databaseReference = database.getReference().child("post").child(postID);
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            HashMap<String, Object> postHash= (HashMap<String, Object>) snapshot.getValue();
+                            Post post=new Post();
+                            post.setRemainAddress(postHash.get("remainAddress").toString());
+                            post.setDistrictName(postHash.get("districtName").toString());
+                            post.setAddress(postHash.get("address").toString());
+                            post.setPin(postID);
+                            post.setPrice(postHash.get("price").toString());
+                            post.setReport(postHash.get("report").toString());
+                            post.setBLNumber(postHash.get("blnumber").toString());
+                            post.setWriterPin(postHash.get("writerPin").toString());
+                            post.setCreateDate(postHash.get("createDate").toString());
+                            post.setModifyDate(postHash.get("modifyDate").toString());
+                            post.setTitle(postHash.get("title").toString());
+                            post.setContents(postHash.get("contents").toString());
+                            post.setIndustryCode(postHash.get("industryCode").toString());
+                            post.setLocalName(postHash.get("localName").toString());
+                            post.setName(postHash.get("name").toString());
+                            post.setState(postHash.get("state").toString());
+
+
+                            HashMap<String, Object> photoHash = (HashMap<String, Object>) snapshot.child("photo").getValue();
+                            final Photos photo=new Photos();
+                            photo.setCount(photoHash.get("count").toString());
+                            for (int i = 0; i < Integer.parseInt(photo.getCount()); i++) {
+                                final int index=i;
+                                String photoIndex = "photo_" + (i + 1);
+                                photo.setPhotos(photoHash.get(photoIndex).toString(),i);
+                                Log.d("upload",photo.getPhotos(i));
+                            }
+
+                            Intent intent=new Intent(SaleItemViewActivity.this,SaleUploadActivity.class);
+                            intent.putExtra("photo",photo);
+                            intent.putExtra("post",post);
+                            startActivity(intent);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }else{
                     Toast.makeText(this, "게시글 작성자만 수정할 수 있습니다.", Toast.LENGTH_LONG).show();
                 }
@@ -233,19 +282,20 @@ public class SaleItemViewActivity extends AppCompatActivity {
                             ArrayList<String> data = new ArrayList<>();
                             for (int i = 0; i < Integer.parseInt(photo.get("count").toString()); i++) {
                                 String photoIndex = "photo_" + (i + 1);
+                                Log.d("delete",photo.get(photoIndex).toString());
                                 data.add(photo.get(photoIndex).toString());
-                                StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("images/"+photoIndex);
+                                StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("images/"+data.get(i));
                                 storageReference.delete();
                             }
                             databaseReference.removeValue();
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
                     });
 
+                    setResult(Activity.RESULT_OK);
                     finish();
                 }else{
                     Toast.makeText(this, "게시글 작성자만 삭제할 수 있습니다.", Toast.LENGTH_LONG).show();

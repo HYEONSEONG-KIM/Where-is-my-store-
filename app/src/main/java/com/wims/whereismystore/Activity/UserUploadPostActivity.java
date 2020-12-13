@@ -44,8 +44,6 @@ public class UserUploadPostActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.userUploae_tab);
         tabLayout.setupWithViewPager(vp);
 
-//        vp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-//        tabLayout.addOnTabSelectedListener(new );
     }
 
     @Override

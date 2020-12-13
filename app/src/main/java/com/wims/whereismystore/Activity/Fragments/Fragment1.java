@@ -1,6 +1,7 @@
 package com.wims.whereismystore.Activity.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -107,11 +108,13 @@ public class Fragment1 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 arrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    SaleListItem saleListItem=dataSnapshot.getValue(SaleListItem.class);
-                    saleListItem.setPostID(dataSnapshot.getKey());
-                    photo=dataSnapshot.child("photo").getValue(Photos.class);
-                    saleListItem.setImage(photo.getPhoto_1());
-                    arrayList.add(0,saleListItem);
+                    if(!dataSnapshot.child("report").getValue().toString().equals("3")) {
+                        SaleListItem saleListItem = dataSnapshot.getValue(SaleListItem.class);
+                        saleListItem.setPostID(dataSnapshot.getKey());
+                        photo = dataSnapshot.child("photo").getValue(Photos.class);
+                        saleListItem.setImage(photo.getPhoto_1());
+                        arrayList.add(0, saleListItem);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -127,9 +130,5 @@ public class Fragment1 extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged();
-    }
+
 }

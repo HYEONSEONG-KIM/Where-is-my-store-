@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +62,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -86,6 +89,9 @@ public class SaleUploadActivity extends AppCompatActivity {
     private Spinner localspin, districtspin;
     private String totalAddress;
     private String postKey;
+
+    private Post modifyPost;
+    private Photos modifyPhoto;
 
     private Photos photo;
     private String userID;
@@ -246,28 +252,7 @@ public class SaleUploadActivity extends AppCompatActivity {
         });
         //완료 버튼 클릭 시 업로드
         Button complete_btn=findViewById(R.id.upload_complete_button);
-        complete_btn.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-                BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
-                Log.d("test",BNumTotal.length()+","+currentImageIndex+","+address_editText.getText()+","+price.getText()+","+title.getText()+","+contents.getText());
-                if(BNumTotal.length()!=10||currentImageList.size()==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
-                    AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
-                    builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
-                    builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    AlertDialog alertDialog=builder.create();
-                    alertDialog.show();
-                }else{
-                    writePost();
-                }
-            }
-        });
+
         //이미지 선택 시 이미지 삭제(1~10)
         image[0].setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,6 +314,74 @@ public class SaleUploadActivity extends AppCompatActivity {
                 deleteImageViewResource(9);
             }
         });
+
+        //SaleItemView 에서 수정 확인 버튼 클릭 시
+        Intent intent=getIntent();
+        if(intent.getSerializableExtra("photo")!=null&&intent.getSerializableExtra("post")!=null){
+            modifyPhoto=(Photos)intent.getSerializableExtra("photo");
+            modifyPost=(Post)intent.getSerializableExtra("post");
+            price.setText(modifyPost.getPrice());
+            address_editText.setText(modifyPost.getAddress());
+            address_remain_editText.setText(modifyPost.getRemainAddress());
+            String BnumTotal=modifyPost.getBLNumber();
+            BNum1.setText(BnumTotal.substring(0,3));
+            BNum2.setText(BnumTotal.substring(3,5));
+            BNum3.setText(BnumTotal.substring(5));
+            title.setText(modifyPost.getTitle());
+            contents.setText(modifyPost.getContents());
+
+            localspin.setSelection(loadspin.getPosition(modifyPost.getLocalName()));
+            diadspin=ArrayAdapter.createFromResource(SaleUploadActivity.this, getResources().getIdentifier(modifyPost.getLocalName(),"array",this.getPackageName()), R.layout.support_simple_spinner_dropdown_item);
+            districtspin.setAdapter(diadspin);
+            districtspin.setSelection(diadspin.getPosition(modifyPost.getDistrictName()));
+            indSpin.setSelection(industryGroupSpin.getPosition(modifyPost.getIndustryCode()));
+
+            complete_btn.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onClick(View v) {
+                    String postKey=modifyPost.getPin();
+                    BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
+                    if(BNumTotal.length()!=10||currentImageList.size()==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
+                        AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
+                        builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog=builder.create();
+                        alertDialog.show();
+                    }else{
+                        modifyPost();
+                    }
+                }
+            });
+        }else{
+            complete_btn.setOnClickListener(new View.OnClickListener() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onClick(View v) {
+                    BNumTotal=BNum1.getText().toString()+BNum2.getText().toString()+BNum3.getText().toString();
+                    Log.d("test",BNumTotal.length()+","+currentImageIndex+","+address_editText.getText()+","+price.getText()+","+title.getText()+","+contents.getText());
+                    if(BNumTotal.length()!=10||currentImageList.size()==0||address_editText.getText().length()==0||price.getText().length()==0||title.getText().length()==0||contents.getText().length()==0){
+                        AlertDialog.Builder builder=new AlertDialog.Builder(SaleUploadActivity.this);
+                        builder.setTitle("알림").setMessage("빈 공간이 있습니다.\n모두 작성해주세요.");
+                        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alertDialog=builder.create();
+                        alertDialog.show();
+                    }else{
+                        writePost();
+                    }
+                }
+            });
+        }
 
     }
     //이미지뷰 클릭 시 삭제
@@ -480,7 +533,84 @@ public class SaleUploadActivity extends AppCompatActivity {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE})
                 .check();
     }
-    //id랑 회원 이름 추가해야함
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void modifyPost(){
+        mDatabase= FirebaseDatabase.getInstance().getReference();
+        Post post=new Post();
+        photo=new Photos();
+
+        //주소지 저장
+        totalAddress=address_editText.getText().toString()+" "+address_remain_editText.getText().toString();
+        post.setTotalAddress(totalAddress);
+        post.setAddress(address_editText.getText().toString());
+        post.setRemainAddress(address_remain_editText.getText().toString());
+
+        //글 제목 저장
+        post.setTitle(title.getText().toString());
+        //글 내용 저장
+        post.setContents(contents.getText().toString());
+        //작성자 이름 저장
+        //작성자 아이디 저장
+        Application app=getApplication();
+        Users user=(Users)app;
+
+        userID=user.getEmail();
+        userName=user.getName();
+        post.setWriterPin(userID);
+        post.setName(userName);
+        //사업자 번호 저장
+        post.setBLNumber(BNumTotal);
+        //시도명 이름 저장
+        post.setLocalName(localspin.getSelectedItem().toString());
+        //시군구 이름 저장
+        post.setDistrictName(districtspin.getSelectedItem().toString());
+        //글 상태 저장(업로드 시 기본 정상 : 1)
+        post.setState(modifyPost.getState());
+        //글 신고 상태 저장(업로드 시 기본 정상 : 1)
+        post.setReport(modifyPost.getReport());
+        //글 작성 시간
+        post.setCreateDate(modifyPost.getCreateDate());
+        //글 수정 시간 저장
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM월 dd일, yyyy");
+        String date=simpleDateFormat.format(new Date(System.currentTimeMillis()));
+        post.setModifyDate(date);
+        //가격 저장
+        post.setPrice(price.getText().toString());
+        //이미지
+        post.setPhoto("");
+        //업종별 코드
+        post.setIndustryCode(strIndustry);
+        postKey=modifyPost.getPin();
+
+        for(int i=0; i<=currentImageIndex;i++){
+            deleteImage(i);
+            String imageUrl=uploadImage(currentImageList.get(i),i);
+            photo.setPhotos(imageUrl,i);
+        }
+
+        photo.setCount(String.valueOf(currentImageIndex+1));
+        mDatabase.child("post").child(postKey).setValue(post)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mDatabase.child("post").child(postKey).child("photo").setValue(photo);
+                        Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(SaleUploadActivity.this, SaleActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SaleUploadActivity.this, "게시글 업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+        Log.d("upload",postKey);
+    }
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void writePost(){
         //게시글 저장하기 위한 firebase 연결
@@ -585,6 +715,11 @@ public class SaleUploadActivity extends AppCompatActivity {
                 });
         return fileName;
     }
-
-
+    //수정 시 기존 이미지 삭제
+    private void deleteImage(int index){
+        for(int i=0;i<Integer.parseInt(modifyPhoto.getCount());i++){
+            StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("images/"+modifyPhoto.getPhotos(i));
+            storageReference.delete();
+        }
+    }
 }

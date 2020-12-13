@@ -3,6 +3,7 @@ package com.wims.whereismystore.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
 public class ReportDialog extends AppCompatActivity {
@@ -49,6 +51,7 @@ public class ReportDialog extends AppCompatActivity {
                 if(reportCode.equals("4")){
                     Toast.makeText(context,"기타 사유 선택 시 상세 이유를 적어주세요.",Toast.LENGTH_SHORT).show();
                 }else{
+
                     ReportPost reportPost = new ReportPost(postID, reportCode, reportReason, message.getText().toString());
                     String postKey = databaseReference.child("report").child("post").push().getKey();
                     databaseReference.child("report").child("post").child(postKey).setValue(reportPost);
@@ -113,6 +116,7 @@ public class ReportDialog extends AppCompatActivity {
             this.reportName=reportName;
             this.reason=reason;
         }
+
         public String getEmail() {
             return email;
         }
@@ -158,6 +162,8 @@ public class ReportDialog extends AppCompatActivity {
             this.reportName=reportName;
             this.reason=reason;
         }
+
+
         public String getPostID() {
             return postID;
         }

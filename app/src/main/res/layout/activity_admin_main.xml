@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.admin.AdminMainActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/admin_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/holo_orange_light"/>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/admin_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="52dp">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/admin_postTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="게시글" />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/admin_userTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사용자" />
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/admin_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

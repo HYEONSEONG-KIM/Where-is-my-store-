@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.wims.whereismystore.Activity.admin.AdminMainActivity;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
@@ -107,11 +108,17 @@ public class LoginActivity extends AppCompatActivity {
                                     user.setName(nameS);
                                     user.setPassword(passwordS);
 
-                                    Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-
+                                    if(user.getEmail().equals("admin@wims.com")){
+                                        Intent intent=new Intent(LoginActivity.this, AdminMainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
                                 }
                             }
                             @Override

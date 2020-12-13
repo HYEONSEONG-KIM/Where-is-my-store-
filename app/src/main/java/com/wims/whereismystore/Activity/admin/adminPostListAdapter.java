@@ -1,4 +1,4 @@
-package com.wims.whereismystore.Class;
+package com.wims.whereismystore.Activity.admin;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,39 +14,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 import com.wims.whereismystore.Activity.SaleItemViewActivity;
+import com.wims.whereismystore.Class.SaleListItem;
 import com.wims.whereismystore.R;
 
 import java.util.ArrayList;
 
-public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleListViewHolder>{
+public class adminPostListAdapter extends RecyclerView.Adapter<adminPostListAdapter.adminPostListViewHolder>{
     private ArrayList<SaleListItem> listItems;
     private Context context;
     private Intent intent;
 
-    public SaleListAdapter(ArrayList<SaleListItem> arrayList, Context context){
+    public adminPostListAdapter(ArrayList<SaleListItem> arrayList, Context context){
         this.listItems=arrayList;
         this.context=context;
     }
     @NonNull
     @Override
-    public SaleListAdapter.SaleListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public adminPostListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.salelistitem,parent,false);
-        SaleListViewHolder holder=new SaleListViewHolder(view);
+        adminPostListViewHolder holder=new adminPostListViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SaleListAdapter.SaleListViewHolder holder, final int position) {
-        StorageReference storage =FirebaseStorage.getInstance().getReference();
+    public void onBindViewHolder(@NonNull final adminPostListViewHolder holder, final int position) {
+        StorageReference storage = FirebaseStorage.getInstance().getReference();
         storage.child("images/"+listItems.get(position).getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -65,8 +64,8 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
 
         holder.title.setText(listItems.get(position).getTitle());
         holder.price.setText(listItems.get(position).getPrice());
-        if(listItems.get(position).getState().toString().equals("1")){ }
-        else if(listItems.get(position).getState().toString().equals("2")){
+        if(listItems.get(position).getState().equals("1")){ }
+        else if(listItems.get(position).getState().equals("2")){
             holder.state.setText("예약중");
             holder.state.setBackgroundResource(R.drawable.bg_state);
         }else{
@@ -78,7 +77,7 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent=new Intent(v.getContext(), SaleItemViewActivity.class);
+                intent=new Intent(v.getContext(), AdminPostViewActivity.class);
                 String postID=listItems.get(position).getPostID();
                 intent.putExtra("postID",postID);
                 intent.putExtra("postUserID",listItems.get(position).getWriterPin());
@@ -87,7 +86,6 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
                 //context.startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -95,14 +93,14 @@ public class SaleListAdapter extends RecyclerView.Adapter<SaleListAdapter.SaleLi
         return (listItems != null ? listItems.size() : 0);
     }
 
-    public class SaleListViewHolder extends RecyclerView.ViewHolder{
+    public class adminPostListViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView title;
         TextView district;
         TextView price;
         TextView state;
 
-        public SaleListViewHolder(@NonNull View itemView) {
+        public adminPostListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.image=itemView.findViewById(R.id.sale_imageView);
             this.title=itemView.findViewById(R.id.saleTitle_textView);
