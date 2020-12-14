@@ -1,9 +1,15 @@
 package com.wims.whereismystore.Activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -57,6 +63,7 @@ public class SaleActivity extends AppCompatActivity {
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
+
         fragment5 = new Fragment5();
 
         setFrag(0); // 첫화면 설정

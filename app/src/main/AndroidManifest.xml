@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.wims.whereismystore">
 
-
     <uses-permission android:name="android.permission.CAMERA" /> <!-- 카메라 권한 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 파일 읽기 권한 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 파일 쓰기 권한 -->
@@ -21,7 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.ReportPostActivity"></activity>
+        <activity android:name=".Activity.admin.AdminUserViewActivity"></activity>
+        <activity android:name=".Activity.admin.AdminPostViewActivity" />
+        <activity android:name=".Activity.admin.AdminMainActivity" />
+        <activity android:name=".Activity.ReportDialog" />
+        <activity android:name=".Activity.ReportPostActivity" />
         <activity android:name=".Activity.ReportUserActivity" />
         <activity android:name=".Activity.SaleFindActivity" />
         <activity android:name=".Activity.UserUploadPostActivity" />
@@ -78,7 +81,11 @@
             tools:ignore="DuplicateActivity,Instantiatable" />
         <activity android:name=".Activity.ChattingActivity" />
 
-
+        <service android:name=".Class.MyFcmService">
+            <intent-filter>
+                <action android:name=".MyFcmService" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"

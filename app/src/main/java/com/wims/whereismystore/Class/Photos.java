@@ -1,7 +1,9 @@
 package com.wims.whereismystore.Class;
 
 
-public class Photos {
+import java.io.Serializable;
+
+public class Photos implements Serializable {
     private String photo_1;
     private String photo_2;
     private String photo_3;

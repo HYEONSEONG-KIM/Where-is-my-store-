@@ -9,6 +9,15 @@ public class SaleListItem {
     private String state;
     private String postID;
     private String image;
+    private String writerPin;
+
+    public String getWriterPin() {
+        return writerPin;
+    }
+
+    public void setWriterPin(String writerPin) {
+        this.writerPin = writerPin;
+    }
 
     public String getDistrictName() {
         return districtName;

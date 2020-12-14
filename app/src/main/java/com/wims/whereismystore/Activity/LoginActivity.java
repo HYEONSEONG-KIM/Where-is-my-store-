@@ -107,10 +107,17 @@ public class LoginActivity extends AppCompatActivity {
                                     user.setName(nameS);
                                     user.setPassword(passwordS);
                                     user.setStatus(status);
-                                    Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                    if(user.getEmail().equals("admin@wims.com")){
+                                        Intent intent=new Intent(LoginActivity.this, AdminMainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(intent);
+                                    }
 
                                 }
                             }
