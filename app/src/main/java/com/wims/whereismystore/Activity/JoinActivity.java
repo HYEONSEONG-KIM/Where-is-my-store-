@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JoinActivity extends AppCompatActivity {
-
+    
     EditText email;
     EditText password;
     EditText name;
