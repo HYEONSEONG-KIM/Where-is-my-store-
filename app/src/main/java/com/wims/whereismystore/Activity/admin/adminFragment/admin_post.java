@@ -57,6 +57,7 @@ public class admin_post extends Fragment {
         layoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         arrayList=new ArrayList<>();
+        reportPostArrayList=new ArrayList<>();
 
         database=FirebaseDatabase.getInstance();
         databaseReference=database.getReference("report").child("post");
@@ -66,9 +67,10 @@ public class admin_post extends Fragment {
                 arrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     ReportPost reportPost=dataSnapshot.getValue(ReportPost.class);
+                    reportPost.setKey(dataSnapshot.getKey());
                     reportPostArrayList.add(reportPost);
                     if(reportPost.getState().equals("1")){
-                        DatabaseReference reference=database.getReference("post").child(reportPost.getPostID());
+                        DatabaseReference reference=FirebaseDatabase.getInstance().getReference("post").child(reportPost.getPostID());
                         reference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,30 +95,6 @@ public class admin_post extends Fragment {
 
             }
         });
-//        database= FirebaseDatabase.getInstance();
-//        databaseReference=database.getReference("post");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                arrayList.clear();
-//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    post= (HashMap<String, Object>) dataSnapshot.getValue();
-//                    if(!post.get("report").toString().equals("1")) {
-//                        SaleListItem saleListItem = dataSnapshot.getValue(SaleListItem.class);
-//                        saleListItem.setPostID(dataSnapshot.getKey());
-//                        photo = dataSnapshot.child("photo").getValue(Photos.class);
-//                        saleListItem.setImage(photo.getPhoto_1());
-//                        arrayList.add(0, saleListItem);
-//                    }
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("fragment1",String.valueOf(databaseError.toException()));
-//            }
-//        });
         adapter=new adminPostListAdapter(arrayList,reportPostArrayList,getContext());
         recyclerView.setAdapter(adapter);
 

@@ -51,8 +51,10 @@ public class AdminUserViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 database = FirebaseDatabase.getInstance();
                 database.getReference().child("users").child("status").setValue("1");
-                database.getReference().child("report").child("user").child("state").setValue("2");
-                finish();
+                database.getReference().child("report").child("user").child(reportUser.getReportKey()).child("state").setValue("2");
+                Intent intent1=new Intent(AdminUserViewActivity.this,AdminMainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
             }
         });
         Button report3=findViewById(R.id.adminUser_report_3_Button);
@@ -61,8 +63,10 @@ public class AdminUserViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 database = FirebaseDatabase.getInstance();
                 database.getReference().child("users").child("status").setValue("3");
-                database.getReference().child("report").child("user").child("state").setValue("2");
-                finish();
+                database.getReference().child("report").child("user").child(reportUser.getKey()).child("state").setValue("2");
+                Intent intent1=new Intent(AdminUserViewActivity.this,AdminMainActivity.class);
+                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent1);
             }
         });
     }

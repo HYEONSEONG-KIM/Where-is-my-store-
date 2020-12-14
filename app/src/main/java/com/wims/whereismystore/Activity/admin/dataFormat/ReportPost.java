@@ -3,13 +3,22 @@ package com.wims.whereismystore.Activity.admin.dataFormat;
 import java.io.Serializable;
 
 public class ReportPost implements Serializable {
-        String reportCode;
-        String reportName;
-        String reason;
-        String postID;
-        String state;
+        private String reportCode;
+    private String reportName;
+    private String reason;
+    private String postID;
+    private String state;
+    private String Key;
+    public String getKey() {
+        return Key;
+    }
 
-        public ReportPost(){}
+    public void setKey(String key) {
+        Key = key;
+    }
+
+
+    public ReportPost(){}
         public ReportPost(String postID, String reportCode, String reportName, String reason, String state){
             this.postID=postID;
             this.reportCode=reportCode;

@@ -34,4 +34,5 @@ public class AdminMainActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.admin_tab);
         tabLayout.setupWithViewPager(vp);
     }
+
 }

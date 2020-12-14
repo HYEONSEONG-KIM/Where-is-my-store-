@@ -3,11 +3,21 @@ package com.wims.whereismystore.Activity.admin.dataFormat;
 import java.io.Serializable;
 
 public class ReportUser implements Serializable {
-        String email;
-        String reportCode;
-        String reportName;
-        String reason;
-        String state;
+    private String email;
+    private String reportCode;
+    private String reportName;
+    private String reason;
+    private String state;
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
+    private String Key;
 
     public ReportUser() {
 
