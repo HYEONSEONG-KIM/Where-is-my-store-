@@ -80,7 +80,7 @@ public class Fragment5 extends Fragment {
                 AlertDialog.Builder alertDialog=new AlertDialog.Builder(getActivity());
                 alertDialog.setTitle("로그아웃");
                 alertDialog.setMessage("로그아웃 하시겠습니까??").setCancelable(false)
-                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -88,7 +88,7 @@ public class Fragment5 extends Fragment {
                                 startActivity(intent);
                             }
                         })
-                        .setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();

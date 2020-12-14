@@ -1,7 +1,11 @@
 package com.wims.whereismystore.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +45,24 @@ public class LoginActivity extends AppCompatActivity {
 
     boolean login_state =false;
 
-
+  public boolean onKeyDown(int keyCode, KeyEvent event){
+      switch (keyCode){
+          case KeyEvent.KEYCODE_BACK:
+          new AlertDialog.Builder(LoginActivity.this)
+                  .setTitle("어플리케이션 종료").setMessage("종료하시겠습니까?")
+                  .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                      @Override
+                      public void onClick(DialogInterface dialog, int which) {
+                          System.exit(0);
+                          Vibrator vibrator=(Vibrator)getSystemService(VIBRATOR_SERVICE);
+                          vibrator.vibrate(300);
+                      }
+                  })
+                  .setNegativeButton("취소",null).show();
+                    return true;
+      }
+      return super.onKeyDown(keyCode,event);
+  }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
