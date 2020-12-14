@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.wims.whereismystore.Activity.admin.adminPostListAdapter;
+import com.wims.whereismystore.Activity.admin.dataFormat.ReportPost;
 import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.SaleListAdapter;
 import com.wims.whereismystore.Class.SaleListItem;
@@ -26,11 +27,6 @@ import com.wims.whereismystore.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link admin_post#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class admin_post extends Fragment {
 
     private String userUploadID;
@@ -39,6 +35,7 @@ public class admin_post extends Fragment {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<SaleListItem> arrayList;
+    private ArrayList<ReportPost> reportPostArrayList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private DatabaseError databaseError;
@@ -61,20 +58,31 @@ public class admin_post extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         arrayList=new ArrayList<>();
 
-        database= FirebaseDatabase.getInstance();
-        databaseReference=database.getReference("post");
+        database=FirebaseDatabase.getInstance();
+        databaseReference=database.getReference("report").child("post");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 arrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    post= (HashMap<String, Object>) dataSnapshot.getValue();
-                    if(!post.get("report").toString().equals("1")) {
-                        SaleListItem saleListItem = dataSnapshot.getValue(SaleListItem.class);
-                        saleListItem.setPostID(dataSnapshot.getKey());
-                        photo = dataSnapshot.child("photo").getValue(Photos.class);
-                        saleListItem.setImage(photo.getPhoto_1());
-                        arrayList.add(0, saleListItem);
+                    ReportPost reportPost=dataSnapshot.getValue(ReportPost.class);
+                    reportPostArrayList.add(reportPost);
+                    if(reportPost.getState().equals("1")){
+                        DatabaseReference reference=database.getReference("post").child(reportPost.getPostID());
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                SaleListItem saleListItem = snapshot.getValue(SaleListItem.class);
+                                saleListItem.setPostID(snapshot.getKey());
+                                photo = snapshot.child("photo").getValue(Photos.class);
+                                saleListItem.setImage(photo.getPhoto_1());
+                                arrayList.add(0, saleListItem);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -82,12 +90,42 @@ public class admin_post extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("fragment1",String.valueOf(databaseError.toException()));
+
             }
         });
-        adapter=new adminPostListAdapter(arrayList,getContext());
+//        database= FirebaseDatabase.getInstance();
+//        databaseReference=database.getReference("post");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                arrayList.clear();
+//                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+//                    post= (HashMap<String, Object>) dataSnapshot.getValue();
+//                    if(!post.get("report").toString().equals("1")) {
+//                        SaleListItem saleListItem = dataSnapshot.getValue(SaleListItem.class);
+//                        saleListItem.setPostID(dataSnapshot.getKey());
+//                        photo = dataSnapshot.child("photo").getValue(Photos.class);
+//                        saleListItem.setImage(photo.getPhoto_1());
+//                        arrayList.add(0, saleListItem);
+//                    }
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.e("fragment1",String.valueOf(databaseError.toException()));
+//            }
+//        });
+        adapter=new adminPostListAdapter(arrayList,reportPostArrayList,getContext());
         recyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

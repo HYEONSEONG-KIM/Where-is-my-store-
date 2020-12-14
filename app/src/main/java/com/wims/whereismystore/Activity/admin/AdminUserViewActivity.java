@@ -9,15 +9,21 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.wims.whereismystore.Activity.admin.dataFormat.ReportUser;
 import com.wims.whereismystore.R;
 
 public class AdminUserViewActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,7 @@ public class AdminUserViewActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("상세 보기");
 
         Intent intent=getIntent();
-        ReportUser reportUser=(ReportUser)intent.getSerializableExtra("reportUser");
+        final ReportUser reportUser=(ReportUser)intent.getSerializableExtra("reportUser");
         TextView email=findViewById(R.id.adminUser_email);
         TextView codeName=findViewById(R.id.adminUser_name);
         TextView reason=findViewById(R.id.adminUser_reason);
@@ -40,7 +46,25 @@ public class AdminUserViewActivity extends AppCompatActivity {
         reason.setText(reportUser.getReason());
 
         Button report1=findViewById(R.id.adminUser_report_1_Button);
+        report1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database = FirebaseDatabase.getInstance();
+                database.getReference().child("users").child("status").setValue("1");
+                database.getReference().child("report").child("user").child("state").setValue("2");
+                finish();
+            }
+        });
         Button report3=findViewById(R.id.adminUser_report_3_Button);
+        report3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                database = FirebaseDatabase.getInstance();
+                database.getReference().child("users").child("status").setValue("3");
+                database.getReference().child("report").child("user").child("state").setValue("2");
+                finish();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

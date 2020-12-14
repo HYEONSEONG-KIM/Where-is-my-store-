@@ -34,6 +34,7 @@ import com.wims.whereismystore.Activity.ReportPostActivity;
 import com.wims.whereismystore.Activity.SaleItemViewActivity;
 import com.wims.whereismystore.Activity.SaleUploadActivity;
 import com.wims.whereismystore.Activity.WriterUserInfoActivity;
+import com.wims.whereismystore.Activity.admin.dataFormat.ReportPost;
 import com.wims.whereismystore.Class.Photos;
 import com.wims.whereismystore.Class.Post;
 import com.wims.whereismystore.Class.SaleViewpagerAdapter;
@@ -48,7 +49,6 @@ import me.relex.circleindicator.CircleIndicator;
 public class AdminPostViewActivity extends AppCompatActivity {
 
     private String postID;
-    private StorageReference mStorageRef;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private HashMap<String, Object> photo;
@@ -60,15 +60,11 @@ public class AdminPostViewActivity extends AppCompatActivity {
     private TextView time;
     private TextView contents;
     private ViewPager pager;
-    private LinearLayout layout;
     private Toolbar toolbar;
-    private TextView report;
-    private Button chatbnt;
-    private String UID;
-    private String UNAME;
-    private String My_Email;
     private SaleViewpagerAdapter adapter;
     CircleIndicator indicator;
+    private TextView codeName;
+    private TextView reason;
     private String writerPin;
 
     @Override
@@ -88,10 +84,16 @@ public class AdminPostViewActivity extends AppCompatActivity {
         contents = findViewById(R.id.adminPost_contents);
         pager = findViewById(R.id.AdminItemViewPager);
         indicator = findViewById(R.id.adminPost_indicator);
+        codeName=findViewById(R.id.adminPost_codeName);
+        reason=findViewById(R.id.adminPost_reason);
 
         final Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
         writerPin = intent.getStringExtra("postUserID");
+        ReportPost reportPost=(ReportPost) intent.getSerializableExtra("reportPost");
+
+        codeName.setText(reportPost.getReportName());
+        reason.setText(reportPost.getReason());
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference().child("post").child(postID);
@@ -133,6 +135,7 @@ public class AdminPostViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 database = FirebaseDatabase.getInstance();
                 database.getReference().child("post").child(postID).child("report").setValue("1");
+                database.getReference().child("report").child("post").child("state").setValue("2");
                 finish();
             }
         });
@@ -142,6 +145,7 @@ public class AdminPostViewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 database = FirebaseDatabase.getInstance();
                 database.getReference().child("post").child(postID).child("report").setValue("3");
+                database.getReference().child("report").child("post").child("state").setValue("2");
                 finish();
             }
         });

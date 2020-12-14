@@ -2,6 +2,7 @@ package com.wims.whereismystore.Activity.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -124,6 +125,7 @@ public class Fragment1 extends Fragment {
                 Log.e("fragment1",String.valueOf(databaseError.toException()));
             }
         });
+
         adapter=new SaleListAdapter(arrayList,getContext());
         recyclerView.setAdapter(adapter);
 

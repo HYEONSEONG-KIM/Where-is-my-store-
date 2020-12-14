@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.wims.whereismystore.Activity.SaleItemViewActivity;
+import com.wims.whereismystore.Activity.admin.dataFormat.ReportPost;
 import com.wims.whereismystore.Class.SaleListItem;
 import com.wims.whereismystore.R;
 
@@ -27,11 +28,13 @@ import java.util.ArrayList;
 
 public class adminPostListAdapter extends RecyclerView.Adapter<adminPostListAdapter.adminPostListViewHolder>{
     private ArrayList<SaleListItem> listItems;
+    private  ArrayList<ReportPost> reportPosts;
     private Context context;
     private Intent intent;
 
-    public adminPostListAdapter(ArrayList<SaleListItem> arrayList, Context context){
+    public adminPostListAdapter(ArrayList<SaleListItem> arrayList, ArrayList<ReportPost> reportPosts, Context context){
         this.listItems=arrayList;
+        this.reportPosts=reportPosts;
         this.context=context;
     }
     @NonNull
@@ -73,7 +76,6 @@ public class adminPostListAdapter extends RecyclerView.Adapter<adminPostListAdap
             holder.state.setBackgroundResource(R.drawable.bg_state);
         }
         holder.district.setText(listItems.get(position).getDistrictName());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +83,9 @@ public class adminPostListAdapter extends RecyclerView.Adapter<adminPostListAdap
                 String postID=listItems.get(position).getPostID();
                 intent.putExtra("postID",postID);
                 intent.putExtra("postUserID",listItems.get(position).getWriterPin());
+                intent.putExtra("reportPost",reportPosts.get(position));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 ((Activity)holder.itemView.getContext()).startActivityForResult(intent,10001);
-                //context.startActivity(intent);
             }
         });
     }
@@ -99,7 +101,6 @@ public class adminPostListAdapter extends RecyclerView.Adapter<adminPostListAdap
         TextView district;
         TextView price;
         TextView state;
-
         public adminPostListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.image=itemView.findViewById(R.id.sale_imageView);

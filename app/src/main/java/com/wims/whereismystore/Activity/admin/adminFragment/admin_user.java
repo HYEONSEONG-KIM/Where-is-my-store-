@@ -66,10 +66,11 @@ public class admin_user extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 arrayList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-//                    reportUser= (HashMap<String, Object>) dataSnapshot.getValue();
-                    ReportUser reportUser = dataSnapshot.getValue(ReportUser.class);
-                    reportUser.setReportKey(dataSnapshot.getKey());
-                    arrayList.add(0, reportUser);
+                    if(dataSnapshot.child("state").getValue().toString().equals("1")) {
+                        ReportUser reportUser = dataSnapshot.getValue(ReportUser.class);
+                        reportUser.setReportKey(dataSnapshot.getKey());
+                        arrayList.add(0, reportUser);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -85,4 +86,9 @@ public class admin_user extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }

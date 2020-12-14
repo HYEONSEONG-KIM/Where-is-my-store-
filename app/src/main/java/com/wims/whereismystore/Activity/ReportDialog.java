@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.wims.whereismystore.Activity.admin.dataFormat.ReportPost;
+import com.wims.whereismystore.Activity.admin.dataFormat.ReportUser;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
@@ -52,11 +54,11 @@ public class ReportDialog extends AppCompatActivity {
                     Toast.makeText(context,"기타 사유 선택 시 상세 이유를 적어주세요.",Toast.LENGTH_SHORT).show();
                 }else{
 
-                    ReportPost reportPost = new ReportPost(postID, reportCode, reportReason, message.getText().toString());
+                    ReportPost reportPost = new ReportPost(postID, reportCode, reportReason, message.getText().toString(),"1");
                     String postKey = databaseReference.child("report").child("post").push().getKey();
                     databaseReference.child("report").child("post").child(postKey).setValue(reportPost);
                     dig.dismiss();
-                    databaseReference.child("post").child(postID).child("state").setValue("2");
+                    databaseReference.child("post").child(postID).child("report").setValue("2");
                 }
             }
         });
@@ -88,7 +90,7 @@ public class ReportDialog extends AppCompatActivity {
                 if(reportCode.equals("6")){
                     Toast.makeText(context,"기타 사유 선택 시 상세 이유를 적어주세요.",Toast.LENGTH_SHORT).show();
                 }else{
-                    ReportUser reportUser = new ReportUser(userID, reportCode, reportReason, message.getText().toString());
+                    ReportUser reportUser = new ReportUser(userID, reportCode, reportReason, message.getText().toString(),"1");
                     String postKey = databaseReference.child("report").child("user").push().getKey();
                     databaseReference.child("report").child("user").child(postKey).setValue(reportUser);
                     String email=userID.replace('.', '+');
@@ -104,97 +106,6 @@ public class ReportDialog extends AppCompatActivity {
             }
         });
     }
-    class ReportUser{
-        String email;
-        String reportCode;
-        String reportName;
-        String reason;
-
-        public ReportUser(String email, String reportCode, String reportName, String reason){
-            this.email=email;
-            this.reportCode=reportCode;
-            this.reportName=reportName;
-            this.reason=reason;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getReportCode() {
-            return reportCode;
-        }
-
-        public void setReportCode(String reportCode) {
-            this.reportCode = reportCode;
-        }
-
-        public String getReportName() {
-            return reportName;
-        }
-
-        public void setReportName(String reportName) {
-            this.reportName = reportName;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-    }
-
-    class  ReportPost{
-        String reportCode;
-        String reportName;
-        String reason;
-        String postID;
-
-        public ReportPost(String postID, String reportCode, String reportName, String reason){
-            this.postID=postID;
-            this.reportCode=reportCode;
-            this.reportName=reportName;
-            this.reason=reason;
-        }
 
 
-        public String getPostID() {
-            return postID;
-        }
-
-        public void setPostID(String postID) {
-            this.postID = postID;
-        }
-
-
-        public String getReportCode() {
-            return reportCode;
-        }
-
-        public void setReportCode(String reportCode) {
-            this.reportCode = reportCode;
-        }
-
-        public String getReportName() {
-            return reportName;
-        }
-
-        public void setReportName(String reportName) {
-            this.reportName = reportName;
-        }
-
-        public String getReason() {
-            return reason;
-        }
-
-        public void setReason(String reason) {
-            this.reason = reason;
-        }
-    }
 }

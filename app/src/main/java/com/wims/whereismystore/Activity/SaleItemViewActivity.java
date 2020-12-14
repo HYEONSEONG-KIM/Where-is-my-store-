@@ -149,12 +149,15 @@ public class SaleItemViewActivity extends AppCompatActivity {
                 report.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent1 = new Intent(SaleItemViewActivity.this, ReportPostActivity.class);
-                        intent1.putExtra("userID", post.get("writerPin").toString());
-                        intent1.putExtra("userName", post.get("name").toString());
-                        intent1.putExtra("postID", key);
-                        intent1.putExtra("title", post.get("title").toString());
-                        startActivity(intent1);
+                        if(My_Email.equals(writerPin)){}
+                        else{
+                            Intent intent1 = new Intent(SaleItemViewActivity.this, ReportPostActivity.class);
+                            intent1.putExtra("userID", post.get("writerPin").toString());
+                            intent1.putExtra("userName", post.get("name").toString());
+                            intent1.putExtra("postID", key);
+                            intent1.putExtra("title", post.get("title").toString());
+                            startActivity(intent1);
+                        }
                     }
                 });
             }

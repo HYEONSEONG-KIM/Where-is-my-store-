@@ -47,6 +47,7 @@ public class adminUserListAdapter extends RecyclerView.Adapter<adminUserListAdap
         reportUser.setReportCode(listItems.get(position).getReportCode());
         reportUser.setReportKey(listItems.get(position).getReportKey());
         reportUser.setReportName(listItems.get(position).getReportName());
+        reportUser.setState(listItems.get(position).getState());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

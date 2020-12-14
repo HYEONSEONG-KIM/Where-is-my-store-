@@ -2,35 +2,21 @@ package com.wims.whereismystore.Activity.admin.dataFormat;
 
 import java.io.Serializable;
 
-public class ReportUser implements Serializable {
-        String email;
+public class ReportPost implements Serializable {
         String reportCode;
         String reportName;
         String reason;
+        String postID;
         String state;
 
-    public ReportUser() {
-
-    }
-
-    public String getReportKey() {
-            return reportKey;
-        }
-
-        public void setReportKey(String reportKey) {
-            this.reportKey = reportKey;
-        }
-
-        String reportKey;
-
-        public ReportUser(String email, String reportCode, String reportName, String reason, String state){
-            this.email=email;
+        public ReportPost(){}
+        public ReportPost(String postID, String reportCode, String reportName, String reason, String state){
+            this.postID=postID;
             this.reportCode=reportCode;
             this.reportName=reportName;
             this.reason=reason;
             this.state=state;
         }
-
 
     public String getState() {
         return state;
@@ -40,15 +26,14 @@ public class ReportUser implements Serializable {
         this.state = state;
     }
 
-
-
-    public String getEmail() {
-            return email;
+        public String getPostID() {
+            return postID;
         }
 
-        public void setEmail(String email) {
-            this.email = email;
+        public void setPostID(String postID) {
+            this.postID = postID;
         }
+
 
         public String getReportCode() {
             return reportCode;
@@ -73,4 +58,5 @@ public class ReportUser implements Serializable {
         public void setReason(String reason) {
             this.reason = reason;
         }
-    }
+
+}
