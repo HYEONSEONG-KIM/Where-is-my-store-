@@ -187,8 +187,7 @@ public class SaleItemViewActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-<<<<<<<<< Temporary merge branch 1
-=========
+
 
         chatbnt.setOnClickListener(new View.OnClickListener() {
             @Override

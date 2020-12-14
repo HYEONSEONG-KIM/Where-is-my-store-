@@ -30,10 +30,6 @@ public class Fragment5 extends Fragment {
 
 
 
-
-
-
-
     Users user = new Users();
 
     @Nullable
