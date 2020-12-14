@@ -66,9 +66,13 @@ public class ChattingActivity extends AppCompatActivity {
 
     private RecyclerView mMessageRecyclerView;
 
-
-
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(ChattingActivity.this, SaleActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +155,7 @@ public class ChattingActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+
 
 
     }

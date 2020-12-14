@@ -12,7 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wims.whereismystore.Activity.Fragments.Fragment1;
 import com.wims.whereismystore.Activity.Fragments.Fragment2;
 import com.wims.whereismystore.Activity.Fragments.Fragment3;
-import com.wims.whereismystore.Activity.Fragments.Fragment4;
 import com.wims.whereismystore.Activity.Fragments.Fragment5;
 import com.wims.whereismystore.R;
 
@@ -24,7 +23,6 @@ public class SaleActivity extends AppCompatActivity {
     private Fragment1 fragment1;
     private Fragment2 fragment2;
     private Fragment3 fragment3;
-    private Fragment4 fragment4;
     private Fragment5 fragment5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +46,8 @@ public class SaleActivity extends AppCompatActivity {
                     case R.id.chat:
                         setFrag(2);
                         break;
-                    case R.id.board:
-                        setFrag(3);
-                        break;
                     case R.id.MY:
-                        setFrag(4);
+                        setFrag(3);
                         break;
                 }
                 return true;
@@ -62,7 +57,6 @@ public class SaleActivity extends AppCompatActivity {
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
         fragment3 = new Fragment3();
-        fragment4 = new Fragment4();
         fragment5 = new Fragment5();
 
         setFrag(0); // 첫화면 설정
@@ -88,10 +82,6 @@ public class SaleActivity extends AppCompatActivity {
                 transaction.commit();
                 break;
             case 3:
-                transaction.replace(R.id.main_frame, fragment4);
-                transaction.commit();
-                break;
-            case 4:
                 transaction.replace(R.id.main_frame, fragment5);
                 transaction.commit();
                 break;

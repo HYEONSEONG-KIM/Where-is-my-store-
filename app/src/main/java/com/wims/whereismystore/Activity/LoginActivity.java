@@ -19,10 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
-import static com.wims.whereismystore.R.id.change_delete;
-import static com.wims.whereismystore.R.id.change_password_pwck;
-import static com.wims.whereismystore.R.id.changebnt;
+import static com.wims.whereismystore.R.id.join_button;
+import static com.wims.whereismystore.R.id.login_button;
 import static com.wims.whereismystore.R.id.login_email;
+import static com.wims.whereismystore.R.id.login_password;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText email;
@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     String emailS;
     String nameS;
     String passwordS;
+    String status;
 
     String emailString;
     String passwordString;
@@ -48,9 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         email = (EditText)findViewById(login_email);
-        password = (EditText)findViewById(change_password_pwck);
-        login = (Button)findViewById(changebnt);
-        account = (Button)findViewById(change_delete);
+        password = (EditText)findViewById(login_password);
+        login = (Button)findViewById(login_button);
+        account = (Button)findViewById(join_button);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,12 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                                     emailS= ds.child("email").getValue(String.class);
                                     nameS = ds.child("name").getValue(String.class);
                                     passwordS = ds.child("password").getValue(String.class);
+                                    status = ds.child("status").getValue(String.class);
 
                                     user = (Users)getApplicationContext();
                                     user.setEmail(emailS);
                                     user.setName(nameS);
                                     user.setPassword(passwordS);
-
+                                    user.setStatus(status);
                                     Intent intent = new Intent(LoginActivity.this, SaleActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

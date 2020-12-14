@@ -36,6 +36,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
+
+
         fragment5=new Fragment5();
 
         Email=((Users)getApplication()).getEmail();
@@ -51,6 +53,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         password=pass.getText().toString().trim();
                         password_pwck=pass_pwck.getText().toString().trim();
+
                         if(password.equals(password_pwck)){
                     String Uid = Email.replace('.','+');
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
