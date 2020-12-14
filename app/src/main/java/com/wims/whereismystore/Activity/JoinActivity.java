@@ -25,7 +25,7 @@ import com.wims.whereismystore.R;
 import java.util.HashMap;
 
 public class JoinActivity extends AppCompatActivity {
-    
+
     EditText email;
     EditText password;
     EditText name;

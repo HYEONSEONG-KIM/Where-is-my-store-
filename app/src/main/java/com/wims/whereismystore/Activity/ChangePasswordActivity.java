@@ -26,6 +26,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     private EditText pass;
     private EditText pass_pwck;
+    private String BeforePass;
     private DatabaseReference mDatabase;
     private String password;
     private String password_pwck;
@@ -36,7 +37,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-
+        BeforePass=((Users)getApplication()).getPassword();
 
         fragment5=new Fragment5();
 
@@ -54,7 +55,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
                         password=pass.getText().toString().trim();
                         password_pwck=pass_pwck.getText().toString().trim();
 
-                        if(password.equals(password_pwck)){
+                        if(BeforePass.equals(pass)){
+                            Toast.makeText(ChangePasswordActivity.this, "이전 비밀번호와 같습니다 다른 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
+                        }
+
+                        else if(password.equals(password_pwck)){
                     String Uid = Email.replace('.','+');
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
                     Map<String, Object> updateMap = new HashMap<>();
