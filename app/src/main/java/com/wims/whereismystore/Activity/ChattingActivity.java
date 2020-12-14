@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +23,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.wims.whereismystore.Class.ChatModel;
 import com.wims.whereismystore.Class.Users;
 import com.wims.whereismystore.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ChattingActivity extends AppCompatActivity {
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -39,6 +44,8 @@ public class ChattingActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabaseReference;
     private EditText mMessageEditText;
     private Button send_bnt;
+
+
 
 
 
@@ -227,15 +234,16 @@ public class ChattingActivity extends AppCompatActivity {
             if(comments.get(position).uid.equals(my)) {
                 ((MessageViewHolder) holder).textView_message.setText(comments.get(position).message);
                 ((MessageViewHolder) holder).textView_name.setText(comments.get(position).name);
-                ((MessageViewHolder) holder).textView_message.setTextColor(R.color.colorBlack);
             }
 
             else{
                 ((MessageViewHolder) holder).textView_message.setText(comments.get(position).message);
                 ((MessageViewHolder) holder).textView_name.setText(comments.get(position).name);
-
             }
+
         }
+
+
 
         @Override
         public int getItemCount() {
@@ -244,14 +252,17 @@ public class ChattingActivity extends AppCompatActivity {
 
         private class MessageViewHolder extends RecyclerView.ViewHolder {
             public TextView textView_message;
-            public  TextView textView_name;
-            public LinearLayout linearLayout_main;
+            public TextView textView_name;
+
+
+
 
             public MessageViewHolder(View view) {
                 super(view);
                 textView_message=view.findViewById(R.id.messageTextview);
                 textView_name=view.findViewById(R.id.messageItem_textview_name);
-                linearLayout_main=findViewById(R.id.messageItem_lineralayout_main);
+
+
             }
         }
 

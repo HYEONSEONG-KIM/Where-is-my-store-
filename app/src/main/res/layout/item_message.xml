@@ -2,15 +2,21 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/messageItem_lineralayout_main">
+    android:id="@+id/messageItem_lineralayout_main"
+    android:orientation="horizontal"
+
+    >
 
     <LinearLayout
         android:id="@+id/messageItem_lineralayout_destination"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+
+
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/messageItem_imageview_profile"
@@ -32,6 +38,7 @@
                 tools:text="사용자 이름 표시 되는 부분"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 />
 
             <ImageView
@@ -45,7 +52,11 @@
                 tools:text="메세지 표시부분"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
+
 
 
         </LinearLayout>
