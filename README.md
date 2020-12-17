@@ -30,6 +30,7 @@
 - FireBase를 이용, RealTime Database에 회원정보를 저장할 수 있는 Users 테이블을 생성
 - 입력한 이메일의 중복 여부 확인 후 아이디를 생성과 동시에 Users 테이블에 저장
 - 로그인 화면에서 이메일과 비밀번호를 정확히 입력하면, 데이터베이스 안의 정보를 읽어 로그인  
+  
 ![회원가입 및 로그인](https://user-images.githubusercontent.com/70748105/102426382-9a96c480-4052-11eb-8e74-28864041ee30.gif)
 ![image](https://user-images.githubusercontent.com/70748105/102426561-e5b0d780-4052-11eb-8d37-18600cc19533.png)  
 
@@ -51,7 +52,8 @@
  - 게시글, 사용자 신고
  - 신고 시, Realtime Database의 Report에 저장
 - 찾기
- - 사용자가 찾기 원하는 내용을 입력 시 제목, 내용에 해당 단어를 포함한 게시글 들을 리사이클뷰에 출력  
+ - 사용자가 찾기 원하는 내용을 입력 시 제목, 내용에 해당 단어를 포함한 게시글 들을 리사이클뷰에 출력 
+   
  ![매매 글쓰기](https://user-images.githubusercontent.com/70748105/102426393-9ff40f00-4052-11eb-8bed-5f0106c3ed35.gif)
  ![매매 유저정보 신고 찾기](https://user-images.githubusercontent.com/70748105/102426398-a2eeff80-4052-11eb-879b-1545322eee7a.gif)  
  ![image](https://user-images.githubusercontent.com/70748105/102426593-f2cdc680-4052-11eb-8aa4-202bd423b071.png)
@@ -68,6 +70,7 @@
 - user의 아이디를 검색하여 채팅방이 중복되어 생성되지 않도록 구현
 - recyclerview를 사용하여 실시간으로 DB에 저장된 message와 user 이름을 화면에 출력하는 방법으로 채팅 기능 구현
 - 매매 기능에서 글을 올린 유저와 채팅을 시작하고, 채팅 목록에서 내가 속한 채팅 방 확인후 원하는 채팅 방에 접근 가능  
+  
 ![채팅1](https://user-images.githubusercontent.com/70748105/102426404-a6828680-4052-11eb-81f8-61dac66172a1.gif)
 ![채팅2](https://user-images.githubusercontent.com/70748105/102426408-a84c4a00-4052-11eb-8f73-ed6e6d45599b.gif)  
 ![image](https://user-images.githubusercontent.com/70748105/102426638-0842f080-4053-11eb-81f7-6d456cda0870.png)
@@ -87,6 +90,7 @@
 - 신고 게시 글 & 사용자 처리
  * 신고된 게시 글 목록 표시, 처리 중인 게시 글만 표시되며 처리 완료 게시 글은 표시되지 않음 
  * 게시 글 클릭 시 하단에 신고 사유 출력, 타당한 사유 시 게시 글 중지 버튼, 정상 게시 글 이라면 정상 게시 글 버튼 클릭  
+   
  ![관리자](https://user-images.githubusercontent.com/70748105/102426424-aedac180-4052-11eb-8a94-5f4bf5a9b58b.gif)
  ![image](https://user-images.githubusercontent.com/70748105/102426675-1d1f8400-4053-11eb-90a0-ade66a227335.png)  
 ----------------
