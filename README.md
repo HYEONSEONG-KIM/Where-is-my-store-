@@ -57,7 +57,8 @@
     
    
  ![매매 글쓰기](https://user-images.githubusercontent.com/70748105/102426393-9ff40f00-4052-11eb-8bed-5f0106c3ed35.gif)
- ![매매 유저정보 신고 찾기](https://user-images.githubusercontent.com/70748105/102426398-a2eeff80-4052-11eb-879b-1545322eee7a.gif)
+ ![매매 유저정보 신고 찾기](https://user-images.githubusercontent.com/70748105/102426398-a2eeff80-4052-11eb-879b-1545322eee7a.gif)  
+   
  ![image](https://user-images.githubusercontent.com/70748105/102426593-f2cdc680-4052-11eb-8aa4-202bd423b071.png)
  ![image](https://user-images.githubusercontent.com/70748105/102426613-fd885b80-4052-11eb-804c-5b518aa4f66a.png)  
    
@@ -77,7 +78,8 @@
   
   
 ![채팅1](https://user-images.githubusercontent.com/70748105/102426404-a6828680-4052-11eb-81f8-61dac66172a1.gif)
-![채팅2](https://user-images.githubusercontent.com/70748105/102426408-a84c4a00-4052-11eb-8f73-ed6e6d45599b.gif)
+![채팅2](https://user-images.githubusercontent.com/70748105/102426408-a84c4a00-4052-11eb-8f73-ed6e6d45599b.gif)  
+  
 ![image](https://user-images.githubusercontent.com/70748105/102426638-0842f080-4053-11eb-81f7-6d456cda0870.png)
 ![image](https://user-images.githubusercontent.com/70748105/102426641-0b3de100-4053-11eb-8544-8c51c6310b3d.png)  
   
